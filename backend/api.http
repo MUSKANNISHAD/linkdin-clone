@@ -1,0 +1,22 @@
+POST http://localhost:3000/register HTTP/1.1
+Content-Type: application/json
+
+{
+    "username"
+    "email"
+    "password"
+    "name"
+}
+
+###
+POST http://localhost:3000/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "email":"mumarii@12",
+    "password":"145623"
+}
+
+###
+GET  http://localhost:3000/get_All_User_Profile HTTP/1.1
+Content-Type: application/json
