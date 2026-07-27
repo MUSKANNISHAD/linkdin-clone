@@ -1,0 +1,147 @@
+/* ===========================
+   Landing Page
+=========================== */
+
+.container {
+    width: 100%;
+    min-height: 100vh;
+    background: #f3f2ef;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mainContainer {
+    width: 90%;
+    max-width: 1200px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 70px;
+}
+
+.mainContainer_left {
+    flex: 1;
+}
+
+.mainContainer_left h1 {
+    font-size: 3.6rem;
+    color: #0A66C2;
+    line-height: 1.15;
+    margin-bottom: 20px;
+}
+
+.mainContainer_left p {
+    font-size: 1.25rem;
+    color: #555;
+    line-height: 1.8;
+    margin-bottom: 30px;
+    max-width: 450px;
+}
+
+.buttonJoin {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 15px 40px;
+    background: #0A66C2;
+    color: white;
+    border-radius: 40px;
+
+    font-size: 18px;
+    font-weight: 600;
+
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.buttonJoin:hover {
+    background: #004182;
+
+    transform: translateY(-3px);
+}
+
+.mainContainer_right {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mainContainer_right img {
+    width: 100%;
+    max-width: 550px;
+    height: auto;
+    object-fit: contain;
+}
+
+
+/* ===========================
+   Login Page
+=========================== */
+
+.cardContainer {
+    width: 80vw;
+    max-width: 1100px;
+    height: 80vh;
+
+    display: flex;
+    overflow: hidden;
+
+    border-radius: 12px;
+    background: white;
+    box-shadow: 0 10px 30px rgba(0,0,0,.15);
+}
+
+.cardContainer_left {
+    flex: 0.6;
+    padding: 3rem;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.form {
+    width: 100%;
+    max-width: 380px;
+}
+
+.cardContainer_right {
+    flex: 0.4;
+
+    background: #0A66C2;
+    color: white;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 2rem;
+    text-align: center;
+}
+
+.buttonWithOutLine {
+    margin-top: 20px;
+
+    width: 180px;
+    height: 50px;
+
+    border: 2px solid white;
+    border-radius: 30px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    cursor: pointer;
+
+    transition: .3s;
+}
+
+.buttonWithOutLine:hover {
+    background: white;
+    color: #0A66C2;
+}

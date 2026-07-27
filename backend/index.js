@@ -10,7 +10,7 @@ const app = express();
 const PORT = 3000;
 
 app.use(cors());
-app.use(express.json());
+app.use(express.json());  //=>  always be placed before routes
 app.use(userRoutes);
 app.use(postRoutes);
 app.use(express.static("uploads"));

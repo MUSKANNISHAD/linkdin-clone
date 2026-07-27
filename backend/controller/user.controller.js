@@ -60,7 +60,7 @@ export const register = async (req, res) => {
         const profile = new Profile({ userId: newUser._id });
         return res.status(200).json({ message: "User successfully registered" });
     } catch (err) {
-        return res.status(500).json({ message: "internal server error", err })
+        return res.status(500).json({ message: err.message })
     }
 }
 
@@ -90,11 +90,11 @@ export const login = async (req, res) => {
 
         return res.status(200).json({
             message: "Logged in",
-            token
+            token: token
         });
 
     } catch (err) {
-        return res.status(500).json({ message: "internal server error", err })
+        return res.status(500).json({ message: err.message })
     }
 }
 
@@ -127,7 +127,7 @@ export const uploadProfilePicture = async (req, res) => {
 export const updateuserprofile = async (req, res) => {
     try {
         const { token, ...newUserData } = req.body;
-        const user = await User.findOne({ token });
+        const user = await User.findOne({ token: token });
         if (!user) {
             return res.status(404).json({ message: "user not found" });
         }
@@ -159,7 +159,7 @@ export const updateuserprofile = async (req, res) => {
 
 export const getUserandProfile = async (req, res) => {
     try {
-        const { token } = req.body;
+        const { token } = req.query;
         const user = await User.findOne({ token: token });
         if (!user) {
             return res.status(404).json({ message: "user not found" });
@@ -185,7 +185,7 @@ export const updateProfileData = async (req, res) => {
     try {
         const { token, ...newProfileData } = req.body;
 
-        const userProfile = await User.findOne({ token });
+        const userProfile = await User.findOne({ token: token });
         if (!userProfile) {
             return res.status(404).json({ message: "user not found" });
         }
@@ -216,7 +216,7 @@ export const getAllUserProfile = async (req, res) => {
         return res.json({ Profiles });
 
     } catch (err) {
-        return res.status(500).json({ message: "Internal server error", err });
+        return res.status(500).json({ message: err.message });
     }
 }
 
