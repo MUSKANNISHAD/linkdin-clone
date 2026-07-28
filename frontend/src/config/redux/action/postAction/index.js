@@ -3,7 +3,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 
 export const getAllPosts = createAsyncThunk(
-    "post/createPost",
+    "post/getAllPosts",
     async (_, thunkAPI) => {
         try {
             const response = await clientServer('/getAllPosts')
@@ -14,4 +14,32 @@ export const getAllPosts = createAsyncThunk(
             return thunkAPI.rejectWithValue(err.response.data);
         }
     }
+)
+
+export const createPost = createAsyncThunk(
+    "post/createPosts",
+    async (userdata, thunkAPI) => {
+        try {
+            const formData = new FormData();
+            formData.append('token', localStorage.getItem('token'));
+            formData.append('body', body);
+            formData.append('media', file);
+
+            const response = await clientServer.post('/post', formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data"
+                }
+            })
+
+            if (response.status === 200) {
+                return thunkAPI.fulfillWithValue("post Uploaded");
+            } else {
+                return thunkAPI.rejectWithValue("post not uploaded");
+            }
+
+        } catch (err) {
+            return thunkAPI.rejectWithValue(err.response.data);
+        }
+    }
+
 )
