@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { createPost, getAllPosts } from '../../config/redux/action/postAction';
+import { createPost, getAllPosts, deletePost } from '../../config/redux/action/postAction';
 import { getAboutUser } from '../../config/redux/action/authAction';
 import UserLayout from '../../layout/userLayout';
 import NavbarComponent from '../../Components/Navbar';
@@ -17,6 +17,7 @@ export default function DashboardComponent() {
     const dispatch = useDispatch();
     const authState = useSelector((state) => state.auth)
 
+    const postState = useSelector((state) => state.postReducer);
     const router = useRouter();
 
 
@@ -36,9 +37,10 @@ export default function DashboardComponent() {
     const [fileContent, setFileContent] = useState();
 
     const handleUpload = async () => {
-        dispatch(createPost({ file: fileContent, body: postContent }));
+        await dispatch(createPost({ file: fileContent, body: postContent }));
         setPostContent("")
         setFileContent(null)
+        dispatch(getAllPosts());
     }
 
     if (authState.user) {
@@ -47,15 +49,70 @@ export default function DashboardComponent() {
             <UserLayout>
                 <DashboardLayout>
                     <div className={styles.scrollContainer}>
-                        <div className={styles.createPostContainer}>
-                            <img className={styles.userProfile} style={{ width: 100 }} src={`${BASE_URL}/${authState.user.userId}`}></img>
-                            <TextField fullWidth label="What's in your mind? " className={styles.textArea} margin="normal" />
-                            <label htmlFor="fileupload">
-                                <div className={styles.fab}>
-                                    <i className="fa-solid fa-plus"></i>
-                                </div>
-                            </label>
-                            <input onChange={(e) => setFileContent(e.target.value[0])} type='file' hidden id="fileupload"></input>
+                        <div className={styles.wrapper}>
+
+                            <div className={styles.createPostContainer}>
+                                <img className={styles.userProfile} style={{ width: 100 }} src={`${BASE_URL}/${authState.user.userId}`}></img>
+                                <TextField fullWidth label="What's in your mind? " className={styles.textArea} margin="normal" />
+                                <label htmlFor="fileupload">
+                                    <div className={styles.fab}>
+                                        <i className="fa-solid fa-plus"></i>
+                                    </div>
+                                </label>
+                                <input onChange={(e) => setFileContent(e.target.value[0])} type='file' hidden id="fileupload"></input>
+                            </div>
+
+                            <div className={styles.postsContainer}>
+
+                                {postState.posts && postState.posts.reverse().map((post) => {
+                                    // {postState.post.map((post) => {
+                                    // return (
+                                    <div key={post._id} className={styles.singleCard}>
+
+                                        <div className={styles.singleCard_profileContainer}>
+                                            <img className={styles.userProfile} src={`${BASE_URL}/${authState.user.userId}`}></img>
+                                            <div>
+                                                <div style={{ display: "flex", gap: "1.2rem", justifyContent: "space-between", cursor: "pointer" }}>
+                                                    <p style={{ fontWeight: "bold" }}>{post.userId.name}</p>
+                                                    {
+                                                        post.userId._id === authState.user.userId._ &&
+                                                        <div onClick={async () => {
+                                                            await dispatch(deletePost({ post_id: post_id }))
+                                                            await dispatch(getAllPosts())
+                                                        }}
+                                                            style={{ cursor: "pointer" }}>
+                                                            <i style={{ height: "1.4em", color: "red" }} className="fa-solid fa-trash">trash</i>
+                                                        </div>
+                                                    }
+
+                                                </div>
+                                                <p>style={{ color: "grey" }}{post.userId.username}</p>
+                                                <p style={{ paddingTop: "1.3rem" }}>{post.body}</p>
+
+                                                <div className={styles.singleCard_image}>
+                                                    <img src={`${BASE_URL}/${post.media}`}></img>
+                                                </div>
+
+                                                <div className={styles.optionsContainer}>
+                                                    <div className={styles.singleoptions_optionContainer}>
+                                                        <i class="fa-solid fa-thumbs-up"></i>
+                                                    </div>
+                                                    <div className={styles.singleoptions_optionContainer}>
+
+                                                    </div>
+                                                    <div className={styles.singleoptions_optionContainer}>
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    // )
+
+                                })}
+                            </div>
+
                         </div>
                     </div>
 

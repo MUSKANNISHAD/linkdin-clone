@@ -1,3 +1,9 @@
+.scrollContainer {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
 .createPostContainer {
     display: flex;
     height: 10svh;
@@ -48,4 +54,39 @@
     padding-inline: 1.2rem;
     padding-block: 0.8rem;
     cursor: pointer;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1.3rem;
+    max-width: 80%;
+}
+
+.singleCard_profileContainer {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.2rem;
+    padding: 1.2rem;
+    padding-right: 3.4rem;
+}
+
+.singleCard_image {
+    width: 100%;
+    padding-top: 0.6rem;
+    height: fit-content;
+    overflow: hidden;
+}
+
+.singleCard_image>img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 20px;
+}
+
+.opationsContainer {
+    display: flex;
+    height: 20%;
+    width: 100%;
 }

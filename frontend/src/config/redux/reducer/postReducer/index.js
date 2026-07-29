@@ -32,7 +32,7 @@ const postSlice = createSlice({
             .addCase(getAllPosts.fulfilled, (state, action) => {
                 state.isError = true,
                     state.isLoading = false,
-                    state.posts = action.payload.posts,
+                    state.posts = action.payload.posts.reverse(),
                     state.postFetched = true
             })
             .addCase(getAllPosts.rejected, (state,action) => {

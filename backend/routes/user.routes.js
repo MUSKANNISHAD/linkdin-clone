@@ -23,7 +23,7 @@ router.route("/update_profile_picture").post(upload.single('profile_picture'), u
 router.route("/register").post(register);
 router.route("/login").post(login);
 router.route("/updateUserProfile").post(updateuserprofile);
-router.route("/getUserandProfile").get(getUserandProfile);
+router.route("/get_User_and_Profile").get(getUserandProfile);
 router.route("/updateProfileData").post(updateProfileData);
 router.route("/get_All_User_Profile").get(getAllUserProfile);
 router.route("/sendingConnectionRequest").post(sendConnectionRequest);
