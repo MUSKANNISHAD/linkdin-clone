@@ -264,7 +264,7 @@ export const sendConnectionRequest = async (req, res) => {
 }
 
 
-export const getMyConnectionRequest = async (req, res) => {
+export const getConnectionRequest = async (req, res) => {
     try {
         const { token } = req.body;
 
@@ -285,7 +285,7 @@ export const getMyConnectionRequest = async (req, res) => {
 
 export const showMyConnection = async (req, res) => {
     try {
-        const { token } = req.body;
+        const { token } = req.query;
 
         const user = await User.findOne({ token });
         if (!user) {
@@ -324,5 +324,23 @@ export const acceptConnect = async (req, res) => {
         return res.json({ messgae: "Requset accepted" });
     } catch (err) {
         return res.status(500).json({ message: "internal server err", err });
+    }
+}
+
+
+export const getUserProfileAndUserBasedOnUsername = async (req, res) => {
+    const { username } = req.query;
+    try {
+        const user = await User.findOne({ username });
+        if (!user) {
+            return res.status(200).json({ message: "user not found" });
+        }
+
+        const userProfile = await Profile.findOne({ userId: user._Id })
+            .populate('userId', 'username name email profilePicture');
+
+        return res.json({ userProfile });
+    } catch (err) {
+        return res.status(500).json({ message: "Internal server error", err })
     }
 }

@@ -11,7 +11,7 @@ const connectionRequest = new mongoose.Schema({
         ref: "Post"
     },
     statue: {
-        type: boolean,
+        type: Boolean,
         default: null
     }
 })

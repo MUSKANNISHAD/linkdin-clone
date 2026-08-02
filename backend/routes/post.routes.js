@@ -2,6 +2,8 @@ import { Router } from "express";
 import { activeCheck } from "../controller/post.controller.js";
 import { createPost,likesIncrement, getAllPosts, deletePost } from "../controller/post.controller.js";
 import { PostComment, delete_user_comment, get_comments_by_post } from "../controller/post.controller.js";
+import multer from "multer";
+
 
 const router = Router();
 
