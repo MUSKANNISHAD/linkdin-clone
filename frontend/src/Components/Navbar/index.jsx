@@ -9,7 +9,8 @@ export default function NavbarComponent() {
     const router = useRouter();
     const authState = useSelector((state) => state.auth)
 
-    const dispatch=useDispatch();
+
+    const dispatch = useDispatch();
 
     return (
         <div>
@@ -23,13 +24,15 @@ export default function NavbarComponent() {
                         {authState.profileFetched && <div>
                             <div style={{ display: "flex", gap: "1.2rem" }}>
                                 <p>Hey,{authState.user.userId.name}</p>
-                                <p style={{ fontWeight: "bold", cursor: "pointer" }}>profile</p>
-                                <p onClick={()=>{
+                                <p onClick={() => {
+                                    router.push('/profile')
+                                }} style={{ fontWeight: "bold", cursor: "pointer" }}>profile</p>
+                                <p onClick={() => {
                                     localStorage.removeItem("token")
                                     router.push("/login")
                                     dispatch(reset());
                                 }}
-                                style={{ fontWeight: "bold", cursor: "pointer" }}>Logout</p>
+                                    style={{ fontWeight: "bold", cursor: "pointer" }}>Logout</p>
 
                             </div>
                         </div>}

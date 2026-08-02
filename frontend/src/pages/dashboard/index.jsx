@@ -1,7 +1,7 @@
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { createPost, getAllPosts, deletePost } from '../../config/redux/action/postAction';
+import { createPost, getAllPosts, deletePost, incrementPostlikes, getAllComments } from '../../config/redux/action/postAction';
 import { getAboutUser } from '../../config/redux/action/authAction';
 import UserLayout from '../../layout/userLayout';
 import NavbarComponent from '../../Components/Navbar';
@@ -9,13 +9,14 @@ import styles from "./style.module.css";
 import DashboardLayout from '../../layout/DashboardLayout';
 import { BASE_URL } from '../../config/index.js';
 import TextField from '@mui/material/TextField';
+import { resetPostId } from '../../config/redux/reducer/postReducer/index.js';
 
 
 export default function DashboardComponent() {
 
 
     const dispatch = useDispatch();
-    const authState = useSelector((state) => state.auth)
+    const authState = useSelector((state) => state.auth);
 
     const postState = useSelector((state) => state.postReducer);
     const router = useRouter();
@@ -35,6 +36,7 @@ export default function DashboardComponent() {
 
     const [postContent, setPostContent] = useState("");
     const [fileContent, setFileContent] = useState();
+    const [postComment, setPostComment] = useState("");
 
     const handleUpload = async () => {
         await dispatch(createPost({ file: fileContent, body: postContent }));
@@ -93,15 +95,30 @@ export default function DashboardComponent() {
                                                     <img src={`${BASE_URL}/${post.media}`}></img>
                                                 </div>
 
-                                                <div className={styles.optionsContainer}>
-                                                    <div className={styles.singleoptions_optionContainer}>
-                                                        <i class="fa-solid fa-thumbs-up"></i>
-                                                    </div>
-                                                    <div className={styles.singleoptions_optionContainer}>
+                                                <div onClick={async () => {
+                                                    await dispatch(incrementPostlikes({ post_id: post_id }))
+                                                    dispatch(getAllPosts())
 
-                                                    </div>
+                                                }}
+                                                    className={styles.optionsContainer}>
                                                     <div className={styles.singleoptions_optionContainer}>
+                                                        <i className="fa-solid fa-thumbs-up">likes</i>
+                                                    </div>
+                                                    <div onClick={() => {
+                                                        dispatch(getAllComments({ post_id: post._id }))
+                                                    }}
+                                                        className={styles.singleoptions_optionContainer}>
+                                                        <i className="fa-solid fa-comment-dots">commnets</i>
+                                                    </div>
+                                                    <div onClick={() => {
+                                                        const text = encodeURIComponent(post.body)
+                                                        const uri = encodeURIComponent("apnacollege.in");
 
+                                                        const twitterUrl = `https://twitter.com/intent/tweet?text=${text}&url=${url}`;
+                                                        window.open(twitterUrl, "_blank")
+                                                    }}
+                                                        className={styles.singleoptions_optionContainer}>
+                                                        <i class="fa-solid fa-share-nodes">share</i>
                                                     </div>
                                                 </div>
 
@@ -116,8 +133,53 @@ export default function DashboardComponent() {
                         </div>
                     </div>
 
+                    {
+                        postState.postId !== "" &&
+                        <div onClick={() => {
+                            dispatch(resetPostId)
+                        }}
+                            className={styles.commentsContainer}>
+                            <div onClick={(e) => {
+                                e.stopPropagation()
+                            }}
+                                className={styles.allCommentsContainer}>
+                                {postState.comments.length === 0 && <h2>No comments</h2>}
+
+
+                                {postState.comments.length !== 0 &&
+                                    <div>
+                                        {postState.comments.map((comment, index) => {
+                                            return (
+                                                <div className={styles.singleComment} key={comment._id}>
+
+                                                    <div className={styles.singleComment_profileContainer}>
+                                                        <img src={`${BASE_URL}/${comment.userId.profilePicture}`} alt=" " />
+                                                        <div>
+                                                            <p style={{ fontWeight: "bold", fontSize: "1.2rem" }}>{comment.userId.name}</p>
+                                                            <p>@{comment.userId.username}</p>
+                                                        </div>
+                                                    </div>
+
+                                                    <p>
+                                                        {comment.body}
+                                                    </p>
+                                                </div>
+                                            )
+
+                                        })}
+                                    </div>
+                                }
+
+                                <div className={styles.postCommentContainer}>
+
+
+                                </div>
+                            </div>
+
+                        </div>
+                    }
                 </DashboardLayout>
-            </UserLayout>
+            </UserLayout >
         )
     } else {
         return (
