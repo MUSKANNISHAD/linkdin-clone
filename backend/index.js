@@ -7,10 +7,11 @@ import postRoutes from "./routes/post.routes.js";
 
 dotenv.config();
 const app = express();
-const PORT = 3000;
+const PORT = 9090;
 
 app.use(cors());
 app.use(express.json());  //=>  always be placed before routes
+
 app.use(userRoutes);
 app.use(postRoutes);
 app.use(express.static("uploads"));
@@ -23,12 +24,11 @@ const start = async () => {
     try {
         const mongo = await mongoose.connect(process.env.MONGOURL);
         console.log("MongoDB Connected");
-        app.listen(3000, () => {
-            console.log("server is listening on port 3000");
+        app.listen(PORT, () => {
+            console.log(`server is listening on port ${PORT}`);
         })
     } catch (err) {
         console.error("Database connection failed:", err);
-
     }
 }
 

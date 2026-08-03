@@ -8,30 +8,70 @@ import { getConnectionRequest, showMyConnection, acceptConnect } from "../contro
 
 const router = Router();
 
+// const storage = multer.diskStorage({
+//     destination: (req, file, cb) => {
+//         cb(null, "./uploads")
+//     },
+//     filename: (req, file, cb) => {
+//         cb(null, file.originalname)
+//     }
+// })
+
+
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, "./uploads")
+        console.log("destination called");
+        console.log(file);
+        cb(null, "./uploads");
     },
     filename: (req, file, cb) => {
-        cb(null, file.originalname)
+        console.log("filename called");
+        console.log(file);
+        cb(null, file.originalname);
     }
-})
+});
+
+
+
+
 
 const upload = multer({ storage: storage });
 
 router.route("/update_profile_picture").post(upload.single('profile_picture'), uploadProfilePicture);
 router.route("/register").post(register);
 router.route("/login").post(login);
-router.route("/updateUserProfile").post(updateuserprofile);
+router.route("/update_User_Profile").post(updateuserprofile);
 router.route("/get_User_and_Profile").get(getUserandProfile);
-router.route("/updateProfileData").post(updateProfileData);
+router.route("/update_Profile_Data").post(updateProfileData);
 router.route("/get_All_User_Profile").get(getAllUserProfile);
 router.route("/sending_Connection_Request").post(sendConnectionRequest);
 router.route("/get_connection_request").get(getConnectionRequest);
 router.route("/show_My_connection").get(showMyConnection);
 router.route("/accept_connection").get(acceptConnect);
-router.route("/user/get_User_Based_on_Username").get(getUserProfileAndUserBasedOnUsername)
+router.route("/user/get_User_Based_on_Username").get(getUserProfileAndUserBasedOnUsername);
 
+
+
+
+
+
+
+// router.post("/update_profile_picture", (req, res) => {
+//     upload.single("profile_picture")(req, res, (err) => {
+//         console.log("==========");
+//         console.log("Error:", err);
+//         console.log("Headers:", req.headers["content-type"]);
+//         console.log("Body:", req.body);
+//         console.log("File:", req.file);
+
+//         res.json({
+//             error: err ? err.message : null,
+//             body: req.body,
+//             file: req.file,
+//             contentType: req.headers["content-type"]
+//         });
+//     });
+// }, uploadProfilePicture);
 
 
 export default router;

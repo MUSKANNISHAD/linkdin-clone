@@ -58,6 +58,9 @@ export const register = async (req, res) => {
         await newUser.save();
 
         const profile = new Profile({ userId: newUser._id });
+
+        await profile.save();
+
         return res.status(200).json({ message: "User successfully registered" });
     } catch (err) {
         return res.status(500).json({ message: err.message })
@@ -169,6 +172,7 @@ export const getUserandProfile = async (req, res) => {
 
         const userProfile = await Profile.findOne({ userId: user._id })
             .populate('userId', 'name username email profilePicture');
+
         console.log(userProfile);
         return res.json({ "profile": userProfile });
 
@@ -196,7 +200,7 @@ export const updateProfileData = async (req, res) => {
 
         await Profile_to_Update.save();
 
-        return res.status(200).json({ message: "profile updated successfully" });
+        return res.status(200).json({ message: "profile updated successfully", Profile_to_Update });
 
     } catch (err) {
         return res.status(500).json({
