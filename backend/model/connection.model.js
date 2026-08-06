@@ -10,7 +10,7 @@ const connectionRequest = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Post"
     },
-    statue: {
+    status: {
         type: Boolean,
         default: null
     }

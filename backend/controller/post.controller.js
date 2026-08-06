@@ -113,7 +113,7 @@ export const get_comments_by_post = async (req, res) => {
 
         const Comments = await Comment
             .find({ postId: post_id })
-            .populate("userId", "username  name");
+            .populate("userId", "username  name ");
 
 
         return res.json(Comments.reverse());

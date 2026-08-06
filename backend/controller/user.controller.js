@@ -7,6 +7,8 @@ import { use } from "react";
 import PDFDocument from "pdfkit";
 import fs from "fs";
 import connectionReq from "../model/connection.model.js";
+import { createWriteStream } from "fs";
+
 
 export const ConvertUserDataToPDF = async (userData) => {
     const doc = new PDFDocument();
@@ -75,6 +77,10 @@ export const login = async (req, res) => {
         }
 
         const userFound = await User.findOne({ email })
+        console.log("Received email:", JSON.stringify(email));
+        console.log("Length:", email.length);
+
+        console.log("user is :", userFound);
         if (!userFound) {
             return res.status(404).json({ message: "user not found" });
         }
@@ -149,7 +155,7 @@ export const updateuserprofile = async (req, res) => {
         Object.assign(user, newUserData);
 
         await user.save();
-        return res.status(200).json({ message: "user profile updated successfully" });
+        return res.status(200).json({ message: "user profile updated successfully", user });
     } catch (err) {
         return res.status(500).json({
             message: "internal server error",
@@ -216,7 +222,6 @@ export const getAllUserProfile = async (req, res) => {
 
         const Profiles = await Profile.find().populate("userId", 'name username email profilePicture');
 
-        console.log(Profiles);
         return res.json({ Profiles });
 
     } catch (err) {
@@ -250,17 +255,25 @@ export const sendConnectionRequest = async (req, res) => {
         const connectionUser = await User.findOne({ _id: connectionId });
 
         if (!connectionUser) {
-            return res.status(404).json({ message: " Connection user not found" });
+            return res.status(404).json({ message: " Connection Id is Invalid" });
         }
 
         const ExistingUser = await connectionReq.findOne(
             {
-                userId: user._id,
-                connectionId: connectionUser._id
+                user_Id: user._id,
+                connection_id: connectionUser._id
             });
         if (ExistingUser) {
             return res.status(400).json({ message: "request already sent" });
         }
+
+        const request = new connectionReq({
+            user_Id: user._id,
+            connection_id: connectionUser._id
+        })
+
+        await request.save();
+        return res.status(200).json({ message: "Connection sent" });
 
     } catch (err) {
         return res.status(500).json({ message: "internal server err", err });
@@ -283,7 +296,11 @@ export const getConnectionRequest = async (req, res) => {
         return res.json({ connections });
 
     } catch (err) {
-        return res.status(500).json({ message: "internal server err", err });
+        return res.status(500).json({
+            message: "internal server error",
+            error: err.message,
+            stack: err.stack
+        });
     }
 }
 
@@ -296,12 +313,16 @@ export const showMyConnection = async (req, res) => {
             return res.status(404).json({ message: "user not found" });
         }
 
-        const connections = await connectionReq.findOne({ connectionId: user._Id })
+        const connections = await connectionReq.findOne({ connection_id: user._Id })
             .populate('connectionId', 'username name email profilePicture');
 
         return res.json({ connections });
     } catch (err) {
-        return res.status(500).json({ message: "internal server err", err });
+        return res.status(500).json({
+            message: "internal server error",
+            error: err.message,
+            stack: err.stack
+        });
     }
 }
 
@@ -318,14 +339,14 @@ export const acceptConnect = async (req, res) => {
         }
 
         if (action_type === "accept") {
-            connection.status_accept = true;
+            connection.status = true;
         } else {
-            connection.status_accept = false;
+            connection.status = false;
         }
 
         await connection.save();
 
-        return res.json({ messgae: "Requset accepted" });
+        return res.json({ messgae: "Request accepted", connection });
     } catch (err) {
         return res.status(500).json({ message: "internal server err", err });
     }
@@ -342,6 +363,8 @@ export const getUserProfileAndUserBasedOnUsername = async (req, res) => {
 
         const userProfile = await Profile.findOne({ userId: user._Id })
             .populate('userId', 'username name email profilePicture');
+
+        console.log("userProfile", userProfile);
 
         return res.json({ userProfile });
     } catch (err) {
