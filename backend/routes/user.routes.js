@@ -6,16 +6,11 @@ import { getAllUserProfile } from "../controller/user.controller.js";
 import { getConnectionRequest, showMyConnection, acceptConnect } from "../controller/user.controller.js";
 
 
+
 const router = Router();
 
-// const storage = multer.diskStorage({
-//     destination: (req, file, cb) => {
-//         cb(null, "./uploads")
-//     },
-//     filename: (req, file, cb) => {
-//         cb(null, file.originalname)
-//     }
-// })
+// multer is a node.js middlware for express that processes mutilpart/form-data 
+// and allows files uploaded by users to be recieved , stored and accessed.
 
 
 const storage = multer.diskStorage({
@@ -32,12 +27,21 @@ const storage = multer.diskStorage({
 });
 
 
-
-
-
 const upload = multer({ storage: storage });
 
-router.route("/update_profile_picture").post(upload.single('profile_picture'), uploadProfilePicture);
+
+router.post(
+    "/update_profile_picture",
+    (req, res, next) => {
+        console.log("Route reached");
+        next();
+    },
+    upload.single("profile_picture"),
+    uploadProfilePicture
+);
+
+// router.route("/update_profile_picture").post(upload.single('profile_picture'), uploadProfilePicture);
+
 router.route("/register").post(register);
 router.route("/login").post(login);
 router.route("/update_User_Profile").patch(updateuserprofile);
@@ -50,29 +54,5 @@ router.route("/get_connection_request").get(getConnectionRequest);
 router.route("/show_My_connection").get(showMyConnection);
 router.route("/accept_connection").get(acceptConnect);
 router.route("/get_User_Based_on_Username").get(getUserProfileAndUserBasedOnUsername);
-
-
-
-
-
-
-
-// router.post("/update_profile_picture", (req, res) => {
-//     upload.single("profile_picture")(req, res, (err) => {
-//         console.log("==========");
-//         console.log("Error:", err);
-//         console.log("Headers:", req.headers["content-type"]);
-//         console.log("Body:", req.body);
-//         console.log("File:", req.file);
-
-//         res.json({
-//             error: err ? err.message : null,
-//             body: req.body,
-//             file: req.file,
-//             contentType: req.headers["content-type"]
-//         });
-//     });
-// }, uploadProfilePicture);
-
 
 export default router;

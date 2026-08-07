@@ -22,12 +22,10 @@ const userSchema = mongoose.Schema({
     password: {
         type: String,
         required: true
-
     },
     profilePicture: {
         type: String,
         default: "default.jpg"
-
     },
     createdAt: {
         type: Date,

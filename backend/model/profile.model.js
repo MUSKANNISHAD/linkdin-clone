@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const educationSchema = new mongoose.Schema({
-    school: {
+    Institute: {
         type: String,
         default: ''
     },

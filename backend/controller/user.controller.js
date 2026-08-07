@@ -10,31 +10,85 @@ import connectionReq from "../model/connection.model.js";
 import { createWriteStream } from "fs";
 
 
+// export const ConvertUserDataToPDF = async (userData) => {
+//     const doc = new PDFDocument();
+//     const OutputPath = crypto.randomBytes(32).toString("hex") + ".pdf";
+//     const stream = createWriteStream("uploads/" + OutputPath);
+
+//     doc.pipe(stream);
+
+//     doc.image(`uploads/${userData.userId.profilePicture})`, { align: "center", width: 100 })
+//     doc.fontSize(14).text(`Name:$(userData:userId.name)`);
+//     doc.fontSize(14).text(`Username:${userData.userId.username}`);
+//     doc.fontSize(14).text(`Email:$(userDta.userId.email)`);
+//     doc.fontSize(14).text(`Bio:$(userDta.bio)`);
+//     doc.fontSize(14).text(`Current Position: $(userDta.curreantPosition)`);
+
+//     doc.fontSize(14).text("Past work:")
+//     userData.pastWork.forEach((work, index) => {
+//         doc.fontSize(14).text(`Company Name: ${work.companyName}`);
+//         doc.fontSize(14).text(`Position: ${work.position}`);
+//         doc.fontSize(14).text(`Years: ${work.years}`);
+//     });
+
+//     doc.end();
+
+//     return OutputPath;
+// }
+
+
 export const ConvertUserDataToPDF = async (userData) => {
     const doc = new PDFDocument();
-    const OutputPath = crypto.randomBytes(32).toString("hex") + ".pdf";
-    const stream = createWriteStream("uploads/" + OutputPath);
+
+    const outputPath = crypto.randomBytes(32).toString("hex") + ".pdf";
+
+    const stream = createWriteStream("uploads/" + outputPath);
 
     doc.pipe(stream);
+    console.log("userData is : ", userData);
 
-    doc.image(`uploads/${userData.userId.profilePicture})`, { align: "center", width: 100 })
-    doc.fontSize(14).text(`Name:$(userData:userId.name)`);
-    doc.fontSize(14).text(`Username:${userData.userId.username}`);
-    doc.fontSize(14).text(`Email:$(userDta.userId.email)`);
-    doc.fontSize(14).text(`Bio:$(userDta.bio)`);
-    doc.fontSize(14).text(`Current Position: $(userDta.curreantPosition)`);
+    doc.image(`uploads/${userData.userId.profilePicture}`, {
+        align: "center",
+        width: 100
+    });
 
-    doc.fontSize(14).text("Past work:")
-    userData.pastWork.forEach((work, index) => {
-        doc.fontSize(14).text(`Company Name: ${work.companyName}`);
-        doc.fontSize(14).text(`Position: ${work.position}`);
-        doc.fontSize(14).text(`Years: ${work.years}`);
+    doc.moveDown();
+    doc.moveDown();
+
+    doc.fontSize(14).text(`Name: ${userData.userId.name}`);
+    doc.fontSize(14).text(`Username: ${userData.userId.username}`);
+    doc.fontSize(14).text(`Email: ${userData.userId.email}`);
+    doc.fontSize(14).text(`Bio: ${userData.bio}`);
+    doc.fontSize(14).text(`Current Position: ${userData.currentPost}`);
+
+    doc.moveDown();
+
+    doc.fontSize(14).text("Past Work:-");
+
+    userData.pastWork.forEach((work) => {
+        doc.text(`Company Name: ${work.company}`);
+        doc.text(`Position: ${work.position}`);
+        doc.text(`Years: ${work.years}`);
+    });
+
+    doc.moveDown();
+
+    doc.fontSize(14).text("Education :-");
+
+    userData.education.forEach((study) => {
+        doc.text(`Institute is:${study.Institute}`);
+        doc.text(`degree:${study.degree}`);
+        doc.text(`fieldofStudy:${study.fieldofStudy}`);
+        doc.moveDown();
     });
 
     doc.end();
 
-    return OutputPath;
-}
+    await new Promise((resolve) => {
+        stream.on("finish", resolve);
+    });
+    return outputPath;
+};
 
 
 export const register = async (req, res) => {
@@ -77,10 +131,7 @@ export const login = async (req, res) => {
         }
 
         const userFound = await User.findOne({ email })
-        console.log("Received email:", JSON.stringify(email));
-        console.log("Length:", email.length);
 
-        console.log("user is :", userFound);
         if (!userFound) {
             return res.status(404).json({ message: "user not found" });
         }
@@ -116,6 +167,7 @@ export const uploadProfilePicture = async (req, res) => {
         if (!user) {
             return res.status(404).json({ message: "user not found" });
         }
+
         user.profilePicture = req.file.filename;
 
         await user.save();
@@ -230,16 +282,25 @@ export const getAllUserProfile = async (req, res) => {
 }
 
 export const downloadProfile = async (req, res) => {
-
     const user_id = req.query.id;
+    try {
+        if (!user_id) {
+            return res.status(400).json({ message: "user not found" });
+        }
 
-    const userProfile = await Profile.findOne({ userId: user_id })
-        .populate('userId', 'name username email  profilePicture');
+        const userProfile = await Profile.findOne({ userId: user_id })
+            .populate('userId', 'name username email  profilePicture');
 
-    let OutputPath = await ConvertUserDataToPDF(userProfile);
+        let OutputPath = await ConvertUserDataToPDF(userProfile);
 
-    return res.json({ "message": OutputPath });
-
+        return res.json({ "message(your Profile)": OutputPath });
+    } catch (err) {
+        return res.status(500).json({
+            message: "internal server error",
+            error: err.message,
+            stack: err.stack
+        });
+    }
 }
 
 export const sendConnectionRequest = async (req, res) => {
