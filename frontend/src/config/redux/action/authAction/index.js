@@ -3,11 +3,11 @@ import { clientServer } from "../../../index";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 
-export const loginUser = createAsyncThunk(
+export const loginUser = createAsyncThunk (
     "user/login",
     async (user, thunkAPI) => {
         try {
-            const response = await clientServer('/login', {
+            const response = await clientServer.post('/login', {
                 email: user.email,
                 password: user.password
             });
@@ -33,7 +33,7 @@ export const userSignup = createAsyncThunk(
     "user/register",
     async (user, thunkAPI) => {
         try {
-            const response = await clientServer('/register', {
+            const response = await clientServer.post('/register', {
                 email: user.email,
                 password: user.password,
                 username: user.username,

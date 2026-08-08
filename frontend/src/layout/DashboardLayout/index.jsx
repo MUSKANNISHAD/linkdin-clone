@@ -12,9 +12,9 @@ export default function DashboardLayout({ children }) {
     const authState = useSelector((state) => state.auth)
 
     useEffect(() => {
-        // if (localStorage.getItem('token') === null) {
-        //     router.push("/login");
-        // }
+        if (localStorage.getItem('token') === null) {
+            router.push("/login");
+        }
         dispatch(setIsTokenThere());
     })
     return (
@@ -30,14 +30,14 @@ export default function DashboardLayout({ children }) {
                             Home
                         </div>
                         <div onClick={() => {
-                            router.push("/Discover")
+                            router.push("/discover")
                         }}
                             className={styles.sideBarOption}>
                             <i class="fa-solid fa-magnifying-glass"></i>
                             Discover
                         </div>
                         <div onClick={() => {
-                            router.push("/my_connections")
+                            router.push("/my_connection")
                         }}
                             className={styles.sideBarOption}>
                             <i class="fa-solid fa-user"></i>

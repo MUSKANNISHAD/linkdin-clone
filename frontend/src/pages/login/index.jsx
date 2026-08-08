@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import UserLayout from '../../layout/userLayout';
+import DashboardLayout from '../../layout/DashboardLayout';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -22,7 +23,6 @@ export default function LoginComponent() {
     const [username, setUserName] = useState("");
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
-
 
 
     const dispatch = useDispatch();
@@ -55,86 +55,93 @@ export default function LoginComponent() {
 
     return (
         <UserLayout>
+            <DashboardLayout>
 
-            <div className={styles.container}>
-                <div className={styles.cardContainer}>
-                    <div className={styles.cardContainer_left}>
-                        <p className={styles.cardleft_heading}>{isLoginMethod ? "Signup" : "Signin"}</p>
-                        <p style={{ color: authState.isError ? "red" : "green" }}>   {authState.message.message}</p>
-                        <form className={styles.form}>
-                            <TextField
-                                onChange={(e) => setEmail(e.target.value)}
-                                fullWidth
-                                label="Email"
-                                variant="outlined"
-                                margin="normal"
-                            />
-                            <TextField
-                                onChange={(e) => setPassword(e.target.value)}
-                                fullWidth
-                                label="Password"
-                                type="password"
-                                variant="outlined"
-                                margin="normal"
-                            />
-                            {isLoginMethod &&
-                                <>
-                                    <TextField
-                                        onChange={(e) => { setUserName(e.target.value) }}
-                                        fullWidth
-                                        label="username"
-                                        type="text"
-                                        variant="outlined"
-                                        margin="normal"
-                                    />
-                                    <TextField
-                                        onChange={(e) => setName(e.target.value)}
-                                        fullWidth
-                                        label="name"
-                                        type="text"
-                                        variant="outlined"
-                                        margin="normal"
-                                    />
-                                </>
-                            }
-
-                            <div onClick={() => {
-                                if (isLoginMethod) {
-                                    handleLogin();
-                                } else {
-                                    handleRegister();
+                <div className={styles.container}>
+                    <div className={styles.cardContainer}>
+                        <div className={styles.cardContainer_left}>
+                            <p className={styles.cardleft_heading}>{isLoginMethod ? "SignIn" : "SignUp"}</p>
+                            <p style={{ color: authState.isError ? "red" : "green" }}>   {authState.message.message}</p>
+                            <form className={styles.form}>
+                                <TextField
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    fullWidth
+                                    label="Email"
+                                    variant="outlined"
+                                    margin="normal"
+                                />
+                                <TextField
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    fullWidth
+                                    label="Password"
+                                    type="password"
+                                    variant="outlined"
+                                    margin="normal"
+                                />
+                                {
+                                    !isLoginMethod &&
+                                    <>
+                                        <TextField
+                                            onChange={(e) => { setUserName(e.target.value) }}
+                                            fullWidth
+                                            label="username"
+                                            type="text"
+                                            variant="outlined"
+                                            margin="normal"
+                                        // className={styles.inputField}
+                                        />
+                                        <TextField
+                                            onChange={(e) => setName(e.target.value)}
+                                            fullWidth
+                                            label="name"
+                                            type="text"
+                                            variant="outlined"
+                                            margin="normal"
+                                        />
+                                    </>
                                 }
-                            }} className={styles.buttonWithOutLine}>
-                                <p>{isLoginMethod ? "Signup" : "SignIn"}</p>
-                            </div>
 
-                            <div onClick={() => {
+                                {/* <div onClick={() => {
+                                    if (isLoginMethod) {
+                                        handleLogin();
+                                    } else {
+                                        handleRegister();
+                                    }
+                                }} className={styles.buttonWithOutLine}>
+                                    <p>{isLoginMethod ? "Signup" : "SignIn"}</p>
+                                </div> */}
 
-
-                            }} >
-                                <p>{isLoginMethod ?
-                                    (<Button variant="contained">Signup</Button>)
-                                    : (<Button variant="contained">SignIn</Button>)}
-                                </p>
-                            </div>
-                        </form>
-                    </div>
-                    <div className={styles.cardContainer_right}>
-
-                        <div>
-                            <h3>{isLoginMethod ? "Already have an Account" : "Don't have an account"}</h3>
-                            <br></br>
-                            <div onClick={() => {
-                                setIsLoginMethod(!isLoginMethod)
-                            }} style={{ color: "black", backgroundColor: "white" }}
-                                className={styles.buttonWithOutLine}>
-                                <p>{isLoginMethod ? "SignIn" : "SignUp"}</p>
+                                <div onClick={() => {
+                                    if (isLoginMethod) {
+                                        handleLogin();
+                                    } else {
+                                        handleRegister();
+                                    }
+                                }} >
+                                    <p style={{ textAlign: "center" }}>{
+                                        isLoginMethod ?
+                                            (<Button variant="contained">Signin</Button>)
+                                            : (<Button variant="contained">SignUp</Button>)
+                                    }
+                                    </p>
+                                </div>
+                            </form>
+                        </div>
+                        <div className={styles.cardContainer_right}>
+                            <div>
+                                <h3>{isLoginMethod ? "Don't have an Account" : "Already have an Account"}</h3>
+                                <div onClick={() => {
+                                    setIsLoginMethod(!isLoginMethod)
+                                }} style={{ color: "black", backgroundColor: "white" }}
+                                    className={styles.buttonWithOutLine}>
+                                    <p>{isLoginMethod ? "SignUp" : "SignIn"}</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
+                    </div>
                 </div>
-            </div>
+            </DashboardLayout>
         </UserLayout>
     )
 }
