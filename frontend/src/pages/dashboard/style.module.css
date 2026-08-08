@@ -4,34 +4,11 @@
     flex-direction: column;
 }
 
-.createPostContainer {
-    display: flex;
-    height: 10svh;
-    justify-content: center;
-    width: 100%;
-    padding-inline: 0.8rem;
-    gap: 1.3rem;
-    align-items: center;
-    background: rgb(255, 246, 246);
-    border-radius: 20px;
-}
 
 .createPostContainer>TextField {
     width: 100%;
 }
 
-.userProfile {
-    width: fit-content;
-    border-radius: 100%;
-    height: 60%;
-}
-
-.fab {
-    background: rgb(0, 59, 130);
-    display: flex;
-    justify-content: center;
-    border-radius: 100%;
-}
 
 .textArea {
     width: 80%;
@@ -147,4 +124,138 @@
     border: none;
     background-color: rgb(228, 228, 228);
     border-radius: 10px;
+}
+
+.createPostContainer {
+    width: 600px;
+    background: white;
+
+    border: 1px solid #e4e6eb;
+    border-radius: 16px;
+
+    padding: 18px 20px;
+
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+
+    box-sizing: border-box;
+}
+
+/* ---------------- TOP ---------------- */
+
+.createPostTop {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.userProfile {
+    width: 52px !important;
+    height: 52px;
+
+    border-radius: 50%;
+    object-fit: cover;
+
+    border: 2px solid #f0f0f0;
+}
+
+.postInput {
+    flex: 1;
+
+    height: 48px;
+
+    padding: 0 18px;
+
+    border: none;
+    outline: none;
+
+    background: #f5f6f7;
+
+    border-radius: 25px;
+
+    font-size: 15px;
+    color: #222;
+
+    transition: 0.2s ease;
+}
+
+.postInput::placeholder {
+    color: #777;
+}
+
+.postInput:hover {
+    background: #eef0f2;
+}
+
+.postInput:focus {
+    background: #eef0f2;
+}
+
+/* ---------------- BOTTOM ---------------- */
+
+.createPostBottom {
+    display: flex;
+    align-items: center;
+
+    margin-top: 16px;
+    padding-top: 14px;
+
+    border-top: 1px solid #eeeeee;
+}
+
+.actionButton {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+
+    padding: 8px 12px;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    color: #555;
+
+    transition: 0.2s ease;
+}
+
+.actionButton:hover {
+    background: #f5f5f5;
+}
+
+.actionButton i {
+    font-size: 19px;
+}
+
+/* ---------------- POST BUTTON ---------------- */
+
+.postButton {
+    margin-left: auto;
+
+    border: none;
+
+    padding: 9px 22px;
+
+    border-radius: 20px;
+
+    background: #0a66c2;
+    color: white;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+.postButton:hover {
+    background: #004182;
+    transform: translateY(-1px);
+}
+
+.postButton:active {
+    transform: translateY(0);
 }

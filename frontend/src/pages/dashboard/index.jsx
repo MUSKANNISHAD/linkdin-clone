@@ -23,11 +23,10 @@ export default function DashboardComponent() {
 
 
     const [postContent, setPostContent] = useState("");
-    const [fileContent, setFileContent] = useState();
+    const [fileContent, setFileContent] = useState(null);
     const [postComment, setPostComment] = useState("");
 
 
-    
 
     useEffect(() => {
         if (authState.isTokenThere) {
@@ -58,14 +57,52 @@ export default function DashboardComponent() {
                         <div className={styles.wrapper}>
 
                             <div className={styles.createPostContainer}>
-                                <img className={styles.userProfile} style={{ width: 100 }} src={`${BASE_URL}/${authState.user.userId.profilePicture}`}></img>
-                                <TextField fullWidth label="What's in your mind? " className={styles.textArea} margin="normal" />
-                                <label htmlFor="fileupload">
-                                    <div className={styles.fab}>
-                                        <i className="fa-solid fa-plus"></i>
-                                    </div>
-                                </label>
-                                <input onChange={(e) => setFileContent(e.target.value[0])} type='file' hidden id="fileupload"></input>
+
+                                <div className={styles.createPostTop}>
+
+                                    <img
+                                        className={styles.userProfile}
+                                        src={`${BASE_URL}/${authState.user.userId.profilePicture}`}
+                                        alt="Profile"
+                                    />
+
+                                    <input
+                                        type="text"
+                                        className={styles.postInput}
+                                        placeholder="Share something with your network..."
+                                        value={postContent}
+                                        onChange={(e) => setPostContent(e.target.value)}
+                                    />
+
+                                </div>
+
+                                <div className={styles.createPostBottom}>
+
+                                    <label htmlFor="fileupload" className={styles.actionButton}>
+                                        <i className="fa-regular fa-image"></i>
+                                        <span>Photo</span>
+                                    </label>
+
+
+                                    <button
+                                        className={styles.postButton}
+                                        onClick={() => {
+                                            // create post
+                                        }}
+                                    >
+                                        Post
+                                    </button>
+
+                                </div>
+
+                                <input
+                                    id="fileupload"
+                                    type="file"
+                                    hidden
+                                    accept="image/*"
+                                    onChange={(e) => setFileContent(e.target.files[0])}
+                                />
+
                             </div>
 
                             <div className={styles.postsContainer}>

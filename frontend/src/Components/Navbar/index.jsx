@@ -33,7 +33,6 @@ export default function NavbarComponent() {
 
     if (authState.user) {
         return (
-
             <div>
                 <div className={styles.container}>
                     <nav className={styles.navbar}>
@@ -76,7 +75,9 @@ export default function NavbarComponent() {
         )
     } else {
         return (
-            <div>LoggedOut</div>
+            <>
+                <div></div>
+            </>
         )
     }
 

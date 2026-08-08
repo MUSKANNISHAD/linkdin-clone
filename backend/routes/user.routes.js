@@ -5,8 +5,6 @@ import { updateuserprofile, getUserandProfile, uploadProfilePicture, updateProfi
 import { getAllUserProfile } from "../controller/user.controller.js";
 import { getConnectionRequest, showMyConnection, acceptConnect } from "../controller/user.controller.js";
 
-
-
 const router = Router();
 
 // multer is a node.js middlware for express that processes mutilpart/form-data 
