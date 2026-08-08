@@ -3,14 +3,14 @@ import { loginUser, userSignup, getAboutUser, getAllUser } from "../../action/au
 import { getConnectionRequest, getMyConnections } from "../../action/authAction";
 
 const initialState = {
-    user: [],
+    user: undefined,
     isError: false,
     isSuccess: false,
     isLoading: false,
     loggedIn: false,
     message: "",
     isTokenThere: false,
-    profileFetched: false,
+    profileFetched: true,
     connections: [],
     connectionRequest: [],
     all_users: [],
@@ -54,7 +54,8 @@ const authSlice = createSlice({
                     state.isSuccess = false,
                     state.isError = true,
                     state.loggedIn = false,
-                    state.message = action.payload.message
+                    state.message = "couldn't loggedin"
+                // state.message = action.payload.message
             })
             .addCase(userSignup.pending, (state) => {
                 state.isLoading = true,
@@ -86,7 +87,7 @@ const authSlice = createSlice({
                 state.isError = false,
                     state.isLoading = false,
                     state.all_profiles_fetched = true,
-                    state.all_users = action.payload.profiles
+                    state.all_users = action.payload.Profiles
             })
             .addCase(getConnectionRequest.fulfilled, (state, action) => {
                 state.connections = action.payload

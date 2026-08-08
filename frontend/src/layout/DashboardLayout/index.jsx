@@ -12,11 +12,11 @@ export default function DashboardLayout({ children }) {
     const authState = useSelector((state) => state.auth)
 
     useEffect(() => {
-        // if (localStorage.getItem('token') === null) {
-        //     router.push("/login");
-        // }
+        if (localStorage.getItem('token') === null) {
+            router.push("/login");
+        }
         dispatch(setIsTokenThere());
-    })
+    },[])
     return (
         <div>
             <div className={styles.container}>
@@ -26,21 +26,21 @@ export default function DashboardLayout({ children }) {
                             router.push("/dashboard")
                         }}
                             className={styles.sideBarOption}>
-                            <i class="fa-solid fa-house"></i>
+                            <i className="fa-solid fa-house home-icon"></i>
                             Home
                         </div>
                         <div onClick={() => {
-                            router.push("/Discover")
+                            router.push("/discover")
                         }}
                             className={styles.sideBarOption}>
-                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <i className="fa-solid fa-magnifying-glass home-icon"></i>
                             Discover
                         </div>
                         <div onClick={() => {
-                            router.push("/my_connections")
+                            router.push("/my_connection")
                         }}
                             className={styles.sideBarOption}>
-                            <i class="fa-solid fa-user"></i>
+                            <i className="fa-solid fa-user home-icon"></i>
                             My Connections
                         </div>
                     </div>
@@ -49,11 +49,11 @@ export default function DashboardLayout({ children }) {
                     {children}
                 </div>
                 <div className={styles.homeContainer_extraContainer}>
-                    <h1>Top Profiles</h1>
+                    <h2>Top Profiles</h2>
                     {authState.all_profiles_fetched && authState.all_users.map((profile) => {
                         return (
                             <div key={profile._id} className={styles.extraContainer_profile}>
-                                <p>{profile.userId.name}</p>
+                                <p>@{profile.userId.name}</p>
                             </div>
                         )
                     })}

@@ -1,12 +1,12 @@
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { createPost, getAllPosts, deletePost, incrementPostlikes, getAllComments } from '../../config/redux/action/postAction';
-import { getAboutUser } from '../../config/redux/action/authAction';
-import UserLayout from '../../layout/userLayout';
-import NavbarComponent from '../../Components/Navbar';
+import { createPost, getAllPosts, deletePost, incrementPostlikes, getAllComments } from '../../config/redux/action/postAction/index.js';
+import { getAboutUser, getAllUser } from '../../config/redux/action/authAction/index.js';
+import UserLayout from '../../layout/userLayout/index.jsx';
+import NavbarComponent from '../../Components/Navbar/index.jsx';
 import styles from "./style.module.css";
-import DashboardLayout from '../../layout/DashboardLayout';
+import DashboardLayout from '../../layout/DashboardLayout/index.jsx';
 import { BASE_URL } from '../../config/index.js';
 import TextField from '@mui/material/TextField';
 import { resetPostId } from '../../config/redux/reducer/postReducer/index.js';
@@ -22,8 +22,13 @@ export default function DashboardComponent() {
     const router = useRouter();
 
 
+    const [postContent, setPostContent] = useState("");
+    const [fileContent, setFileContent] = useState();
+    const [postComment, setPostComment] = useState("");
+
+
     useEffect(() => {
-        if (authState.istheretoken) {
+        if (authState.isTokenThere) {
             dispatch(getAllPosts())
             dispatch(getAboutUser({ token: localStorage.getItem('token') }))
 
@@ -34,9 +39,6 @@ export default function DashboardComponent() {
     }, [authState.isTokenThere])
 
 
-    const [postContent, setPostContent] = useState("");
-    const [fileContent, setFileContent] = useState();
-    const [postComment, setPostComment] = useState("");
 
     const handleUpload = async () => {
         await dispatch(createPost({ file: fileContent, body: postContent }));
@@ -54,7 +56,7 @@ export default function DashboardComponent() {
                         <div className={styles.wrapper}>
 
                             <div className={styles.createPostContainer}>
-                                <img className={styles.userProfile} style={{ width: 100 }} src={`${BASE_URL}/${authState.user.userId}`}></img>
+                                <img className={styles.userProfile} style={{ width: 100 }} src={`${BASE_URL}/${authState.user.userId.profilePicture}`}></img>
                                 <TextField fullWidth label="What's in your mind? " className={styles.textArea} margin="normal" />
                                 <label htmlFor="fileupload">
                                     <div className={styles.fab}>
@@ -66,7 +68,7 @@ export default function DashboardComponent() {
 
                             <div className={styles.postsContainer}>
 
-                                {postState.posts && postState.posts.reverse().map((post) => {
+                                {/* {postState.posts && postState.posts.reverse().map((post) => {
                                     // {postState.post.map((post) => {
                                     // return (
                                     <div key={post._id} className={styles.singleCard}>
@@ -127,7 +129,7 @@ export default function DashboardComponent() {
                                     </div>
                                     // )
 
-                                })}
+                                })} */}
                             </div>
 
                         </div>
@@ -153,7 +155,7 @@ export default function DashboardComponent() {
                                                 <div className={styles.singleComment} key={comment._id}>
 
                                                     <div className={styles.singleComment_profileContainer}>
-                                                        <img src={`${BASE_URL}/${comment.userId.profilePicture}`} alt=" " />
+                                                        <img src={`${BASE_URL}/${comment.userId.profilePicture}`} alt="profile-picture" />
                                                         <div>
                                                             <p style={{ fontWeight: "bold", fontSize: "1.2rem" }}>{comment.userId.name}</p>
                                                             <p>@{comment.userId.username}</p>

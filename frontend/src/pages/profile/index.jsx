@@ -6,7 +6,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getAboutUser } from '../../config/redux/action/authAction';
 import { BASE_URL } from '../../config';
 import { getAllPosts } from '../../config/redux/action/postAction';
-
+import { resetPostId } from '../../config/redux/reducer/postReducer';
+// import postReducer from "../../config/redux/reducer/postReducer";
 
 export default function ProfilePage() {
 
@@ -23,10 +24,10 @@ export default function ProfilePage() {
     useEffect(() => {
         if (authState.user != undefined) {
             setUserProfile(authState.user)
-            let post = postReducer.post.filter((post) => {
-                return post.userId.username === authState.user.userId.username
-            })
-            setUserPost(post)
+            // let post = postReducer.post.filter((post) => {
+            //     return post.userId.username === authState.user.userId.username
+            // })
+            // setUserPosts(post)
 
         }
 
