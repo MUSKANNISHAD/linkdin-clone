@@ -38,6 +38,9 @@ export default function ProfilePage() {
         dispatch(getAllPosts());
     }, [])
 
+    const handleProfilePicture =async()=>{
+        
+    }
 
 
     return (
@@ -64,10 +67,8 @@ export default function ProfilePage() {
                                         <p style={{ color: "grey" }}>@{userProfile.userId.username}</p>
                                     </div>
 
-
-
                                     <div>
-                                        <p>{userProfile.bio}</p>
+                                        {/* <p>{userProfile.bio}</p> */}
                                     </div>
 
                                 </div>
@@ -105,10 +106,12 @@ export default function ProfilePage() {
                                     userProfile.pastWork.map((work, index) => {
                                         return (
                                             <div key={index} className={styles.workHistoryCard}>
-                                                <p style={{ display: "flex", alignItems: "center", fontWeight: "bold", gap: "0.8rem" }}>
-                                                    {work.company}-{work - position}
+                                                <p style={{ display: "flex", alignItems: "center", gap: "0.8rem" }}>
+                                                    Software Engineer at {work.company}
+                                                    <br></br>
+                                                    {work.position}
                                                 </p>
-                                                <p>{work.years}</p>
+                                                <p>from{work.years}-Present</p>
                                             </div>
                                         )
                                     })

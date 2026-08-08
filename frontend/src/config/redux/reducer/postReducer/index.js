@@ -29,21 +29,21 @@ const postSlice = createSlice({
                 state.isLoading = true,
                     state.message = "fetching all posts.."
             })
-            .addCase(getAllPosts.fulfilled, (state, action) => {
-                state.isError = true,
-                    state.isLoading = false,
-                    state.posts = action.payload.posts.reverse(),
-                    state.postFetched = true
-            })
             .addCase(getAllPosts.rejected, (state, action) => {
                 state.isError = true,
                     state.isLoading = false,
                     state.message = action.payload
             })
+            .addCase(getAllPosts.fulfilled, (state, action) => {
+                state.isError = false,
+                    state.isLoading = false,
+                    state.posts = action.payload.posts.reverse(),
+                    state.postFetched = true
+            })
             .addCase(getAllComments.fulfilled, (state, action) => {
                 state.postId = action.payload.postId
             })
-            
+
 
     }
 })

@@ -1,5 +1,7 @@
 .homeContainer {
-    display: flex
+    display: flex;
+    border-right: 1px solid rgb(222, 222, 222);
+
 }
 
 .homeContainer>div:nth-child(odd) {
@@ -15,17 +17,17 @@
     flex-direction: column;
     gap: 1.2rem;
     align-items: start;
-    border-right: 1px solid rgb(222, 222, 222);
+    /* border-right: 1px solid rgb(222, 222, 222); */
 }
 
 .sideBarOption {
     display: flex;
     align-items: center;
-    font-size: 1.4rem;
+    font-size: 1.1rem;
     gap: 1.3rem;
-    width: 80%;
+    width: 12rem;
     min-width: 80%;
-    max-width: 80%;
+    max-width: 100%;
     margin: 0 auto;
     cursor: pointer;
     transition: all 0.2s;
@@ -49,6 +51,8 @@
 .homeContainer_extraContainer {
     border-left: 1px soild rgb(222, 222, 222);
     padding-left: 1.2rem;
+    /* border-right: 1px solid rgb(222, 222, 222); */
+
 }
 
 .homeContainer_feedContainer {

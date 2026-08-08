@@ -10,32 +10,6 @@ import connectionReq from "../model/connection.model.js";
 import { createWriteStream } from "fs";
 
 
-// export const ConvertUserDataToPDF = async (userData) => {
-//     const doc = new PDFDocument();
-//     const OutputPath = crypto.randomBytes(32).toString("hex") + ".pdf";
-//     const stream = createWriteStream("uploads/" + OutputPath);
-
-//     doc.pipe(stream);
-
-//     doc.image(`uploads/${userData.userId.profilePicture})`, { align: "center", width: 100 })
-//     doc.fontSize(14).text(`Name:$(userData:userId.name)`);
-//     doc.fontSize(14).text(`Username:${userData.userId.username}`);
-//     doc.fontSize(14).text(`Email:$(userDta.userId.email)`);
-//     doc.fontSize(14).text(`Bio:$(userDta.bio)`);
-//     doc.fontSize(14).text(`Current Position: $(userDta.curreantPosition)`);
-
-//     doc.fontSize(14).text("Past work:")
-//     userData.pastWork.forEach((work, index) => {
-//         doc.fontSize(14).text(`Company Name: ${work.companyName}`);
-//         doc.fontSize(14).text(`Position: ${work.position}`);
-//         doc.fontSize(14).text(`Years: ${work.years}`);
-//     });
-
-//     doc.end();
-
-//     return OutputPath;
-// }
-
 
 export const ConvertUserDataToPDF = async (userData) => {
     const doc = new PDFDocument();

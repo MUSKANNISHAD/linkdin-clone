@@ -41,7 +41,7 @@ export default function DashboardLayout({ children }) {
                         }}
                             className={styles.sideBarOption}>
                             <i className="fa-solid fa-user home-icon"></i>
-                            My Connections
+                            My-Connections
                         </div>
                     </div>
                 </div>
@@ -53,7 +53,7 @@ export default function DashboardLayout({ children }) {
                     {authState.all_profiles_fetched && authState.all_users.map((profile) => {
                         return (
                             <div key={profile._id} className={styles.extraContainer_profile}>
-                                <p>@{profile.userId.name}</p>
+                                {/* <p>@{profile.userId.name}</p> */}
                             </div>
                         )
                     })}

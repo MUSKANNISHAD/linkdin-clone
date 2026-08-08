@@ -16,20 +16,46 @@ export const getAllPosts = createAsyncThunk(
     }
 )
 
+// export const createPost = createAsyncThunk(
+//     "post/createPosts",
+//     async (userdata, thunkAPI) => {
+//         try {
+//             const formData = new FormData();
+//             formData.append('token', localStorage.getItem('token'));
+//             formData.append('body', body);
+//             formData.append('media', file);
+
+//             const response = await clientServer.post('/post', formData, {
+//                 headers: {
+//                     "Content-Type": "multipart/form-data"
+//                 }
+//             })
+
+//             if (response.status === 200) {
+//                 return thunkAPI.fulfillWithValue("post Uploaded");
+//             } else {
+//                 return thunkAPI.rejectWithValue("post not uploaded");
+//             }
+
+//         } catch (err) {
+//             return thunkAPI.rejectWithValue(err.response.data);
+//         }
+//     }
+
+// )
+
+
 export const createPost = createAsyncThunk(
     "post/createPosts",
-    async (userdata, thunkAPI) => {
+    async ({ file, body }, thunkAPI) => {
         try {
             const formData = new FormData();
-            formData.append('token', localStorage.getItem('token'));
-            formData.append('body', body);
-            formData.append('media', file);
 
-            const response = await clientServer.post('/post', formData, {
-                headers: {
-                    "Content-Type": "multipart/form-data"
-                }
-            })
+            formData.append("token", localStorage.getItem("token"));
+            formData.append("body", body);
+            formData.append("media", file);
+
+            const response = await clientServer.post("/post", formData);
 
             if (response.status === 200) {
                 return thunkAPI.fulfillWithValue("post Uploaded");
@@ -38,11 +64,13 @@ export const createPost = createAsyncThunk(
             }
 
         } catch (err) {
-            return thunkAPI.rejectWithValue(err.response.data);
+            return thunkAPI.rejectWithValue(
+                err.response?.data || err.message
+            );
         }
     }
+);
 
-)
 
 
 export const deletePost = createAsyncThunk(
