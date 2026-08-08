@@ -27,6 +27,8 @@ export default function DashboardComponent() {
     const [postComment, setPostComment] = useState("");
 
 
+    
+
     useEffect(() => {
         if (authState.isTokenThere) {
             dispatch(getAllPosts())

@@ -20,6 +20,12 @@ export default function NavbarComponent() {
     }, [])
 
     useEffect(() => {
+        if (!authState.all_profiles_fetched) {
+            dispatch(getAllUser());
+        }
+    }, [])
+
+    useEffect(() => {
         if (authState.isTokenThere) {
             dispatch(getAboutUser({ token: localStorage.getItem('token') }))
         }
