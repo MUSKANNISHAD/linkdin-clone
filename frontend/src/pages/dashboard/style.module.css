@@ -4,9 +4,11 @@
     flex-direction: column;
 }
 
+
 .createPostContainer>TextField {
     width: 100%;
 }
+
 
 .textArea {
     width: 80%;
