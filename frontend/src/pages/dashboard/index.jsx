@@ -25,6 +25,8 @@ export default function DashboardComponent() {
     const [fileContent, setFileContent] = useState(null);
     const [postComment, setPostComment] = useState("");
 
+
+
     useEffect(() => {
         if (authState.isTokenThere) {
             dispatch(getAllPosts())
@@ -121,14 +123,19 @@ export default function DashboardComponent() {
                                             <div key={post._id} className={styles.singleCard}>
 
                                                 <div className={styles.singleCard_profileContainer}>
-                                                    <img className={styles.userProfile}
+                                                    <img onClick={() => {
+                                                        router.push(`/profile/${post.userId._id}`)
+                                                    }}
+                                                        className={styles.userProfile}
                                                         src={`${BASE_URL}/${authState.user.userId.profilePicture}`}>
-                                                        {console.log("profile pic is: ", authState.user.userId.profilePicture)}
+                                                        {/* {console.log("profile pic is: ", authState.user.userId.profilePicture)} */}
                                                         {/* src={`${BASE_URL}/${userProfile.userId.profilePicture}`}> */}
                                                     </img>
                                                     <div>
                                                         <div style={{ display: "flex", gap: "1.2rem", justifyContent: "space-between", cursor: "pointer" }}>
-                                                            <p style={{ fontWeight: "bold" }}>{post.userId.name}</p>
+                                                            <p style={{ fontWeight: "bold" }}>
+                                                                {post.userId.name}
+                                                            </p>
                                                             {
                                                                 post.userId._id === authState.user.userId._ &&
                                                                 <div onClick={async () => {

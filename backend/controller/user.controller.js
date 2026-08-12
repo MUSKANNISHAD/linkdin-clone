@@ -406,3 +406,29 @@ export const getUserProfileAndUserBasedOnUsername = async (req, res) => {
         return res.status(500).json({ message: "Internal server error", err })
     }
 }
+
+export const getUserAndProfileById = async (req, res) => {
+    try {
+        const { userId } = req.params;
+
+        const user = await User.findById(userId);
+
+        if (!user) {
+            return res.status(404).json({
+                message: "User not found"
+            });
+        }
+        const profile = await Profile.findOne({
+            userId: userId
+        });
+        if (!profile) {
+            return res.status(400).json({ message: " Profile not found" });
+        }
+
+        return res.status(200).json({ user, profile });
+    } catch (error) {
+        return res.status(500).json({
+            message: error.message
+        });
+    }
+};

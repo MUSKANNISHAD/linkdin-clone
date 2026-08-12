@@ -3,7 +3,7 @@ import { clientServer } from "../../../index";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 
-export const loginUser = createAsyncThunk (
+export const loginUser = createAsyncThunk(
     "user/login",
     async (user, thunkAPI) => {
         try {
@@ -65,6 +65,22 @@ export const getAboutUser = createAsyncThunk(
         }
     }
 )
+
+export const getUserById = createAsyncThunk(
+    "user/getUserById",
+    async (userId, thunkAPI) => {
+        try {
+            const response = await clientServer.get(
+                `/get_User_and_Profile/${userId}`
+            );
+            return thunkAPI.fulfillWithValue(response.data);
+        } catch (err) {
+            return thunkAPI.rejectWithValue(
+                err.response?.data
+            );
+        }
+    }
+);
 
 export const getAllUser = createAsyncThunk(
     "user/getAllUser",

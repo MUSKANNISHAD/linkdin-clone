@@ -7,7 +7,8 @@ import { getAboutUser } from '../../config/redux/action/authAction';
 import { BASE_URL } from '../../config';
 import { getAllPosts } from '../../config/redux/action/postAction';
 import { resetPostId } from '../../config/redux/reducer/postReducer';
-// import postReducer from "../../config/redux/reducer/postReducer";
+
+
 
 export default function ProfilePage() {
 

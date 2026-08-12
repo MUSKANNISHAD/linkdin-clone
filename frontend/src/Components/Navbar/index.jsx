@@ -33,7 +33,7 @@ export default function NavbarComponent() {
 
     if (authState.user) {
         return (
-            <div>
+            <div className={styles.NavbarContainer}>
                 <div className={styles.container}>
                     <nav className={styles.navbar}>
                         <h1 style={{ cursor: "pointer" }} onClick={() => {
@@ -76,7 +76,7 @@ export default function NavbarComponent() {
     } else {
         return (
             <>
-                <div></div>
+                <div>Not a User</div>
             </>
         )
     }

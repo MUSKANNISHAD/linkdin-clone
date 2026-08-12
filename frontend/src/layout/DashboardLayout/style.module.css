@@ -17,7 +17,11 @@
     flex-direction: column;
     gap: 1.2rem;
     align-items: start;
-    /* border-right: 1px solid rgb(222, 222, 222); */
+
+    position: sticky;
+    top: 80px;
+
+    height: calc(100vh - 80px);
 }
 
 .sideBarOption {
@@ -45,16 +49,20 @@
 .container {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
 }
+
 
 .homeContainer_extraContainer {
-    border-left: 1px soild rgb(222, 222, 222);
+    border-left: 1px solid rgb(222, 222, 222);
     padding-left: 1.2rem;
-    /* border-right: 1px solid rgb(222, 222, 222); */
 
+    position: sticky;
+    top: 80px;
+
+    height: calc(100vh - 80px);
 }
-
 .homeContainer_feedContainer {
     padding-inline: 0.8rem;
 }
+
