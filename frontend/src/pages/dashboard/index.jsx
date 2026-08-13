@@ -22,7 +22,7 @@ export default function DashboardComponent() {
 
 
     const [postContent, setPostContent] = useState("");
-    const [fileContent, setFileContent] = useState(null);
+    const [fileContent, setFileContent] = useState(nullnull);
     const [postComment, setPostComment] = useState("");
 
 
