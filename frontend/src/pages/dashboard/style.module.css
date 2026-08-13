@@ -5,8 +5,22 @@
 }
 
 
-.createPostContainer>TextField {
+/* .createPostContainer>TextField {
     width: 100%;
+} */
+
+.createPostContainer {
+    width: 100%;
+    box-sizing: border-box;
+
+    background: white;
+
+    border: 1px solid #e4e6eb;
+    border-radius: 16px;
+
+    padding: 18px 20px;
+
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
 }
 
 
@@ -33,11 +47,22 @@
     cursor: pointer;
 }
 
-.wrapper {
+/* .wrapper {
     display: flex;
     flex-direction: column;
     gap: 1.3rem;
     max-width: 80%;
+} */
+
+.wrapper {
+    width: 100%;
+    max-width: 700px;
+
+    margin: 0 auto;
+
+    display: flex;
+    flex-direction: column;
+    gap: 1.3rem;
 }
 
 .singleCard_profileContainer {
