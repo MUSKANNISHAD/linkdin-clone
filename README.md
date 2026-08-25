@@ -21,6 +21,7 @@ A full-stack professional networking platform that enables users to create profi
 ## 🛠️ Tech Stack
 
 ### Frontend
+- Next.js
 - React.js
 - Redux Toolkit
 - CSS
