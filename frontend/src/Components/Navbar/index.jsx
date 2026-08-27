@@ -20,12 +20,6 @@ export default function NavbarComponent() {
     }, [])
 
     useEffect(() => {
-        if (!authState.all_profiles_fetched) {
-            dispatch(getAllUser());
-        }
-    }, [])
-
-    useEffect(() => {
         if (authState.isTokenThere) {
             dispatch(getAboutUser({ token: localStorage.getItem('token') }))
         }
@@ -43,7 +37,9 @@ export default function NavbarComponent() {
 
                             {authState.profileFetched && <div>
                                 <div style={{ display: "flex", gap: "1.2rem" }}>
-                                    <p>Hey,{authState.user.userId.name}</p>
+                                    {/* {console.log("authState.user =", authState.user.userId?.name)} */}
+                                    {/* {console.log("authState.user.userId =", authState.user?.userId)} */}
+                                    <p>Hey,{authState.user.userId?.name}</p>
                                     <p onClick={() => {
                                         router.push('/profile')
                                     }} style={{ fontWeight: "bold", cursor: "pointer" }}>

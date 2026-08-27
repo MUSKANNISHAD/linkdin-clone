@@ -25,13 +25,11 @@ export default function ProfilePage() {
     useEffect(() => {
         if (authState.user != undefined) {
             setUserProfile(authState.user)
-            // let post = postReducer.post.filter((post) => {
-            //     return post.userId.username === authState.user.userId.username
-            // })
-            // setUserPosts(post)
-
+            let post = postReducer.posts.filter((post) => {
+                return post.userId.username === authState.user.userId.username
+            })
+            setUserPosts(post)
         }
-
     }, [postReducer.post], [authState.user]);
 
     useEffect(() => {
@@ -39,91 +37,111 @@ export default function ProfilePage() {
         dispatch(getAllPosts());
     }, [])
 
-    const handleProfilePicture =async()=>{
-        
+    const handleProfilePicture = async () => {
+
     }
 
 
     return (
         <UserLayout>
             <DashboardLayout>
-                {
-                    authState.user && userProfile.userId &&
+                {authState.user && userProfile.userId && (
                     <div className={styles.container}>
-                        <div className={styles.backDropContainer}>
-                            <img className={styles.backDrop}
+
+                        {/* Cover + Profile Picture */}
+                        <div className={styles.profileHeader}>
+
+                            <div className={styles.coverContainer}>
+                                <img
+                                    className={styles.coverImage}
+                                    src={`${BASE_URL}/${userProfile.userId.profilePicture}`}
+                                    alt="Cover"
+                                />
+                            </div>
+
+                            <img
+                                className={styles.profilePicture}
                                 src={`${BASE_URL}/${userProfile.userId.profilePicture}`}
-                                alt="backDrop"
+                                alt="Profile"
                             />
+
                         </div>
 
 
-                        <div className={styles.profileContainer_details}>
+                        {/* Basic Information */}
+                        <div className={styles.profileInfo}>
 
-                            <div style={{ display: "flex", gap: "0.7rem" }}>
-                                <div style={{ flex: "0.8" }}>
+                            <div>
+                                <h2>{userProfile.userId.name}</h2>
 
-                                    <div style={{ display: "flex", width: "fit-content" }}>
-                                        <h2>{userProfile.userId.name}</h2>
-                                        <p style={{ color: "grey" }}>@{userProfile.userId.username}</p>
+                                <p className={styles.username}>
+                                    @{userProfile.userId.username}
+                                </p>
+
+                                <p className={styles.bio}>
+                                    {userProfile.bio}
+                                </p>
+                            </div>
+
+                        </div>
+
+
+                        {/* Recent Activity */}
+                        <div className={styles.section}>
+
+                            <h3>Recent Activity</h3>
+
+                            <div className={styles.activityContainer}>
+
+                                {userPosts.map((post) => (
+                                    <div
+                                        key={post._id}
+                                        className={styles.postCard}
+                                    >
+                                        {post.media !== "" && (
+                                            <img
+                                                src={`${BASE_URL}/${post.media}`}
+                                                alt="Post"
+                                            />
+                                        )}
                                     </div>
-
-                                    <div>
-                                        {/* <p>{userProfile.bio}</p> */}
-                                    </div>
-
-                                </div>
-
-                                <div style={{ flex: "0.2" }}>
-                                    <h3>Recent Activity</h3>
-
-                                    {userPosts.map((post) => {
-                                        return (
-                                            <div key={post._id} className={styles.postCard}>
-                                                <div className={styles.card}>
-                                                    <div className={styles.card_profileContainer}>
-                                                        {post.media !== "" ?
-                                                            <img src={`${BASE_URL}/${post.media}`} alt="base-url" />
-                                                            :
-                                                            <div style={{ width: "3.4rem", height: "3.4rem" }}></div>
-                                                        }
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        )
-                                    })}
-                                </div>
-
+                                ))}
 
                             </div>
 
                         </div>
 
 
-                        <div className={styles.workHistory}>
+                        {/* Work History */}
+                        <div className={styles.section}>
+
+                            <h3>Experience</h3>
+
                             <div className={styles.workHistoryContainer}>
-                                {
-                                    userProfile.pastWork.map((work, index) => {
-                                        return (
-                                            <div key={index} className={styles.workHistoryCard}>
-                                                <p style={{ display: "flex", alignItems: "center", gap: "0.8rem" }}>
-                                                    Software Engineer at {work.company}
-                                                    <br></br>
-                                                    {work.position}
-                                                </p>
-                                                <p>from{work.years}-Present</p>
-                                            </div>
-                                        )
-                                    })
-                                }
+
+                                {userProfile.pastWork.map((work, index) => (
+                                    <div
+                                        key={index}
+                                        className={styles.workHistoryCard}
+                                    >
+                                        <h4>{work.position}</h4>
+
+                                        <p>
+                                            {work.company}
+                                        </p>
+
+                                        <span>
+                                            {work.years} - Present
+                                        </span>
+                                    </div>
+                                ))}
+
                             </div>
 
                         </div>
-
 
                     </div>
-                }
+                )}
             </DashboardLayout>
         </UserLayout>
     )

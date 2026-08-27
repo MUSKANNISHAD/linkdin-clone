@@ -10,7 +10,7 @@ const initialState = {
     loggedIn: false,
     message: "",
     isTokenThere: false,
-    profileFetched: true,
+    profileFetched: false,
     connections: [],
     connectionRequest: [],
     all_users: [],
@@ -32,7 +32,7 @@ const authSlice = createSlice({
             state.isTokenThere = true
         },
         setIsTokenNotThere: (state) => {
-            state.isTokenNotThere = false
+            state.isTokenThere = false
         }
     },
 
@@ -67,11 +67,11 @@ const authSlice = createSlice({
                     state.message = {
                         message: "Registration is susccessful, please loggedin"
                     }
-                state.loggedIn = true,
+                state.loggedIn = false,
                     state.user = action.payload
             })
             .addCase(userSignup.rejected, (state, action) => {
-                state.isLoading = false,
+                    state.isLoading = false,
                     state.isSuccess = false,
                     state.isError = true,
                     state.loggedIn = false,
@@ -80,7 +80,7 @@ const authSlice = createSlice({
             .addCase(getAboutUser.fulfilled, (state, action) => {
                 state.isError = false,
                     state.isLoading = false,
-                    state.profilefetched = true,
+                    state.profileFetched = true,
                     state.user = action.payload.profile
             })
             .addCase(getAllUser.fulfilled, (state, action) => {

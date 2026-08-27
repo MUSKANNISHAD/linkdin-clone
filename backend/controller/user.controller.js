@@ -91,7 +91,7 @@ export const register = async (req, res) => {
 
         await profile.save();
 
-        return res.status(200).json({ message: "User successfully registered" });
+        return res.status(200).json({ message: "User successfully registered", newUser });
     } catch (err) {
         return res.status(500).json({ message: err.message })
     }
@@ -114,7 +114,6 @@ export const login = async (req, res) => {
         if (!isMatch) {
             return res.status(400).json({ message: "Invalid creadentials" })
         }
-
 
         const token = crypto.randomBytes(32).toString("hex");
 
@@ -194,7 +193,7 @@ export const updateuserprofile = async (req, res) => {
 
 export const getUserandProfile = async (req, res) => {
     try {
-        const { token } = req.query;
+        const  token  = req.query.token;
         const user = await User.findOne({ token: token });
         if (!user) {
             return res.status(404).json({ message: "user not found" });
@@ -245,11 +244,9 @@ export const updateProfileData = async (req, res) => {
 
 export const getAllUserProfile = async (req, res) => {
     try {
-
         const Profiles = await Profile.find().populate("userId", 'name username email profilePicture');
 
         return res.json({ Profiles });
-
     } catch (err) {
         return res.status(500).json({ message: err.message });
     }

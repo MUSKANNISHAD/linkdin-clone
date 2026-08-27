@@ -11,6 +11,8 @@ import { BASE_URL } from '../../config/index.js';
 import TextField from '@mui/material/TextField';
 import { resetPostId } from '../../config/redux/reducer/postReducer/index.js';
 
+
+
 export default function DashboardComponent() {
 
 
@@ -20,12 +22,9 @@ export default function DashboardComponent() {
     const postState = useSelector((state) => state.postReducer);
     const router = useRouter();
 
-
     const [postContent, setPostContent] = useState("");
     const [fileContent, setFileContent] = useState(null);
     const [postComment, setPostComment] = useState("");
-
-
 
     useEffect(() => {
         if (authState.isTokenThere) {
@@ -46,12 +45,6 @@ export default function DashboardComponent() {
         dispatch(getAllPosts());
     }
 
-    const handleLikes = async () => {
-        await dispatch(incrementPostlikes)
-    }
-
-
-
     if (authState.user) {
         return (
             <UserLayout>
@@ -65,7 +58,7 @@ export default function DashboardComponent() {
 
                                     <img
                                         className={styles.userProfile}
-                                        src={`${BASE_URL}/${authState.user.userId.profilePicture}`}
+                                        src={`${BASE_URL}/${authState.user.profilePicture}`}
                                         alt="Profile"
                                     />
 
@@ -127,28 +120,29 @@ export default function DashboardComponent() {
                                                         router.push(`/profile/${post.userId._id}`)
                                                     }}
                                                         className={styles.userProfile}
-                                                        src={`${BASE_URL}/${authState.user.userId.profilePicture}`}>
-                                                        {/* {console.log("profile pic is: ", authState.user.userId.profilePicture)} */}
-                                                        {/* src={`${BASE_URL}/${userProfile.userId.profilePicture}`}> */}
-                                                    </img>
+                                                        src={`${BASE_URL}/${authState.user.profilePicture}`} />
+                                                    {/* {console.log("profile pic is: ", authState.user.userId.profilePicture)} */}
+                                                    {/* src={`${BASE_URL}/${userProfile.userId.profilePicture}`}> */}
+
                                                     <div>
                                                         <div style={{ display: "flex", gap: "1.2rem", justifyContent: "space-between", cursor: "pointer" }}>
                                                             <p style={{ fontWeight: "bold" }}>
-                                                                {post.userId.name}
+                                                                {post.userId?.name || ""}
                                                             </p>
                                                             {
-                                                                post.userId._id === authState.user.userId._ &&
+                                                                post.userId?._id === authState.user.userId?._id &&
                                                                 <div onClick={async () => {
-                                                                    await dispatch(deletePost({ post_id: post_id }))
+                                                                    { console.log("delted post", deletePost) }
+                                                                    await dispatch(deletePost({ post_id: post?._id }))
                                                                     await dispatch(getAllPosts())
                                                                 }}
                                                                     style={{ cursor: "pointer" }}>
-                                                                    <i style={{ height: "1.4em", color: "red" }} className="fa-solid fa-trash">Delete</i>
+                                                                    {/* <i style={{ height: "1.4em", color: "red" }} className="fa-solid fa-trash">Delete</i> */}
                                                                 </div>
                                                             }
 
                                                         </div>
-                                                        <p style={{ color: "grey" }}>{post.userId.username}</p>
+                                                        <p style={{ color: "grey" }}>{post.userId?.username}</p>
                                                         <p style={{ paddingTop: "1.3rem" }}>{post.body}</p>
 
                                                         <div className={styles.singleCard_image}>

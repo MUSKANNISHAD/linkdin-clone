@@ -13,10 +13,11 @@ import UserLayout from '../../layout/userLayout';
 export default function LoginComponent() {
 
     const authState = useSelector((state) => state.auth)
-
     const router = useRouter();
 
     const [isLoginMethod, setIsLoginMethod] = useState(true);
+
+    const dispatch = useDispatch();
 
     const [name, setName] = useState("");
     const [username, setUserName] = useState("");
@@ -34,7 +35,6 @@ export default function LoginComponent() {
         dispatch(loginUser({ email, password }));
     }
 
-    const dispatch = useDispatch();
 
     useEffect(() => {
         if (authState.loggedIn) {
@@ -58,8 +58,6 @@ export default function LoginComponent() {
             dispatch(getAboutUser({ token: localStorage.getItem('token') }))
         }
     }, [authState.isTokenThere])
-
-
 
     return (
 
@@ -94,7 +92,6 @@ export default function LoginComponent() {
                                     type="text"
                                     variant="outlined"
                                     margin="normal"
-                                // className={styles.inputField}
                                 />
                                 <TextField
                                     onChange={(e) => setName(e.target.value)}
@@ -107,16 +104,6 @@ export default function LoginComponent() {
                             </>
                         }
 
-                        {/* <div onClick={() => {
-                                    if (isLoginMethod) {
-                                        handleLogin();
-                                    } else {
-                                        handleRegister();
-                                    }
-                                }} className={styles.buttonWithOutLine}>
-                                    <p>{isLoginMethod ? "Signup" : "SignIn"}</p>
-                                </div> */}
-
                         <div onClick={() => {
                             if (isLoginMethod) {
                                 handleLogin();
@@ -124,11 +111,12 @@ export default function LoginComponent() {
                                 handleRegister();
                             }
                         }} >
-                            <p style={{ textAlign: "center" }}>{
-                                isLoginMethod ?
-                                    (<Button variant="contained">Signin</Button>)
-                                    : (<Button variant="contained">SignUp</Button>)
-                            }
+                            <p onClick={(console.log("your mssage is", authState.message.message))}
+                                style={{ textAlign: "center" }}>{
+                                    isLoginMethod ?
+                                        (<Button variant="contained">Signin</Button>)
+                                        : (<Button variant="contained">SignUp</Button>)
+                                }
                             </p>
                         </div>
                     </form>
