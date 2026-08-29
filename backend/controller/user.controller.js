@@ -3,7 +3,6 @@ import User from "../model/user.model.js";
 import bcrypt from "bcrypt";
 import Profile from "../model/profile.model.js";
 import crypto from "crypto";
-import { use } from "react";
 import PDFDocument from "pdfkit";
 import fs from "fs";
 import connectionReq from "../model/connection.model.js";
