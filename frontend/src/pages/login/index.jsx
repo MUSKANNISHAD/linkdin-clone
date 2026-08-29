@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import styles from "./style.module.css";
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import { getAboutUser, loginUser, userSignup } from '../../config/redux/action/authAction';
+import { getAboutCurrentUser, loginUser, userSignup } from '../../config/redux/action/authAction';
 import { emptyMessage } from '../../config/redux/reducer/authReducer';
 import UserLayout from '../../layout/userLayout';
 
@@ -26,12 +26,10 @@ export default function LoginComponent() {
 
 
     const handleRegister = () => {
-        console.log("registering you...")
         dispatch(userSignup({ username, password, name, email }));
     }
 
     const handleLogin = () => {
-        console.log("loggedIn");
         dispatch(loginUser({ email, password }));
     }
 
@@ -55,7 +53,7 @@ export default function LoginComponent() {
 
     useEffect(() => {
         if (authState.isTokenThere) {
-            dispatch(getAboutUser({ token: localStorage.getItem('token') }))
+            dispatch(getAboutCurrentUser({ token: localStorage.getItem('token') }))
         }
     }, [authState.isTokenThere])
 

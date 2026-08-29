@@ -1,8 +1,12 @@
+/* =========================================================
+   MAIN CONTAINER
+========================================================= */
+
 .container {
     width: 100%;
     max-width: 820px;
-    margin: 0 auto;
 
+    margin: 0 auto;
     padding: 1.2rem 0 3rem;
 
     display: flex;
@@ -12,14 +16,27 @@
     box-sizing: border-box;
 }
 
+
+/* =========================================================
+   PROFILE HEADER
+========================================================= */
+
 .profileHeader {
     position: relative;
+
     width: 100%;
+
+    margin-bottom: 55px;
 }
 
 
+/* =========================================================
+   COVER IMAGE
+========================================================= */
 
 .coverContainer {
+    position: relative;
+
     width: 100%;
     height: 260px;
 
@@ -27,63 +44,182 @@
 
     border-radius: 18px;
 
-    background: linear-gradient(
-        135deg,
-        #667eea,
-        #764ba2
-    );
+    background: linear-gradient(135deg,
+            #667eea,
+            #764ba2);
 }
 
 .coverImage {
     width: 100%;
     height: 100%;
 
+    display: block;
+
     object-fit: cover;
     object-position: center;
+
+    transition: transform 0.4s ease;
+}
+
+.coverContainer:hover .coverImage {
+    transform: scale(1.02);
 }
 
 
+/* =========================================================
+   PROFILE PICTURE WRAPPER
+========================================================= */
 
-.profilePicture {
+.profilePictureWrapper {
     position: absolute;
 
     left: 35px;
-    bottom: -55px;
+    bottom: -60px;
 
     width: 120px;
     height: 120px;
 
     border-radius: 50%;
 
-    object-fit: cover;
+    overflow: hidden;
+
+    background: white;
 
     border: 6px solid white;
 
-    background: white;
+    box-sizing: border-box;
+
+    cursor: pointer;
+
+    z-index: 10;
+
+    box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.15);
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.profilePictureWrapper:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 7px 20px rgba(0, 0, 0, 0.2);
 }
 
 
+/* =========================================================
+   PROFILE IMAGE
+========================================================= */
+
+.profilePicture {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+
+    transition:
+        transform 0.35s ease,
+        filter 0.35s ease;
+}
+
+.profilePictureWrapper:hover .profilePicture {
+    transform: scale(1.08);
+
+    filter: brightness(0.7);
+}
+
+
+/* =========================================================
+   PROFILE IMAGE EDIT OVERLAY
+========================================================= */
+
+.profilePictureOverlay {
+    position: absolute;
+
+    inset: 0;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 5px;
+
+    border-radius: 50%;
+
+    background: rgba(0, 0, 0, 0.5);
+
+    color: white;
+
+    cursor: pointer;
+
+    opacity: 0;
+
+    transition:
+        opacity 0.3s ease;
+}
+
+.profilePictureWrapper:hover .profilePictureOverlay {
+    opacity: 1;
+}
+
+.profilePictureOverlay i {
+    font-size: 20px;
+}
+
+.profilePictureOverlay span {
+    font-size: 13px;
+
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   FILE INPUT
+========================================================= */
+
+.profilePictureInput {
+    display: none;
+}
+
+
+/* =========================================================
+   BASIC PROFILE INFORMATION
+========================================================= */
 
 .profileInfo {
     background: white;
 
-    padding: 70px 30px 25px;
+    padding: 25px 30px 30px;
 
-    border-radius: 0 0 18px 18px;
+    border-radius: 18px;
 
     border: 1px solid #e5e7eb;
 
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    box-shadow:
+        0 3px 12px rgba(0, 0, 0, 0.06);
+
+    box-sizing: border-box;
 }
 
 .profileInfo h2 {
     margin: 0;
 
     font-size: 28px;
+
+    font-weight: 700;
+
+    line-height: 1.2;
 }
 
 .username {
-    margin: 4px 0;
+    margin: 6px 0 0;
 
     color: #777;
 
@@ -91,26 +227,33 @@
 }
 
 .bio {
-    margin-top: 15px;
+    margin: 15px 0 0;
 
     color: #444;
 
     line-height: 1.6;
+
+    font-size: 15px;
 }
 
 
-/* ================= SECTIONS ================= */
+/* =========================================================
+   GENERAL SECTIONS
+========================================================= */
 
 .section {
+    width: 100%;
+
     background: white;
 
     padding: 25px 30px;
 
-    border-radius: 15px;
+    border-radius: 18px;
 
     border: 1px solid #e5e7eb;
 
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    box-shadow:
+        0 3px 12px rgba(0, 0, 0, 0.05);
 
     box-sizing: border-box;
 }
@@ -119,9 +262,14 @@
     margin: 0 0 20px;
 
     font-size: 20px;
+
+    font-weight: 700;
 }
 
 
+/* =========================================================
+   RECENT ACTIVITY
+========================================================= */
 
 .activityContainer {
     display: flex;
@@ -131,31 +279,55 @@
     overflow-x: auto;
 
     padding-bottom: 5px;
+
+    scrollbar-width: thin;
+}
+
+.activityContainer::-webkit-scrollbar {
+    height: 6px;
+}
+
+.activityContainer::-webkit-scrollbar-thumb {
+    background: #cfcfcf;
+
+    border-radius: 10px;
 }
 
 .postCard {
+    position: relative;
+
     min-width: 160px;
     width: 160px;
     height: 160px;
 
-    border-radius: 12px;
+    flex-shrink: 0;
 
     overflow: hidden;
 
-    background: #f5f5f5;
+    border-radius: 12px;
 
-    flex-shrink: 0;
+    background: #f5f5f5;
 }
 
 .postCard img {
     width: 100%;
     height: 100%;
 
+    display: block;
+
     object-fit: cover;
+
+    transition: transform 0.3s ease;
+}
+
+.postCard:hover img {
+    transform: scale(1.05);
 }
 
 
-/* ================= EXPERIENCE ================= */
+/* =========================================================
+   EXPERIENCE
+========================================================= */
 
 .workHistoryContainer {
     display: flex;
@@ -173,12 +345,25 @@
     background: #f8f9fa;
 
     border-left: 4px solid #0a66c2;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.workHistoryCard:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.07);
 }
 
 .workHistoryCard h4 {
     margin: 0 0 5px;
 
     font-size: 17px;
+
+    font-weight: 700;
 }
 
 .workHistoryCard p {
@@ -197,4 +382,157 @@
     color: #777;
 
     font-size: 14px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 700px) {
+
+    .container {
+        padding: 1rem 0 2rem;
+    }
+
+    .coverContainer {
+        height: 220px;
+
+        border-radius: 14px;
+    }
+
+    .profilePictureWrapper {
+        left: 25px;
+        bottom: -55px;
+
+        width: 110px;
+        height: 110px;
+    }
+
+    .profileInfo {
+        padding: 65px 20px 25px;
+    }
+
+    .profileInfo h2 {
+        font-size: 24px;
+    }
+
+    .section {
+        padding: 20px;
+    }
+}
+
+
+@media (max-width: 450px) {
+
+    .coverContainer {
+        height: 190px;
+    }
+
+    .profilePictureWrapper {
+        left: 20px;
+        bottom: -50px;
+
+        width: 100px;
+        height: 100px;
+    }
+
+    .profileInfo {
+        padding: 60px 18px 22px;
+    }
+
+    .profileInfo h2 {
+        font-size: 22px;
+    }
+
+    .section {
+        padding: 18px;
+    }
+
+    .postCard {
+        min-width: 140px;
+        width: 140px;
+        height: 140px;
+    }
+}
+
+
+.profileContainer input {
+    outline: none;
+    border-style: none;
+    padding-inline: 10px;
+    padding-block: 9px;
+}
+
+.nameEdit {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.updateProfileBtn {
+    padding-inline: 0.8rem;
+    padding-block: 0.3rem;
+    background: rgbA(3, 93, 183, 0.905);
+    outline: none;
+    border: none;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+    width: fit-content
+}
+
+.UserBioUpdate textarea {
+    outline: none;
+    border-style: none;
+    padding-inline: 10px;
+    padding-block: 9px;
+    font-family: "Poppins" !important;
+    font-size: 1.1rem;
+}
+
+
+.addWorkButton {
+    width: fit-content;
+    padding-inline: 1.3rem;
+    border: 1px dotted silver;
+    border-radius: 10px;
+    padding-block: 1rem;
+    cursor: pointer;
+}
+
+.commentsContainer {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    background: rgba(0, 0, 0, 0.7);
+    overflow: hidden;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+}
+
+.allCommentsContainer {
+    width: 40vw;
+    height: fit-content;
+    background: white;
+    border-radius: 10px;
+    position: relative;
+    padding: 1.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.inputField {
+    padding-inline: 1.3rem;
+    padding-block: 0.8rem;
+    outline: none;
+    border-radius: 10px;
+    border: 1px solid silver;
+    width: 100%;
 }

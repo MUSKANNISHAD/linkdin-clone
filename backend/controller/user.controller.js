@@ -19,7 +19,7 @@ export const ConvertUserDataToPDF = async (userData) => {
     const stream = createWriteStream("uploads/" + outputPath);
 
     doc.pipe(stream);
-    console.log("userData is : ", userData);
+    // console.log("userData is : ", userData);
 
     doc.image(`uploads/${userData.userId.profilePicture}`, {
         align: "center",
@@ -65,7 +65,7 @@ export const ConvertUserDataToPDF = async (userData) => {
 };
 
 
-export const register = async (req, res) => {
+export const signup = async (req, res) => {
     try {
         const { name, username, email, password } = req.body;
         if (!name || !username || !email || !password) {
@@ -192,19 +192,17 @@ export const updateuserprofile = async (req, res) => {
 
 
 export const getUserandProfile = async (req, res) => {
+    const token = req.query.token;
     try {
-        const  token  = req.query.token;
         const user = await User.findOne({ token: token });
         if (!user) {
             return res.status(404).json({ message: "user not found" });
         }
 
-        console.log(user);
-
         const userProfile = await Profile.findOne({ userId: user._id })
             .populate('userId', 'name username email profilePicture');
 
-        console.log(userProfile);
+        // console.log(userProfile);
         return res.json({ "profile": userProfile });
 
     } catch (err) {
@@ -263,8 +261,8 @@ export const downloadProfile = async (req, res) => {
             .populate('userId', 'name username email  profilePicture');
 
         let OutputPath = await ConvertUserDataToPDF(userProfile);
-
-        return res.json({ "message(your Profile)": OutputPath });
+        return res.json({ message: OutputPath });
+        // return res.json({ "message(your Profile)": OutputPath });
     } catch (err) {
         return res.status(500).json({
             message: "internal server error",
@@ -315,15 +313,15 @@ export const sendConnectionRequest = async (req, res) => {
 
 export const getConnectionRequest = async (req, res) => {
     try {
-        const { token } = req.body;
+        const { token } = req.query;
 
         const user = await User.findOne({ token });
         if (!user) {
             return res.status(404).json({ message: "user not found" });
         }
 
-        const connections = await connectionReq.findOne({ userId: user._Id })
-            .populate('connectionId', 'username name email profilePicture');
+        const connections = await connectionReq.find({ connection_id: user._id })
+            .populate('user_Id', 'username name email profilePicture');
 
         return res.json({ connections });
 
@@ -337,18 +335,19 @@ export const getConnectionRequest = async (req, res) => {
 }
 
 export const showMyConnection = async (req, res) => {
-    try {
-        const { token } = req.query;
+    const { token } = req.query;
 
+    try {
         const user = await User.findOne({ token });
         if (!user) {
             return res.status(404).json({ message: "user not found" });
         }
 
-        const connections = await connectionReq.findOne({ connection_id: user._Id })
-            .populate('connectionId', 'username name email profilePicture');
+        const connections = await connectionReq.find({ connection_id: user._id })
+            .populate('user_Id', 'username name email profilePicture');
 
-        return res.json({ connections });
+        // return res.json({ message: "These are connection", connections });
+        res.json({ connections });
     } catch (err) {
         return res.status(500).json({
             message: "internal server error",
@@ -365,6 +364,7 @@ export const acceptConnect = async (req, res) => {
         if (!user) {
             return res.status(404).json({ message: "user not found" });
         }
+        console.log("id is :", user)
         const connection = await connectionReq.findOne({ _id: requestId });
         if (!connection) {
             return res.status(404).json({ message: "connection not found" });
@@ -393,12 +393,13 @@ export const getUserProfileAndUserBasedOnUsername = async (req, res) => {
             return res.status(200).json({ message: "user not found" });
         }
 
-        const userProfile = await Profile.findOne({ userId: user._Id })
+        const userProfile = await Profile.findOne({ userId: user._id })
             .populate('userId', 'username name email profilePicture');
 
-        console.log("userProfile", userProfile);
 
-        return res.json({ userProfile });
+        // console.log("userProfile is this and this  ", userProfile);
+
+        return res.json({ "profile": userProfile });
     } catch (err) {
         return res.status(500).json({ message: "Internal server error", err })
     }

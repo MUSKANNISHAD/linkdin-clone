@@ -47,7 +47,7 @@ export const userSignup = createAsyncThunk(
     }
 )
 
-export const getAboutUser = createAsyncThunk(
+export const getAboutCurrentUser = createAsyncThunk(
     "user/getaboutUserandProfile",
     async (user, thunkAPI) => {
         try {
@@ -101,7 +101,9 @@ export const getConnectionRequest = createAsyncThunk(
     async (user, thunkAPI) => {
         try {
             const response = await clientServer.get('/get_connection_request', {
-                token: user.token
+                params: {
+                    token: user.token
+                }
             })
             return thunkAPI.fulfillWithValue(response.data.connections)
 
@@ -121,6 +123,7 @@ export const sendConnectionRequest = createAsyncThunk(
             })
 
             thunkAPI.dispatch(getConnectionRequest({ token: user.token }));
+
             return thunkAPI.fulfillWithValue(response.data);
 
         } catch (err) {
@@ -129,14 +132,16 @@ export const sendConnectionRequest = createAsyncThunk(
     }
 )
 
-export const getMyConnections = createAsyncThunk(
+export const getMyConnectionsRequest = createAsyncThunk(
     "user/show_My_connection",
     async (user, thunkAPI) => {
         try {
             const response = await clientServer.get('/show_My_connection', {
-                token: user.token
+                params: {
+                    token: user.token
+                }
             })
-            return thunkAPI.fulfillWithValue(response.data)
+            return thunkAPI.fulfillWithValue(response.data.connections);;
 
         } catch (err) {
             return thunkAPI.rejectWithValue(err.response.data);
@@ -154,7 +159,8 @@ export const acceptConnections = createAsyncThunk(
                 action_type: user.action
             })
             thunkAPI.dispatch(getConnectionRequest({ token: user.token }))
-            thunkAPI.dispatch(getMyConnections({ token: user.token }));
+            thunkAPI.dispatch(getMyConnectionsRequest({ token: user.token }));
+
             return thunkAPI.fulfillWithValue(response.data)
 
         } catch (err) {
@@ -162,3 +168,4 @@ export const acceptConnections = createAsyncThunk(
         }
     }
 )
+

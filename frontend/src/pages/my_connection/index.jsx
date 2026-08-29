@@ -3,12 +3,11 @@ import UserLayout from '../../layout/userLayout';
 import DashboardLayout from '../../layout/DashboardLayout';
 import styles from "./index.module.css";
 import { useDispatch, useSelector } from 'react-redux';
-import { acceptConnections, getMyConnections } from '../../config/redux/action/authAction';
+import { acceptConnections, getMyConnectionsRequest } from '../../config/redux/action/authAction/index.js';
 import { BASE_URL } from '../../config';
 import { useRouter } from 'next/router';
 
 export default function MyConnection() {
-
 
     const dispatch = useDispatch();
 
@@ -16,13 +15,12 @@ export default function MyConnection() {
 
     const authState = useSelector((state) => state.auth)
     useEffect(() => {
-        dispatch(getMyConnections({ token: localStorage.getItem("token") }))
+        dispatch(getMyConnectionsRequest({ token: localStorage.getItem("token") }))
 
     }, [])
 
     useEffect(() => {
         if (authState.connectionRequest.length !== 0) {
-            console.log(authState.connectionRequest);
         }
     }, [authState.connectionRequest])
 
@@ -30,21 +28,22 @@ export default function MyConnection() {
         <UserLayout>
             <DashboardLayout>
                 <div style={{ display: "flex", flexDirection: "column", gap: "1.7rem" }}>
-                    <h1>My Connections</h1>
+                    <h3>My Connections</h3>
                     {authState.connectionRequest.length === 0 && <h1>No Connections Yet </h1>}
-                    {authState.connectionRequest.length != 0 && authState.connectionRequest.filter((connection) => connection.status_accepted === null).map((user, index) => {
+                    {authState.connectionRequest.length != 0 && authState.connectionRequest.filter((connection) => connection.status === null).map((user, index) => {
                         return (
                             <div onClick={() => {
-                                router.push(`/view_profile/${user.userId.username}`)
+                                router.push(`/view_profile/${user.user_Id.username}`)
                             }}
                                 className={styles.userCard} key={index}>
                                 <div style={{ display: "flex", alignItems: "center", gap: "1.2rem" }}>
                                     <div className={styles.profilePicture}>
-                                        <img src={`${BASE_URL}/{user.userId.profilePicture}`} alt="profilePicture" />
+                                        <img className={styles.baseImage} src={`${BASE_URL}/${user.user_Id.profilePicture}`} alt="profilePicture" />
+
                                     </div>
                                     <div className={styles.userInfo}>
-                                        <h3>{user.userId.name}</h3>
-                                        <p>{user.userId.username}</p>
+                                        <h3>{user.user_Id?.name}</h3>
+                                        <p>{user.user_Id?.username}</p>
                                     </div>
                                     <button onClick={(e) => {
                                         e.stopPropagation()
@@ -59,20 +58,21 @@ export default function MyConnection() {
                             </div>
                         )
                     })}
-                    <h4>My Network</h4>
-                    {authState.connectionRequest.filter((connection) => connection.status_accepted !== null).map((user, index) => {
+                    <h3>My Network</h3>
+                    {authState.connectionRequest.filter((connection) => connection.status !== null).map((user, index) => {
+                        { console.log("authstate.connectionRequest is ", authState.connectionRequest) }
                         return (
                             <div onClick={() => {
-                                router.push(`/view_profile/${user.userId.username}`)
+                                router.push(`/view_profile/${user.user_Id?.username}`)
                             }}
                                 className={styles.userCard} key={index}>
                                 <div style={{ display: "flex", alignItems: "center", gap: "1.2rem" }}>
                                     <div className={styles.profilePicture}>
-                                        <img src={`${BASE_URL}/{user.userId.profilePicture}`} alt="profilePicture" />
+                                        <img className={styles.baseImage} src={`${BASE_URL}/${user.user_Id.profilePicture}`} alt="profilePicture" />
                                     </div>
                                     <div className={styles.userInfo}>
-                                        <h3>{user.userId.name}</h3>
-                                        <p>{user.userId.username}</p>
+                                        <h3>{user.user_Id?.name}</h3>
+                                        <p>{user.user_Id?.username}</p>
                                     </div>
 
                                 </div>

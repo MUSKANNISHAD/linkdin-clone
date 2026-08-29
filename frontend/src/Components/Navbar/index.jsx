@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { reset } from '../../config/redux/reducer/authReducer';
 import authReducer from "../../config/redux/reducer/authReducer";
-import { getAboutUser, getAllUser } from '../../config/redux/action/authAction';
+import { getAboutCurrentUser, getAllUser } from '../../config/redux/action/authAction';
 
 export default function NavbarComponent() {
 
@@ -21,7 +21,7 @@ export default function NavbarComponent() {
 
     useEffect(() => {
         if (authState.isTokenThere) {
-            dispatch(getAboutUser({ token: localStorage.getItem('token') }))
+            dispatch(getAboutCurrentUser({ token: localStorage.getItem('token') }))
         }
     }, [authState.isTokenThere])
 
@@ -37,8 +37,6 @@ export default function NavbarComponent() {
 
                             {authState.profileFetched && <div>
                                 <div style={{ display: "flex", gap: "1.2rem" }}>
-                                    {/* {console.log("authState.user =", authState.user.userId?.name)} */}
-                                    {/* {console.log("authState.user.userId =", authState.user?.userId)} */}
                                     <p>Hey,{authState.user.userId?.name}</p>
                                     <p onClick={() => {
                                         router.push('/profile')
@@ -58,7 +56,7 @@ export default function NavbarComponent() {
 
                             {!authState.profileFetched &&
                                 <div onClick={() => {
-                                    console.log("authstate is :", authState.profileFetched)
+                                    // console.log("authstate is :", authState.profileFetched)
                                     router.push("/login")
                                 }} className={styles.ButtonJoin}>
                                     <p>Be a part</p>

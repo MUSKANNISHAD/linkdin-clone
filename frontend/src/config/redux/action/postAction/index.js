@@ -109,7 +109,7 @@ export const incrementPostlikes = createAsyncThunk(
 )
 
 
-export const getAllComments = createAsyncThunk(
+export const getCommentsById = createAsyncThunk(
     "posts/getAllcomments",
     async (postData, thunkAPI) => {
         try {

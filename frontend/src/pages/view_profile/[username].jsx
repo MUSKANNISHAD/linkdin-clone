@@ -6,15 +6,16 @@ import styles from "./index.module.css";
 import { BASE_URL, clientServer } from '../../config';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
-import { sendConnectionRequest, getConnectionRequest, getMyConnections } from '../../config/redux/action/authAction';
-import { getAllPosts } from '../../config/redux/action/postAction';
+import { sendConnectionRequest, getConnectionRequest, getMyConnectionsRequest } from '../../config/redux/action/authAction/index.js';
+import { getAllPosts } from '../../config/redux/action/postAction/index.js';
 
 
-return { props: { userProfile: request.data.profile } }
+// return { props: { userProfile: request.data.profile } }
 
 
-export default function view_profile({ }) {
+export default function view_profile({ userProfile }) {
 
+    { console.log("userProfile is ", userProfile) }
 
     const router = useRouter();
     const postReducer = useSelector((state) => state.postReducer);
@@ -29,35 +30,39 @@ export default function view_profile({ }) {
 
 
     const getUserPost = async () => {
-        await dispatch(getAllposts())
+        await dispatch(getAllPosts())
         await dispatch(getConnectionRequest({ token: localStorage.getItem("token") }));
-        await dispatch(getMyConnections({ token: localStorage.getItem('token') }));
+        await dispatch(getMyConnectionsRequest({ token: localStorage.getItem('token') }));
     }
 
 
     useEffect(() => {
-        let post = postReducer.post.filter((post) => {
+        let post = postReducer.posts.filter((post) => {
             return post.userId.username === router.query.username
         })
         setUserPost(post)
 
-    }, [postReducer.post]);
+    }, [postReducer.posts]);
 
     useEffect(() => {
-        if (authState.connections.some(user => user.connectionId._id === userProfile.userId._id)) {
+        getUserPost();
+    }, []);
+
+    useEffect(() => {
+        // console.log("authstate is ", authState.connections)
+        if (authState.connections.some(user => user.user_Id?._id === userProfile.userId?._id)) {
             setIsCurrentUserInConnection(true);
-            if (authState.connections.find(user => user.connectionId._id === userProfile.userId._id).status_accepted === true) {
+            if (authState.connections.find(user => user.user_Id?._id === userProfile.userId?._id).status === true) {
                 setIsConnetionNull(false);
             }
         }
 
-        if (authState.connectionRequest.some(user => user.userId._id === userProfile.userId._id)) {
+        if (authState.connectionRequest.some(user => user.user_Id?._id === userProfile.userId?._id)) {
             setIsCurrentUserInConnection(true);
-            if (authState.connectionRequest.find(user => user.userId._id === userProfile.userId._id).status_accepted === true) {
+            if (authState.connectionRequest.find(user => user.user_Id?._id === userProfile.userId?._id).status === true) {
                 setIsConnetionNull(false);
             }
         }
-
 
     }, [authState.connections, authState.connectionRequest])
 
@@ -69,7 +74,7 @@ export default function view_profile({ }) {
             <DashboardLayout>
                 <div className={styles.container}>
                     <div className={styles.backDropContainer}>
-                        <img className={styles.backDrop} src={`${BASE_URL}/${userProfile.userId.profilePicture}`} about="backDrop" />
+                        <img className={styles.backDrop} src={`${BASE_URL}/${userProfile.userId?.profilePicture}`} about="backDrop" />
                     </div>
 
 
@@ -79,8 +84,8 @@ export default function view_profile({ }) {
                             <div style={{ flex: "0.8" }}>
 
                                 <div style={{ display: "flex", width: "fit-content" }}>
-                                    <h2>{userProfile.userId.name}</h2>
-                                    <p style={{ color: "grey" }}>@{userProfile.userId.username}</p>
+                                    <div> <h2>{userProfile.userId?.name}</h2> </div>
+                                    <p style={{ color: "grey" }}>@{userProfile?.userId?.username}</p>
                                 </div>
 
                                 <div style={{ display: "flex", alignItems: "center", gap: "1.2rem" }}>
@@ -90,16 +95,21 @@ export default function view_profile({ }) {
                                         </button> :
                                         <button onClick={() => {
                                             dispatch(sendConnectionRequest({ token: localStorage.getItem("token"), user_id: userProfile.userId._id }))
+                                            dispatch(getConnectionRequest({ token: localStorage.getItem("token") }))
                                         }}
                                             className={styles.connectionBtn}>Connect</button>
                                     }
-                                    <div style={{ cursor: "pointer" }}>
+                                    <div onClick={async () => {
+                                        const response = await clientServer.get(`/download_Profile?id=${userProfile.userId._id}`);
+                                        window.open(`${BASE_URL}/${response.data.message}`, "_blank")
+                                    }}
+                                        style={{ cursor: "pointer" }}>
                                         <i style={{ width: "1.2em" }} className="fa-solid fa-download"></i>
                                     </div>
                                 </div>
 
                                 <div>
-                                    <p>{userProfile.bio}</p>
+                                    <p>{userProfile?.bio}</p>
                                 </div>
 
                             </div>
@@ -107,7 +117,7 @@ export default function view_profile({ }) {
                             <div style={{ flex: "0.2" }}>
                                 <h3>Recent Activity</h3>
 
-                                {userPosts.map((post) => {
+                                {postReducer.posts.map((post) => {
                                     return (
                                         <div key={post._id} className={styles.postCard}>
                                             <div className={styles.card}>
@@ -119,6 +129,7 @@ export default function view_profile({ }) {
                                                     }
 
                                                 </div>
+                                                <p>{post.body}</p>
                                             </div>
                                         </div>
                                     )
@@ -133,12 +144,13 @@ export default function view_profile({ }) {
 
                     <div className={styles.workHistory}>
                         <div className={styles.workHistoryContainer}>
+                            <h4>Work History</h4>
                             {
-                                userProfile.pastWork.map((work, index) => {
+                                userProfile?.pastWork.map((work, index) => {
                                     return (
                                         <div key={index} className={styles.workHistoryCard}>
                                             <p style={{ display: "flex", alignItems: "center", fontWeight: "bold", gap: "0.8rem" }}>
-                                                {work.company}-{work - position}
+                                                {work.company} - {work.position}
                                             </p>
                                             <p>{work.years}</p>
                                         </div>
@@ -157,18 +169,18 @@ export default function view_profile({ }) {
 }
 
 
-export async function getServerSideprops(context) {
-    console.log("view profile");
-    console.log(context.query.username);
+export async function getServerSideProps(context) {
+    // console.log("view profile");
+    // console.log(context.query.username);
 
-    const request = await clientServer.get('/user/get_User_Based_on_Username', {
+    const request = await clientServer.get('/get_User_Based_on_Username', {
         params: {
             username: context.query.username
         }
     })
 
     const response = await request.data;
-    console.log("response is ", response);
+    // console.log("response is ", response);
 
     return { props: { userProfile: request.data.profile } }
 }

@@ -77,3 +77,19 @@
     height: 1.4em;
     min-width: fit-content;
 }
+
+
+@media only screen and (max-width:600px) {
+    .homeContainer_extraContainer {
+        display: none;
+    }
+
+    .homeContainer {
+        display: block;
+    }
+
+    .homeContainer_leftBar {
+        display: none;
+    }
+
+}

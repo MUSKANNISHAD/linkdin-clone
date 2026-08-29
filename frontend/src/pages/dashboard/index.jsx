@@ -1,8 +1,8 @@
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { createPost, getAllPosts, deletePost, incrementPostlikes, getAllComments } from '../../config/redux/action/postAction/index.js';
-import { getAboutUser, getAllUser } from '../../config/redux/action/authAction/index.js';
+import { createPost, getAllPosts, deletePost, incrementPostlikes, getCommentsById } from '../../config/redux/action/postAction/index.js';
+import { getAboutCurrentUser, getAllUser } from '../../config/redux/action/authAction/index.js';
 import UserLayout from '../../layout/userLayout/index.jsx';
 import NavbarComponent from '../../Components/Navbar/index.jsx';
 import styles from "./style.module.css";
@@ -29,7 +29,7 @@ export default function DashboardComponent() {
     useEffect(() => {
         if (authState.isTokenThere) {
             dispatch(getAllPosts())
-            dispatch(getAboutUser({ token: localStorage.getItem('token') }))
+            dispatch(getAboutCurrentUser({ token: localStorage.getItem('token') }))
 
             if (!authState.all_profiles_fetched) {
                 dispatch(getAllUser());
@@ -58,7 +58,8 @@ export default function DashboardComponent() {
 
                                     <img
                                         className={styles.userProfile}
-                                        src={`${BASE_URL}/${authState.user.profilePicture}`}
+                                        src={`${BASE_URL}/${authState.user.userId?.profilePicture}`}
+
                                         alt="Profile"
                                     />
 
@@ -100,16 +101,6 @@ export default function DashboardComponent() {
                             </div>
 
                             <div className={styles.postsContainer}>
-
-                                {/* {postState.posts && postState.posts.map((post) => {
-                                    return (
-                                        <div key={post._id} className={styles.singleCard}>
-                                           
-                                        </div>
-                                    )
-                                })} */}
-
-
                                 {
                                     postState.posts && postState.posts.map((post) => {
                                         return (
@@ -120,19 +111,20 @@ export default function DashboardComponent() {
                                                         router.push(`/profile/${post.userId._id}`)
                                                     }}
                                                         className={styles.userProfile}
-                                                        src={`${BASE_URL}/${authState.user.profilePicture}`} />
-                                                    {/* {console.log("profile pic is: ", authState.user.userId.profilePicture)} */}
-                                                    {/* src={`${BASE_URL}/${userProfile.userId.profilePicture}`}> */}
+                                                        src={`${BASE_URL}/${post.userId?.profilePicture}`} />
+
 
                                                     <div>
                                                         <div style={{ display: "flex", gap: "1.2rem", justifyContent: "space-between", cursor: "pointer" }}>
-                                                            <p style={{ fontWeight: "bold" }}>
+                                                            <p onClick={() => {
+                                                                router.push(`/profile/${post.userId._id}`)
+                                                            }} style={{ fontWeight: "bold" }}>
                                                                 {post.userId?.name || ""}
                                                             </p>
                                                             {
                                                                 post.userId?._id === authState.user.userId?._id &&
                                                                 <div onClick={async () => {
-                                                                    { console.log("delted post", deletePost) }
+                                                                    // { console.log("delted post", deletePost) }
                                                                     await dispatch(deletePost({ post_id: post?._id }))
                                                                     await dispatch(getAllPosts())
                                                                 }}
@@ -147,7 +139,7 @@ export default function DashboardComponent() {
 
                                                         <div className={styles.singleCard_image}>
                                                             <img src={`${BASE_URL}/${post.media}`} />
-                                                            {fileContent ? console.log("uploaede image is :  ", post.media) : ""}
+                                                            {/* {fileContent ? console.log("uploaede image is :  ", post.media) : ""} */}
                                                         </div>
 
                                                         {/* <div className={styles.singleCard_image}>
@@ -163,13 +155,13 @@ export default function DashboardComponent() {
                                                                 dispatch(getAllPosts())
                                                             }}
                                                                 className={styles.singleoptions_optionContainer}>
-                                                                <i className="fa-solid fa-thumbs-up">Li</i>
+                                                                <i className="fa-solid fa-thumbs-up"></i>
                                                             </div>
                                                             <div onClick={() => {
-                                                                dispatch(getAllComments({ post_id: post._id }))
+                                                                dispatch(getCommentsById({ post_id: post._id }))
                                                             }}
                                                                 className={styles.singleoptions_optionContainer}>
-                                                                <i className="fa-solid fa-comment-dots">Co</i>
+                                                                <i className="fa-solid fa-comment-dots"></i>
                                                             </div>
                                                             <div onClick={() => {
                                                                 const text = encodeURIComponent(post.body)
@@ -179,7 +171,7 @@ export default function DashboardComponent() {
                                                                 window.open(twitterUrl, "_blank")
                                                             }}
                                                                 className={styles.singleoptions_optionContainer}>
-                                                                <i class="fa-solid fa-share-nodes">sh</i>
+                                                                <i class="fa-solid fa-share-nodes"></i>
                                                             </div>
                                                         </div>
 
@@ -205,12 +197,12 @@ export default function DashboardComponent() {
                                 e.stopPropagation()
                             }}
                                 className={styles.allCommentsContainer}>
-                                {postState.comments.length === 0 && <h2>No comments</h2>}
+                                {postState.Comments.length === 0 && <h2>No comments</h2>}
 
 
-                                {postState.comments.length !== 0 &&
+                                {postState.Comments.length !== 0 &&
                                     <div>
-                                        {postState.comments.map((comment, index) => {
+                                        {postState.Comments.map((comment, index) => {
                                             return (
                                                 <div className={styles.singleComment} key={comment._id}>
 

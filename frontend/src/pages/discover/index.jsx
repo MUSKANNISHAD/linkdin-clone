@@ -12,9 +12,7 @@ import { useRouter } from 'next/router';
 export default function DiscoverPages() {
 
     const authState = useSelector((state) => state.auth);
-
     const router = useRouter();
-
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -28,28 +26,28 @@ export default function DiscoverPages() {
         <UserLayout>
             <DashboardLayout>
                 <div className={styles.allUserProfile}>
+                    <h1 style={{ textAlign: "center" }}>Discover</h1>
                     {
                         authState.all_profiles_fetched && authState.all_users.map((user) => {
                             return (
-                                <>
-                                    <div onClick={() => {
-                                        router.push(`/view_profile/${user.userId.username}`)
-                                    }}
-                                        key={user._id} className={styles.userCard}>
-                                        <img className={styles.userCard_image} src={`${BASE_URL}/${user.userId.profilePicture}`} alt="profile"></img>
-                                        <div>
-                                            <h1>{user.userId.name}</h1>
-                                            <p>{user.userId.email}</p>
-                                        </div>
-                                    </div>
-                                </>
-                            )
 
+                                <div onClick={() => {
+                                    router.push(`/view_profile/${user.userId.username}`)
+                                }}
+                                    key={user._id} className={styles.userCard}>
+                                    <img className={styles.userCard_image} src={`${BASE_URL}/${user.userId.profilePicture}`}
+                                        alt="profile"
+                                    />
+                                    <div>
+                                        <h1>{user.userId.name}</h1>
+                                        <p>{user.userId.email}</p>
+                                    </div>
+                                </div>
+                            )
                         })
                     }
                 </div>
             </DashboardLayout>
         </UserLayout>
-
     )
 }

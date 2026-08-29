@@ -5,20 +5,21 @@
     padding: 1.3rem;
     align-items: center;
     box-shadow: 10px 10px 10px 0px rgb(0, 0, 0, 0.1);
+    justify-content:space-between;
 }
 
-.profilePicture>img{
-    width:6.5rem;
+.baseImage {
+    width: 6.5rem;
     border-radius: 50%;
 }
 
-.connectionButton {
+.connectedButton {
     padding-inline: 0.8rem;
     padding-block: 0.3rem;
-    border: 1px solid black;
-    outline: none;
     background: rgbA(3, 93, 183, 0.905);
+    outline: none;
+    border: none;
+    color: white;
     border-radius: 10px;
     cursor: pointer;
-
 }
