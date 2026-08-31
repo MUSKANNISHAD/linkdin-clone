@@ -40,7 +40,7 @@ export default function DiscoverPages() {
                                     />
                                     <div>
                                         <h1>{user.userId.name}</h1>
-                                        <p>{user.userId.email}</p>
+                                        <p>@{user.userId.username}</p>
                                     </div>
                                 </div>
                             )

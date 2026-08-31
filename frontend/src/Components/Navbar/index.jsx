@@ -3,7 +3,7 @@ import styles from "./style.module.css";
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { reset } from '../../config/redux/reducer/authReducer';
-import authReducer from "../../config/redux/reducer/authReducer";
+// import authReducer from "../../config/redux/reducer/authReducer";
 import { getAboutCurrentUser, getAllUser } from '../../config/redux/action/authAction';
 
 export default function NavbarComponent() {
@@ -35,24 +35,37 @@ export default function NavbarComponent() {
                         }}>Pro Connect</h1>
                         <div className={styles.navbarOptionContainer}>
 
-                            {authState.profileFetched && <div>
-                                <div style={{ display: "flex", gap: "1.2rem" }}>
-                                    <p>Hey,{authState.user.userId?.name}</p>
-                                    <p onClick={() => {
-                                        router.push('/profile')
-                                    }} style={{ fontWeight: "bold", cursor: "pointer" }}>
+                            {authState.profileFetched && (
+                                <div className={styles.navbarLinks}>
+                                    <p>
+                                        Hey, {authState.user.userId?.name}
+                                    </p>
+                                    <p
+                                        onClick={() => {
+                                            router.push('/profile')
+                                        }}
+                                        style={{
+                                            fontWeight: "bold",
+                                            cursor: "pointer"
+                                        }}
+                                    >
                                         profile
                                     </p>
-                                    <p onClick={() => {
-                                        localStorage.removeItem("token")
-                                        router.push("/login")
-                                        dispatch(reset());
-                                    }}
-                                        style={{ fontWeight: "bold", cursor: "pointer" }}>Logout
+                                    <p
+                                        onClick={() => {
+                                            localStorage.removeItem("token")
+                                            router.push("/login")
+                                            dispatch(reset())
+                                        }}
+                                        style={{
+                                            fontWeight: "bold",
+                                            cursor: "pointer"
+                                        }}
+                                    >
+                                        Logout
                                     </p>
-
                                 </div>
-                            </div>}
+                            )}
 
                             {!authState.profileFetched &&
                                 <div onClick={() => {

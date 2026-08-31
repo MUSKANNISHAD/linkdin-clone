@@ -108,7 +108,7 @@ export default function DashboardComponent() {
 
                                                 <div className={styles.singleCard_profileContainer}>
                                                     <img onClick={() => {
-                                                        router.push(`/profile/${post.userId._id}`)
+                                                        router.push(`/view_profile/${post.userId.username}`)
                                                     }}
                                                         className={styles.userProfile}
                                                         src={`${BASE_URL}/${post.userId?.profilePicture}`} />
@@ -117,7 +117,8 @@ export default function DashboardComponent() {
                                                     <div>
                                                         <div style={{ display: "flex", gap: "1.2rem", justifyContent: "space-between", cursor: "pointer" }}>
                                                             <p onClick={() => {
-                                                                router.push(`/profile/${post.userId._id}`)
+                                                                router.push(`/view_profile/${post.userId.username}`)
+
                                                             }} style={{ fontWeight: "bold" }}>
                                                                 {post.userId?.name || ""}
                                                             </p>
@@ -171,7 +172,7 @@ export default function DashboardComponent() {
                                                                 window.open(twitterUrl, "_blank")
                                                             }}
                                                                 className={styles.singleoptions_optionContainer}>
-                                                                <i class="fa-solid fa-share-nodes"></i>
+                                                                <i className="fa-solid fa-share-nodes"></i>
                                                             </div>
                                                         </div>
 

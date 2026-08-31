@@ -1,93 +1,511 @@
 .container {
+    width: 100%;
+    max-width: 900px;
+
+    margin: 0 auto;
+
     display: flex;
     flex-direction: column;
+
     gap: 1.2rem;
-    padding: 1.3rem;
-    background: rgb(255, 253, 253);
+
+    padding: 1.2rem 0 3rem;
+
+    box-sizing: border-box;
 }
 
+
 .backDropContainer {
-    height: 30vh;
+    position: relative;
+
     width: 100%;
+    height: 260px;
+
+    overflow: visible;
+
+    border-radius: 18px;
+
     background-image: url("https://images.pexels.com/photos/6532123/pexels-photo-6532123.jpeg");
+
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    position: relative;
-    border-radius: 20px;
 }
+
 
 .backDrop {
-    width: 10em;
-    height: 10em;
-    object-fit: cover;
     position: absolute;
+
+    left: 35px;
+    bottom: -60px;
+
+    width: 120px;
+    height: 120px;
+
+    object-fit: cover;
+
     border-radius: 50%;
-    bottom: -30%;
-    left: 8%;
-    text-align: center;
+
+    border: 6px solid white;
+
+    background: white;
+
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+
+    display: block;
 }
+
 
 .profileContainer_details {
-    padding-top: 6.6rem;
-}
-
-.card {
-    display: flex;
-    align-items: center;
-    gap: 1.4rem;
-}
-
-.card_profileContainer {
-    display: flex;
-}
-
-.card_profileContainer>img {
-    width: 3.4rem;
-    height: auto;
-    height: 3.4rem;
-    object-fit: cover;
-}
-
-.connectionBtn {
-    padding-inline: 0.8rem;
-    padding-block: 0.3rem;
-    background: rgbA(3, 93, 183, 0.905);
-    outline: none;
-    border: none;
-    color: white;
-    border-radius: 10px;
-    cursor: pointer;
-}
-
-.connectionButton {
-    padding-inline: 0.8rem;
-    padding-block: 0.3rem;
-    border: none;
-    outline: none;
-    color: white;
-    background: rgbA(3, 93, 183, 0.905);
-    border-radius: 10px;
-    cursor: pointer;
-
-}
-
-.workHistoryContainer {
-    display: flex;
-    gap: 1.4rem;
-    padding-top: 1.4rem;
     width: 100%;
-    flex-wrap: wrap;
+
+    padding: 80px 25px 25px;
+
+    box-sizing: border-box;
+
+    background: white;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 0 0 16px 16px;
+
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
 }
 
-.workHistoryCard {
-    min-width: fit-content;
-    padding-inline: 2.5rem;
-    padding-block: 1rem;
-    border-radius: 10px;
-    box-shadow: 10px 10px 15px rgb(173, 173, 173);
+.profileMain {
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 2rem;
+
+    width: 100%;
 }
+
+
+.profileContent {
+    flex: 1;
+
+    min-width: 0;
+}
+
+
+.profileName {
+    display: flex;
+
+    align-items: baseline;
+
+    flex-wrap: wrap;
+
+    gap: 0.7rem;
+
+    margin-bottom: 0.8rem;
+}
+
+
+.profileName h2 {
+    margin: 0;
+
+    font-size: 2rem;
+
+    font-weight: 700;
+
+    line-height: 1.2;
+}
+
+
+.profileName p {
+    margin: 0;
+
+    color: #777;
+
+    font-size: 0.95rem;
+}
+
+.profileContent > div:last-child {
+    margin-top: 1rem;
+}
+
+.profileContent > div:last-child p {
+    margin: 0;
+
+    color: #444;
+
+    line-height: 1.6;
+}
+
+
+.profileActions {
+    display: flex;
+
+    align-items: center;
+
+    gap: 1rem;
+
+    margin-top: 1rem;
+}
+
+
+.connectionBtn,
+.connectionButton {
+    border: none;
+    outline: none;
+
+    padding: 0.55rem 1.1rem;
+
+    border-radius: 8px;
+
+    background: #0a66c2;
+
+    color: white;
+
+    font-size: 0.9rem;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.connectionBtn:hover,
+.connectionButton:hover {
+    background: #004182;
+
+    transform: translateY(-1px);
+}
+
+
+.downloadButton {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 36px;
+    height: 36px;
+
+    border-radius: 50%;
+
+    cursor: pointer;
+
+    transition: background 0.2s ease;
+}
+
+
+.downloadButton:hover {
+    background: #f0f2f5;
+}
+
+
+.downloadButton i {
+    font-size: 17px;
+}
+
+
+.recentActivity {
+    width: 250px;
+
+    flex-shrink: 0;
+
+    padding-left: 1rem;
+
+    border-left: 1px solid #eeeeee;
+}
+
+
+.recentActivity h3 {
+    margin: 0 0 1rem;
+
+    font-size: 1.1rem;
+}
+
 
 .postCard {
     padding-bottom: 1rem;
+
+    margin-bottom: 1rem;
+
+    border-bottom: 1px solid #eeeeee;
+}
+
+
+.card {
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 0.8rem;
+}
+
+
+.card_profileContainer {
+    display: flex;
+
+    flex-shrink: 0;
+}
+
+
+.card_profileContainer > img {
+    width: 54px;
+    height: 54px;
+
+    object-fit: cover;
+
+    border-radius: 8px;
+}
+
+
+.card > p {
+    margin: 0;
+
+    color: #444;
+
+    font-size: 0.9rem;
+
+    line-height: 1.4;
+
+    overflow-wrap: anywhere;
+}
+
+
+.workHistory {
+    width: 100%;
+
+    background: white;
+
+    padding: 1.5rem;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 16px;
+
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+
+    box-sizing: border-box;
+}
+
+
+.workHistoryContainer {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 1rem;
+
+    width: 100%;
+}
+
+
+.workHistoryContainer h4 {
+    margin: 0;
+
+    font-size: 1.2rem;
+}
+
+
+.workHistoryCard {
+    width: 100%;
+
+    padding: 1rem 1.2rem;
+
+    box-sizing: border-box;
+
+    border-radius: 10px;
+
+    background: #f8f9fa;
+
+    border-left: 4px solid #0a66c2;
+}
+
+
+.workHistoryCard p {
+    margin: 0.3rem 0;
+
+    color: #444;
+}
+
+
+.workHistoryCard p:first-child {
+    color: #222;
+
+    font-weight: 600;
+}
+
+@media screen and (max-width: 768px) {
+
+    .container {
+        padding: 1rem;
+    }
+
+    .backDropContainer {
+        height: 230px;
+    }
+
+    .profileMain {
+        gap: 1.5rem;
+    }
+
+    .profileName h2 {
+        font-size: 1.7rem;
+    }
+
+    .recentActivity {
+        width: 220px;
+    }
+
+}
+
+@media screen and (max-width: 600px) {
+
+    .container {
+        padding: 0.8rem;
+    }
+
+
+    /* Cover */
+
+    .backDropContainer {
+        height: 190px;
+
+        border-radius: 14px;
+    }
+
+
+
+    .backDrop {
+        left: 20px;
+        bottom: -50px;
+
+        width: 100px;
+        height: 100px;
+
+        border-width: 5px;
+    }
+
+
+
+    .profileContainer_details {
+        padding: 70px 1rem 1.2rem;
+
+        border-radius: 0 0 14px 14px;
+    }
+
+
+
+    .profileMain {
+        flex-direction: column;
+
+        gap: 1.5rem;
+    }
+
+
+
+    .profileContent {
+        width: 100%;
+    }
+
+
+    .profileName {
+        gap: 0.4rem;
+    }
+
+
+    .profileName h2 {
+        font-size: 1.5rem;
+    }
+
+
+    .profileName p {
+        font-size: 0.85rem;
+    }
+
+
+    /* Actions */
+
+    .profileActions {
+        gap: 0.7rem;
+    }
+
+
+    .connectionBtn,
+    .connectionButton {
+        padding: 0.5rem 1rem;
+
+        font-size: 0.85rem;
+    }
+
+
+
+    .recentActivity {
+        width: 100%;
+
+        padding-left: 0;
+
+        padding-top: 1rem;
+
+        border-left: none;
+
+        border-top: 1px solid #eeeeee;
+    }
+
+
+    .recentActivity h3 {
+        margin-bottom: 0.8rem;
+    }
+
+
+    /* Work */
+
+    .workHistory {
+        padding: 1rem;
+    }
+
+}
+
+@media screen and (max-width: 400px) {
+
+    .backDropContainer {
+        height: 170px;
+    }
+
+
+    .backDrop {
+        left: 15px;
+
+        width: 90px;
+        height: 90px;
+
+        bottom: -45px;
+    }
+
+
+    .profileContainer_details {
+        padding-top: 62px;
+    }
+
+
+    .profileName h2 {
+        font-size: 1.35rem;
+    }
+
+
+    .profileActions {
+        width: 100%;
+    }
+
+
+    .connectionBtn,
+    .connectionButton {
+        padding: 0.45rem 0.8rem;
+    }
+
+
+    .workHistoryCard {
+        padding: 0.9rem;
+    }
+
 }

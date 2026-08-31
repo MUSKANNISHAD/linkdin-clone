@@ -80,15 +80,18 @@ export default function view_profile({ userProfile }) {
 
                     <div className={styles.profileContainer_details}>
 
-                        <div style={{ display: "flex", gap: "0.7rem" }}>
-                            <div style={{ flex: "0.8" }}>
+                        <div className={styles.profileMain}>
+                            <div className={styles.profileContent}>
 
-                                <div style={{ display: "flex", width: "fit-content" }}>
-                                    <div> <h2>{userProfile.userId?.name}</h2> </div>
-                                    <p style={{ color: "grey" }}>@{userProfile?.userId?.username}</p>
+                                <div className={styles.profileName}>
+                                    <h2>{userProfile.userId?.name}</h2>
+
+                                    <p>
+                                        @{userProfile?.userId?.username}
+                                    </p>
                                 </div>
 
-                                <div style={{ display: "flex", alignItems: "center", gap: "1.2rem" }}>
+                                <div className={styles.profileActions}>
                                     {isCurrentUserInConnection ?
                                         <button className={styles.connectionButton}>
                                             {isConnectionNull ? "pending" : "Connected"}
@@ -99,25 +102,27 @@ export default function view_profile({ userProfile }) {
                                         }}
                                             className={styles.connectionBtn}>Connect</button>
                                     }
-                                    <div onClick={async () => {
-                                        const response = await clientServer.get(`/download_Profile?id=${userProfile.userId._id}`);
-                                        window.open(`${BASE_URL}/${response.data.message}`, "_blank")
-                                    }}
-                                        style={{ cursor: "pointer" }}>
+                                    <div
+                                        onClick={async () => {
+                                            const response = await clientServer.get(
+                                                `/download_Profile?id=${userProfile.userId._id}`
+                                            );
+                                            window.open(
+                                                `${BASE_URL}/${response.data.message}`,
+                                                "_blank"
+                                            )
+                                        }}
+                                        className={styles.downloadButton}>
                                         <i style={{ width: "1.2em" }} className="fa-solid fa-download"></i>
                                     </div>
                                 </div>
-
                                 <div>
                                     <p>{userProfile?.bio}</p>
                                 </div>
-
                             </div>
-
-                            <div style={{ flex: "0.2" }}>
+                            <div className={styles.recentActivity}>
                                 <h3>Recent Activity</h3>
-
-                                {postReducer.posts.map((post) => {
+                                {userPost.map((post) => {
                                     return (
                                         <div key={post._id} className={styles.postCard}>
                                             <div className={styles.card}>

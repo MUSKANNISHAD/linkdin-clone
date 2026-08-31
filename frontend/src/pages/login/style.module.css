@@ -1,6 +1,3 @@
-/* ===========================
-   Landing Page
-=========================== */
 
 .container {
     width: 100%;
@@ -103,11 +100,6 @@
 }
 
 
-/* ===========================
-   Login Page
-=========================== */
-
-
 
 .cardContainer_left {
     flex: 0.6;
@@ -117,12 +109,22 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    box-sizing: border-box;
+}
+
+.cardleft_heading {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin: 0 0 1rem;
 }
 
 .form {
     width: 100%;
     max-width: 380px;
 }
+
+
 
 .cardContainer_right {
     flex: 0.4;
@@ -135,7 +137,9 @@
     align-items: center;
 
     padding: 2rem;
+
     text-align: center;
+    box-sizing: border-box;
 }
 
 .buttonWithOutLine {
@@ -153,10 +157,112 @@
 
     cursor: pointer;
 
-    transition: .3s;
+    transition: 0.2s ease;
 }
 
 .buttonWithOutLine:hover {
     background: white;
     color: #0A66C2;
+}
+
+
+@media screen and (max-width: 900px) {
+
+    .cardContainer {
+        width: 90vw;
+        height: 75vh;
+    }
+
+    .cardContainer_left {
+        padding: 2rem;
+    }
+
+    .cardContainer_right {
+        padding: 1.5rem;
+    }
+
+    .buttonWithOutLine {
+        width: 150px;
+    }
+}
+
+
+
+@media screen and (max-width: 600px) {
+
+    .container {
+        padding: 1rem;
+        box-sizing: border-box;
+    }
+
+    .cardContainer {
+        width: 95vw;
+        max-width: 420px;
+
+        height: 70vh;
+
+        flex-direction: row;
+    }
+
+    .cardContainer_left {
+        flex: 0.65;
+        padding: 1.2rem 0.8rem;
+    }
+
+    .cardContainer_right {
+        flex: 0.35;
+        padding: 1rem 0.5rem;
+    }
+
+    .cardleft_heading {
+        font-size: 1.4rem;
+    }
+
+    .form {
+        width: 100%;
+    }
+
+    .cardContainer_right h3 {
+        font-size: 0.85rem;
+    }
+
+    .buttonWithOutLine {
+        width: 100px;
+        height: 40px;
+
+        margin-top: 12px;
+
+        font-size: 0.8rem;
+    }
+}
+
+@media screen and (max-width: 400px) {
+
+    .cardContainer {
+        width: 96vw;
+    }
+
+    .cardContainer_left {
+        flex: 0.68;
+        padding: 1rem 0.6rem;
+    }
+
+    .cardContainer_right {
+        flex: 0.32;
+        padding: 0.8rem 0.4rem;
+    }
+
+    .cardleft_heading {
+        font-size: 1.25rem;
+    }
+
+    .cardContainer_right h3 {
+        font-size: 0.75rem;
+    }
+
+    .buttonWithOutLine {
+        width: 90px;
+        height: 36px;
+        font-size: 0.75rem;
+    }
 }

@@ -1,33 +1,187 @@
+/* ================= NAVBAR ================= */
+
 .NavbarContainer {
     position: sticky;
     top: 0;
     z-index: 1000;
 
-    background: white;
     width: 100%;
+
+    background: white;
+    border-bottom: 1px solid #eeeeee;
+
+    box-sizing: border-box;
 }
 
+
+/* ================= NAVBAR INNER ================= */
+
 .container {
-    padding: 1.2rem;
+    width: 100%;
+    padding: 1rem 1.5rem;
+
+    box-sizing: border-box;
 }
 
 .navbar {
+    width: 100%;
+
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    gap: 1rem;
+
+    box-sizing: border-box;
 }
+
+
+/* ================= LOGO ================= */
+
+.navbar h1 {
+    margin: 0;
+
+    font-size: 1.8rem;
+    font-weight: 700;
+
+    white-space: nowrap;
+
+    cursor: pointer;
+}
+
+
+/* ================= RIGHT SIDE ================= */
 
 .navbarOptionContainer {
     display: flex;
+    align-items: center;
+
+    min-width: 0;
 }
 
+.navbarLinks {
+    display: flex;
+    align-items: center;
+
+    gap: 1.2rem;
+
+    white-space: nowrap;
+}
+
+
+/* ================= TEXT ================= */
+
+.navbarLinks p {
+    margin: 0;
+
+    font-size: 1rem;
+
+    white-space: nowrap;
+}
+
+
+/* ================= JOIN BUTTON ================= */
+
 .ButtonJoin {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0.6rem 1.2rem;
+
     background: #cd8987;
+
     border-radius: 10px;
-    padding-block: 0.6rem;
-    padding-inline: 1.2rem;
+
     color: white;
-    font-size: 0.7rem;
-    font-weight: bold;
+
+    font-size: 0.85rem;
+    font-weight: 600;
+
     cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.ButtonJoin:hover {
+    background: #b87573;
+    transform: translateY(-1px);
+}
+
+.ButtonJoin p {
+    margin: 0;
+}
+
+
+/* =====================================================
+   TABLET
+===================================================== */
+
+@media screen and (max-width: 768px) {
+
+    .container {
+        padding: 0.9rem 1rem;
+    }
+
+    .navbar h1 {
+        font-size: 1.5rem;
+    }
+
+    .navbarLinks {
+        gap: 0.8rem;
+    }
+
+    .navbarLinks p {
+        font-size: 0.9rem;
+    }
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media screen and (max-width: 600px) {
+
+    .container {
+        padding: 0.8rem;
+    }
+
+    .navbar {
+        gap: 0.5rem;
+    }
+
+    .navbar h1 {
+        font-size: 1.3rem;
+    }
+
+    .navbarLinks {
+        gap: 0.6rem;
+    }
+
+    .navbarLinks p {
+        font-size: 0.8rem;
+    }
+}
+
+
+/* =====================================================
+   SMALL MOBILE
+===================================================== */
+
+@media screen and (max-width: 450px) {
+
+    .navbar h1 {
+        font-size: 1.15rem;
+    }
+
+    .navbarLinks {
+        gap: 0.5rem;
+    }
+
+    .navbarLinks p {
+        font-size: 0.75rem;
+    }
 }
