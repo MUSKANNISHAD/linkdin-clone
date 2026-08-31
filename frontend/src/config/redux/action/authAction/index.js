@@ -33,7 +33,7 @@ export const userSignup = createAsyncThunk(
     "user/register",
     async (user, thunkAPI) => {
         try {
-            const response = await clientServer.post('/register', {
+            const response = await clientServer.post('/signup', {
                 email: user.email,
                 password: user.password,
                 username: user.username,

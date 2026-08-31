@@ -7,7 +7,6 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { getAboutCurrentUser, loginUser, userSignup } from '../../config/redux/action/authAction';
 import { emptyMessage } from '../../config/redux/reducer/authReducer';
-import UserLayout from '../../layout/userLayout';
 
 
 export default function LoginComponent() {
@@ -58,8 +57,7 @@ export default function LoginComponent() {
     }, [authState.isTokenThere])
 
     return (
-
-        <div className={styles.container}>
+        < div className={styles.container} >
             <div className={styles.cardContainer}>
                 <div className={styles.cardContainer_left}>
                     <p className={styles.cardleft_heading}>{isLoginMethod ? "SignIn" : "SignUp"}</p>
@@ -109,7 +107,7 @@ export default function LoginComponent() {
                                 handleRegister();
                             }
                         }} >
-                            <p onClick={(console.log("your mssage is", authState.message.message))}
+                            <p
                                 style={{ textAlign: "center" }}>{
                                     isLoginMethod ?
                                         (<Button variant="contained">Signin</Button>)
@@ -132,6 +130,6 @@ export default function LoginComponent() {
                 </div>
 
             </div>
-        </div>
+        </div >
     )
 }

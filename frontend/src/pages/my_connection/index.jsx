@@ -68,7 +68,7 @@ export default function MyConnection() {
                                 className={styles.userCard} key={index}>
                                 <div style={{ display: "flex", alignItems: "center", gap: "1.2rem" }}>
                                     <div className={styles.profilePicture}>
-                                        <img className={styles.baseImage} src={`${BASE_URL}/${user.user_Id.profilePicture}`} alt="profilePicture" />
+                                        <img className={styles.baseImage} src={`${BASE_URL}/${user.user_Id?.profilePicture}`} alt="profilePicture" />
                                     </div>
                                     <div className={styles.userInfo}>
                                         <h3>{user.user_Id?.name}</h3>

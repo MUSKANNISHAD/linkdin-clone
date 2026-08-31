@@ -15,8 +15,6 @@ import { getAllPosts } from '../../config/redux/action/postAction/index.js';
 
 export default function view_profile({ userProfile }) {
 
-    { console.log("userProfile is ", userProfile) }
-
     const router = useRouter();
     const postReducer = useSelector((state) => state.postReducer);
     const authState = useSelector((state) => state.auth);
@@ -185,7 +183,6 @@ export async function getServerSideProps(context) {
     })
 
     const response = await request.data;
-    // console.log("response is ", response);
 
     return { props: { userProfile: request.data.profile } }
 }
