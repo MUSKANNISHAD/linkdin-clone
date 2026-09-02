@@ -1,4 +1,3 @@
-
 .scrollContainer {
     width: 100%;
     display: flex;
@@ -206,7 +205,7 @@
     box-sizing: border-box;
 }
 
-.singleCard_profileContainer > div {
+.singleCard_profileContainer>div {
     min-width: 0;
     flex: 1;
 }
@@ -223,7 +222,7 @@
     box-sizing: border-box;
 }
 
-.singleCard_image > img {
+.singleCard_image>img {
     display: block;
 
     width: 100%;
@@ -270,7 +269,7 @@
     background: #f5f5f5;
 }
 
-.singleoptions_optionContainer > i {
+.singleoptions_optionContainer>i {
     font-size: 18px;
 
     width: auto;
@@ -301,7 +300,7 @@
     position: relative;
 
     width: 40vw;
-    max-width: 600px;
+    max-width: 700px;
 
     height: 80vh;
     max-height: 800px;
@@ -323,7 +322,8 @@
     bottom: 1.2rem;
     left: 1.2rem;
 
-    width: calc(100% - 2.4rem);
+    /* width: calc(100% - 2.4rem); */
+    width: 90%;
 
     display: flex;
     align-items: center;
@@ -334,21 +334,27 @@
     box-sizing: border-box;
 }
 
-.postCommentContainer > input {
+.postCommentContainer>input {
     flex: 1;
-
-    min-width: 0;
-
-    padding: 1rem 1.5rem;
-
+    padding-inline: 1.5rem;
+    padding-block: 1.2rem;
     border: none;
-
-    background-color: #e4e4e4;
-
+    background-color: rgb(228, 228, 228);
     border-radius: 10px;
-
-    outline: none;
 }
+
+.postCommentContainer_commentBtn {
+    flex: 0.1;
+    width: fit-content;
+    padding: 1.2rem;
+    height: fit-content;
+    background: orange;
+    border-radius: 10px;
+    text-align: center;
+    color: white;
+    cursor: pointer;
+}
+
 
 .singleComment {
     padding: 1rem 0;
@@ -449,7 +455,7 @@
         padding-top: 0.4rem;
     }
 
-    .singleCard_image > img {
+    .singleCard_image>img {
         border-radius: 14px;
     }
 

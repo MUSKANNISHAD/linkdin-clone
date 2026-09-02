@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { createPost, getAllPosts, deletePost, incrementPostlikes, getCommentsById } from '../../config/redux/action/postAction/index.js';
+import { createPost, getAllPosts, deletePost, incrementPostlikes, getCommentsById, postComment } from '../../config/redux/action/postAction/index.js';
 import { getAboutCurrentUser, getAllUser } from '../../config/redux/action/authAction/index.js';
 import UserLayout from '../../layout/userLayout/index.jsx';
 import NavbarComponent from '../../Components/Navbar/index.jsx';
@@ -15,7 +15,6 @@ import { resetPostId } from '../../config/redux/reducer/postReducer/index.js';
 
 export default function DashboardComponent() {
 
-
     const dispatch = useDispatch();
     const authState = useSelector((state) => state.auth);
 
@@ -24,7 +23,8 @@ export default function DashboardComponent() {
 
     const [postContent, setPostContent] = useState("");
     const [fileContent, setFileContent] = useState(null);
-    const [postComment, setPostComment] = useState("");
+    // const [postComment, setPostComment] = useState("");
+    const [commentText, setCommentText] = useState("");
 
     useEffect(() => {
         if (authState.isTokenThere) {
@@ -143,13 +143,6 @@ export default function DashboardComponent() {
                                                             {/* {fileContent ? console.log("uploaede image is :  ", post.media) : ""} */}
                                                         </div>
 
-                                                        {/* <div className={styles.singleCard_image}>
-                                                            {console.log("uploaded image is:", post.media)}
-                                                            <img src={`${BASE_URL}/${post.media}`} />
-                                                        </div> */}
-
-
-
                                                         <div className={styles.optionsContainer}>
                                                             <div onClick={async () => {
                                                                 await dispatch(incrementPostlikes)
@@ -162,7 +155,9 @@ export default function DashboardComponent() {
                                                                 dispatch(getCommentsById({ post_id: post._id }))
                                                             }}
                                                                 className={styles.singleoptions_optionContainer}>
-                                                                <i className="fa-solid fa-comment-dots"></i>
+                                                                <i className="fa-solid fa-comment-dots">ch</i>
+                                                                {/* {getCommentsById ? console.log("poststate is :", postState) : ""} */}
+
                                                             </div>
                                                             <div onClick={() => {
                                                                 const text = encodeURIComponent(post.body)
@@ -208,7 +203,7 @@ export default function DashboardComponent() {
                                                 <div className={styles.singleComment} key={comment._id}>
 
                                                     <div className={styles.singleComment_profileContainer}>
-                                                        <img src={`${BASE_URL}/${comment.userId.profilePicture}`} alt="profile-picture" />
+                                                        {/* <img src={`${BASE_URL}/${comment.userId.profilePicture}`} alt="profile-picture" /> */}
                                                         <div>
                                                             <p style={{ fontWeight: "bold", fontSize: "1.2rem" }}>{comment.userId.name}</p>
                                                             <p>@{comment.userId.username}</p>
@@ -224,8 +219,21 @@ export default function DashboardComponent() {
                                         })}
                                     </div>
                                 }
-
+                                {console.log("postState is", postState.Comments)}
                                 <div className={styles.postCommentContainer}>
+                                    <input type="text" placeholder='enter Comments' value={commentText} onChange={(e) => setCommentText(e.target.value)} />
+                                    <div onClick={async () => {
+                                        await dispatch(postComment({
+                                            post_id: postState.postId,
+                                            body: commentText
+                                        }))
+
+                                        await dispatch(getCommentsById({
+                                            post_id: postState.Comments.postId
+                                        }))
+                                    }} className={styles.postCommentContainer_commentBtn}>
+                                        <p>Comments</p>
+                                    </div>
 
 
                                 </div>

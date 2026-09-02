@@ -138,9 +138,9 @@ export const postComment = createAsyncThunk(
                 post_id: commentData.post_id,
                 body: commentData.body
             })
-            const response = await clientServer.post("./postComment", {
+            const response = await clientServer.post("/createComment", {
                 token: localStorage.getItem("token"),
-                commentBody: commentData.body,
+                body: commentData.body,
                 post_id: commentData.post_id
 
             })
