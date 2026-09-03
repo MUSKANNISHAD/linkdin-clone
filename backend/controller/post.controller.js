@@ -21,15 +21,12 @@ export const createPost = async (req, res) => {
             body: req.body.body,
             media: req.file != undefined ? req.file.filename : "",
             fileType: req.file != undefined ? req.file.mimetype.split("/")[1] : ""
-
         })
         await post.save();
-
         return res.status(200).json({ message: "post created" });
     }
     catch (err) {
         console.error(err);
-
         return res.status(500).json({
             message: "Internal server error",
             error: err.message
@@ -65,7 +62,6 @@ export const deletePost = async (req, res) => {
         }
 
         await Post.deleteOne({ _id: post_id });
-
         return res.json({ message: "post deleted" });
     } catch (err) {
         return res.status(500).json({ message: "Internal server error" });
@@ -80,7 +76,7 @@ export const PostComment = async (req, res) => {
             return res.status(404).json({ message: "user not found" }).select("_id");
         }
 
-        const post = await Post.findOne({ "_id": post_id });
+        const post = await Post.findOne({ _id: post_id });
         if (!post) {
             return res.status(404).json({ message: "post not found" });
         }
@@ -91,7 +87,6 @@ export const PostComment = async (req, res) => {
             body: commentBody
         })
         await comment.save();
-
         return res.status(200).json({ message: "You commented ", comment });
     } catch (err) {
         console.error(err);
@@ -103,17 +98,17 @@ export const PostComment = async (req, res) => {
     }
 }
 
-export const get_comments_by_post = async (req, res) => {
+export const getCommentsByPost = async (req, res) => {
     const { post_id } = req.query;
     try {
-        const post = await Post.findOne({ "_id": post_id });
+        const post = await Post.findOne({ _id: post_id });
         if (!post) {
             return res.status(404).json({ message: "post not found" });
         }
 
         const Comments = await Comment
             .find({ postId: post_id })
-            .populate("userId", "username  name ");
+            .populate("userId", "username  name profilePicture");
 
 
         return res.json(Comments.reverse());
