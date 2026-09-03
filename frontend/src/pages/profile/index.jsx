@@ -132,7 +132,6 @@ export default function ProfilePage() {
                         </div>
 
 
-                        {/* Basic Information */}
                         <div className={styles.profileInfo}>
 
                             <div className={styles.profileContainer}>
@@ -155,8 +154,7 @@ export default function ProfilePage() {
                                 />
                                 {/* <h2>{userProfile.userId.name}</h2> */}
 
-                                <p contentEditable className={styles.username}>
-                                    {/*  see the document for more about "contentEditable" */}
+                                <p  className={styles.username}>
                                     @{userProfile.userId.username}
                                 </p>
 
@@ -183,11 +181,7 @@ export default function ProfilePage() {
                                     Update Profile
                                 </div>
                             )}
-
                         </div>
-
-
-                        {/* Recent Activity */}
                         <div className={styles.section}>
 
                             <h3>Recent Activity</h3>
@@ -213,7 +207,6 @@ export default function ProfilePage() {
                         </div>
 
 
-                        {/* Work History */}
                         <div className={styles.section}>
 
                             <h3>Experience</h3>

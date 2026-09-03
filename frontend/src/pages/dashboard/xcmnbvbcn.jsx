@@ -8,8 +8,8 @@ import NavbarComponent from '../../Components/Navbar/index.jsx';
 import styles from "./style.module.css";
 import DashboardLayout from '../../layout/DashboardLayout/index.jsx';
 import { BASE_URL } from '../../config/index.js';
-import TextField from '@mui/material/TextField';
 import { resetPostId } from '../../config/redux/reducer/postReducer/index.js';
+
 
 
 export default function DashboardComponent() {
@@ -18,11 +18,13 @@ export default function DashboardComponent() {
     const authState = useSelector((state) => state.auth);
 
     const postState = useSelector((state) => state.postReducer);
+    console.log("CURRENT POST ID IN STATE:", postState.postId);
     const router = useRouter();
 
     const [postContent, setPostContent] = useState("");
     const [fileContent, setFileContent] = useState(null);
     const [commentText, setCommentText] = useState("");
+
 
     useEffect(() => {
         if (authState.isTokenThere) {
@@ -99,8 +101,6 @@ export default function DashboardComponent() {
                             </div>
 
                             <div className={styles.postsContainer}>
-                                {/* {console.log("postState is", postState)} */}
-
                                 {
                                     postState.posts && postState.posts.map((post) => {
                                         return (
@@ -160,15 +160,31 @@ export default function DashboardComponent() {
                                                                     borderRadius: "6px",
                                                                     fontFamily: "sans-serif"
                                                                 }}>
+                                                                {/* {console.log("post likes is ", post.posts.likes)} */}
                                                                 <i className="fa-solid fa-thumbs-up">&nbsp;{post.likes}</i>
                                                             </div>
-                                                            <div onClick={async () => {
+                                                            {/* <div onClick={async () => {
                                                                 await dispatch(getCommentsById({ post_id: post._id }))
                                                             }}
                                                                 className={styles.singleoptions_optionContainer}>
                                                                 <i className="fa-solid fa-comment-dots">ch</i>
-                                                                {/* {getCommentsById ? console.log("poststate is :", postState) : ""} */}
 
+                                                            </div> */}
+                                                            <div
+                                                                onClick={async () => {
+                                                                    console.log("CLICKED POST ID:", post._id);
+
+                                                                    const result = await dispatch(
+                                                                        getCommentsById({
+                                                                            post_id: post._id
+                                                                        })
+                                                                    );
+
+                                                                    console.log("THUNK RESULT:", result);
+                                                                }}
+                                                                className={styles.singleoptions_optionContainer}
+                                                            >
+                                                                <i className="fa-solid fa-comment-dots">ch</i>
                                                             </div>
                                                             <div onClick={() => {
                                                                 const text = encodeURIComponent(post.body)
@@ -204,20 +220,20 @@ export default function DashboardComponent() {
                                 e.stopPropagation()
                             }}
                                 className={styles.allCommentsContainer}>
-                                {postState.Comments?.length === 0 && <h2>No comments</h2>}
+                                {postState.Comments.length === 0 && <h2>No comments</h2>}
 
 
-                                {postState.Comments?.length !== 0 &&
+                                {postState.Comments.length !== 0 &&
                                     <div>
-                                        {postState.Comments?.map((comment, index) => {
+                                        {postState.Comments.map((comment, index) => {
                                             return (
                                                 <div className={styles.singleComment} key={comment._id}>
 
                                                     <div className={styles.singleComment_profileContainer}>
                                                         {/* <img src={`${BASE_URL}/${comment.userId.profilePicture}`} alt="profile-picture" /> */}
                                                         <div>
-                                                            <p style={{ fontWeight: "bold", fontSize: "1.2rem" }}>{comment.userId?.name}</p>
-                                                            <p>@{comment.userId?.username}</p>
+                                                            <p style={{ fontWeight: "bold", fontSize: "1.2rem" }}>{comment.userId.name}</p>
+                                                            <p>@{comment.userId.username}</p>
                                                         </div>
                                                     </div>
 
@@ -230,19 +246,17 @@ export default function DashboardComponent() {
                                         })}
                                     </div>
                                 }
-                                {/* {console.log("postState is", postState.Comments)} */}
                                 <div className={styles.postCommentContainer}>
                                     <input type="text" placeholder='enter Comments' value={commentText} onChange={(e) => setCommentText(e.target.value)} />
                                     <div onClick={async () => {
                                         await dispatch(postComment({
                                             post_id: postState.postId,
-                                            commentBody: commentText
+                                            body: commentText
                                         }))
 
                                         await dispatch(getCommentsById({
                                             post_id: postState.postId
                                         }))
-                                        // console.log("comment is", commentText)
                                     }} className={styles.postCommentContainer_commentBtn}>
                                         <p>Comments</p>
                                     </div>
