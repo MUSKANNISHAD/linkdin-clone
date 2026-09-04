@@ -48,7 +48,7 @@ export const getAllPosts = async (req, res) => {
 export const deletePost = async (req, res) => {
     const { token, post_id } = req.body;
     try {
-        const user = await User.findone({ token });
+        const user = await User.findOne({ token });
         if (!user) {
             return res.status(404).json({ message: "user not found" });
         }
