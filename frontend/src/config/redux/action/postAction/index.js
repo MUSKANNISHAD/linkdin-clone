@@ -74,15 +74,20 @@ export const createPost = createAsyncThunk(
 
 
 export const deletePost = createAsyncThunk(
-    async (post_id, thunkAPI) => {
+    "post/deletePost",
+    async ({ post_id }, thunkAPI) => {
+        console.log("🔥 DELETE THUNK FIRED");
+        console.log("post_id:", post_id);
         try {
-            const response = await clientServer.deletePost('/deletePost', {
+            const response = await clientServer.delete('/delete_Post', {
                 data: {
                     token: localStorage.getItem("token"),
-                    post_id: post_id.post_id
+                    post_id: post_id
                 }
 
             })
+            console.log("🔥 6. API RESPONSE:", response);
+
             return thunkAPI.fulfillWithValue(response.data);
 
 

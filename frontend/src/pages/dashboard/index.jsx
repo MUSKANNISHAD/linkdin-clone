@@ -8,7 +8,7 @@ import NavbarComponent from '../../Components/Navbar/index.jsx';
 import styles from "./style.module.css";
 import DashboardLayout from '../../layout/DashboardLayout/index.jsx';
 import { BASE_URL } from '../../config/index.js';
-import TextField from '@mui/material/TextField';
+// import TextField from '@mui/material/TextField';
 import { resetPostId } from '../../config/redux/reducer/postReducer/index.js';
 
 
@@ -99,20 +99,17 @@ export default function DashboardComponent() {
                             </div>
 
                             <div className={styles.postsContainer}>
-                                {/* {console.log("postState is", postState)} */}
-
                                 {
+
                                     postState.posts && postState.posts.map((post) => {
                                         return (
                                             <div key={post._id} className={styles.singleCard}>
-
                                                 <div className={styles.singleCard_profileContainer}>
                                                     <img onClick={() => {
                                                         router.push(`/view_profile/${post.userId.username}`)
                                                     }}
                                                         className={styles.userProfile}
                                                         src={`${BASE_URL}/${post.userId?.profilePicture}`} />
-
 
                                                     <div>
                                                         <div style={{ display: "flex", gap: "1.2rem", justifyContent: "space-between", cursor: "pointer" }}>
@@ -122,7 +119,7 @@ export default function DashboardComponent() {
                                                             }} style={{ fontWeight: "bold" }}>
                                                                 {post.userId?.name || ""}
                                                             </p>
-                                                            {
+                                                            {/* {
                                                                 post.userId?._id === authState.user.userId?._id &&
                                                                 <div onClick={async () => {
                                                                     // { console.log("delted post", deletePost) }
@@ -130,9 +127,8 @@ export default function DashboardComponent() {
                                                                     await dispatch(getAllPosts())
                                                                 }}
                                                                     style={{ cursor: "pointer" }}>
-                                                                    {/* <i style={{ height: "1.4em", color: "red" }} className="fa-solid fa-trash">Delete</i> */}
                                                                 </div>
-                                                            }
+                                                            } */}
 
                                                         </div>
                                                         <p style={{ color: "grey" }}>{post.userId?.username}</p>
@@ -166,8 +162,7 @@ export default function DashboardComponent() {
                                                                 await dispatch(getCommentsById({ post_id: post._id }))
                                                             }}
                                                                 className={styles.singleoptions_optionContainer}>
-                                                                <i className="fa-solid fa-comment-dots">ch</i>
-                                                                {/* {getCommentsById ? console.log("poststate is :", postState) : ""} */}
+                                                                <i className="fa-solid fa-comment-dots"></i>
 
                                                             </div>
                                                             <div onClick={() => {
@@ -242,9 +237,10 @@ export default function DashboardComponent() {
                                         await dispatch(getCommentsById({
                                             post_id: postState.postId
                                         }))
+                                        setCommentText("");
                                         // console.log("comment is", commentText)
                                     }} className={styles.postCommentContainer_commentBtn}>
-                                        <p>Comments</p>
+                                        <p >Comments</p>
                                     </div>
 
 

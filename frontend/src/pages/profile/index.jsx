@@ -7,6 +7,7 @@ import { getAboutCurrentUser } from '../../config/redux/action/authAction';
 import { BASE_URL, clientServer } from '../../config';
 import { getAllPosts } from '../../config/redux/action/postAction';
 import { resetPostId } from '../../config/redux/reducer/postReducer';
+import { deletePost } from '../../config/redux/action/postAction/index.js';
 
 
 
@@ -19,7 +20,7 @@ export default function ProfilePage() {
 
     const [userPosts, setUserPosts] = useState([]);
     const [userProfile, setUserProfile] = useState({});
-    
+
     const [profileChanged, setProfileChanged] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -72,13 +73,11 @@ export default function ProfilePage() {
                 pastWork: userProfile.pastWork,
                 education: userProfile.education
             });
-            // Refresh Redux user data
             await dispatch(
                 getAboutCurrentUser({
                     token: localStorage.getItem("token")
                 })
             );
-            // Hide update button
             setProfileChanged(false);
 
         } catch (err) {
@@ -92,11 +91,8 @@ export default function ProfilePage() {
             <DashboardLayout>
                 {authState.user && userProfile.userId && (
                     <div className={styles.container}>
-
                         <div className={styles.profileHeader}>
-
                             <div className={styles.coverContainer}>
-
                                 <img
                                     className={styles.coverImage}
                                     src={`${BASE_URL}/${userProfile.userId.profilePicture}`}
@@ -105,7 +101,6 @@ export default function ProfilePage() {
                             </div>
 
                             <div className={styles.profilePictureWrapper}>
-
                                 <img
                                     className={styles.profilePicture}
                                     src={`${BASE_URL}/${userProfile.userId.profilePicture}`}
@@ -131,11 +126,8 @@ export default function ProfilePage() {
                             </div>
                         </div>
 
-
                         <div className={styles.profileInfo}>
-
                             <div className={styles.profileContainer}>
-
                                 <input
                                     className={styles.nameEdit}
                                     type="text"
@@ -154,7 +146,7 @@ export default function ProfilePage() {
                                 />
                                 {/* <h2>{userProfile.userId.name}</h2> */}
 
-                                <p  className={styles.username}>
+                                <p className={styles.username}>
                                     @{userProfile.userId.username}
                                 </p>
 
@@ -169,9 +161,6 @@ export default function ProfilePage() {
                                         rows={Math.max(3, Math.ceil(userProfile.bio.length / 80))}
                                     />
                                 </div>
-
-
-
                             </div>
                             {profileChanged && (
                                 <div
@@ -183,47 +172,59 @@ export default function ProfilePage() {
                             )}
                         </div>
                         <div className={styles.section}>
-
                             <h3>Recent Activity</h3>
 
                             <div className={styles.activityContainer}>
-
                                 {userPosts.map((post) => (
-                                    <div
-                                        key={post._id}
-                                        className={styles.postCard}
-                                    >
+                                    <div className={styles.activityPost} key={post._id}>
+
                                         {post.media !== "" && (
-                                            <img
-                                                src={`${BASE_URL}/${post.media}`}
-                                                alt="Post"
-                                            />
+                                            <div className={styles.postMedia}>
+                                                <img
+                                                    src={`${BASE_URL}/${post.media}`}
+                                                    alt="Post"
+                                                />
+                                            </div>
                                         )}
+
+                                        <div className={styles.postContent}>
+                                            <div className={styles.postTitleRow}>
+                                                <h4>{post.body}</h4>
+                                                <button
+                                                    type="button"
+                                                    className={styles.deleteBtn}
+                                                    onClick={() => {
+                                                        console.log("1. BUTTON CLICKED");
+                                                        console.log("2. deletePost:", deletePost);
+                                                        console.log("3. dispatch:", dispatch);
+
+                                                        dispatch(deletePost({ post_id: post._id }));
+
+                                                        console.log("4. AFTER DISPATCH");
+                                                    }}
+                                                    title="Delete post"
+                                                >
+                                                    <i className="fa-solid fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+
                                     </div>
                                 ))}
-
                             </div>
-
                         </div>
-
-
                         <div className={styles.section}>
-
                             <h3>Experience</h3>
-
                             <div className={styles.workHistoryContainer}>
-
                                 {userProfile.pastWork.map((work, index) => (
                                     <div
                                         key={index}
                                         className={styles.workHistoryCard}
                                     >
                                         <h4>{work.position}</h4>
-
                                         <p>
                                             {work.company}
                                         </p>
-
                                         <span>
                                             {work.years} - Present
                                         </span>
@@ -236,15 +237,8 @@ export default function ProfilePage() {
                             </div>
 
                         </div>
-
-
-
                     </div>
                 )}
-
-
-
-
 
                 {
                     isModalOpen &&
@@ -265,7 +259,6 @@ export default function ProfilePage() {
                             }} className={styles.updateProfileBtn}>Add work</div>
 
                         </div>
-
                     </div>
                 }
             </DashboardLayout>
