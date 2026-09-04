@@ -92,7 +92,12 @@ export const signup = async (req, res) => {
 
         return res.status(200).json({ message: "User successfully registered", newUser });
     } catch (err) {
-        return res.status(500).json({ message: err.message })
+        console.error(err);
+
+        return res.status(500).json({
+            message: "Internal server error",
+            error: err.message
+        });
     }
 }
 
@@ -126,7 +131,12 @@ export const login = async (req, res) => {
         });
 
     } catch (err) {
-        return res.status(500).json({ message: err.message })
+        console.error(err);
+
+        return res.status(500).json({
+            message: "Internal server error",
+            error: err.message
+        });
     }
 }
 
@@ -245,7 +255,12 @@ export const getAllUserProfile = async (req, res) => {
 
         return res.json({ Profiles });
     } catch (err) {
-        return res.status(500).json({ message: err.message });
+        console.error(err);
+
+        return res.status(500).json({
+            message: "Internal server error",
+            error: err.message
+        });
     }
 }
 
@@ -305,7 +320,12 @@ export const sendConnectionRequest = async (req, res) => {
         return res.status(200).json({ message: "Connection sent" });
 
     } catch (err) {
-        return res.status(500).json({ message: "internal server err", err });
+        console.error(err);
+
+        return res.status(500).json({
+            message: "Internal server error",
+            error: err.message
+        });
     }
 }
 
@@ -379,7 +399,12 @@ export const acceptConnect = async (req, res) => {
 
         return res.json({ messgae: "Request accepted", connection });
     } catch (err) {
-        return res.status(500).json({ message: "internal server err", err });
+        console.error(err);
+
+        return res.status(500).json({
+            message: "Internal server error",
+            error: err.message
+        });
     }
 }
 
@@ -400,7 +425,12 @@ export const getUserProfileAndUserBasedOnUsername = async (req, res) => {
 
         return res.json({ "profile": userProfile });
     } catch (err) {
-        return res.status(500).json({ message: "Internal server error", err })
+        console.error(err);
+
+        return res.status(500).json({
+            message: "Internal server error",
+            error: err.message
+        });
     }
 }
 
@@ -423,9 +453,12 @@ export const getUserAndProfileById = async (req, res) => {
         }
 
         return res.status(200).json({ user, profile });
-    } catch (error) {
+    } catch (err) {
+        console.error(err);
+
         return res.status(500).json({
-            message: error.message
+            message: "Internal server error",
+            error: err.message
         });
     }
 };

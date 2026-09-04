@@ -41,7 +41,12 @@ export const getAllPosts = async (req, res) => {
         return res.json({ posts });
 
     } catch (err) {
-        return res.status(500).json({ message: "Internal server error" });
+        console.error(err);
+
+        return res.status(500).json({
+            message: "Internal server error",
+            error: err.message
+        });
     }
 }
 
@@ -64,7 +69,12 @@ export const deletePost = async (req, res) => {
         await Post.deleteOne({ _id: post_id });
         return res.json({ message: "post deleted" });
     } catch (err) {
-        return res.status(500).json({ message: "Internal server error" });
+        console.error(err);
+
+        return res.status(500).json({
+            message: "Internal server error",
+            error: err.message
+        });
     }
 }
 
@@ -113,7 +123,12 @@ export const getCommentsByPost = async (req, res) => {
 
         return res.json(Comments.reverse());
     } catch (err) {
-        return res.status(500).json({ message: "Internal server error" });
+        console.error(err);
+
+        return res.status(500).json({
+            message: "Internal server error",
+            error: err.message
+        });
     }
 }
 
@@ -137,7 +152,12 @@ export const delete_user_comment = async (req, res) => {
         return res.json({ message: "Comment deleted" });
 
     } catch (err) {
-        return res.status(500).json({ message: "Internal server error" });
+        console.error(err);
+
+        return res.status(500).json({
+            message: "Internal server error",
+            error: err.message
+        });
     }
 }
 
@@ -154,6 +174,11 @@ export const likesIncrement = async (req, res) => {
 
         return res.json({ message: "likes incremented" });
     } catch (err) {
-        return res.status(500).json({ message: "Internal server error" });
+        console.error(err);
+
+        return res.status(500).json({
+            message: "Internal server error",
+            error: err.message
+        });
     }
 }
