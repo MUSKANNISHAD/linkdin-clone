@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const BASE_URL = "https://linkdin-clone-1-chn3.onrender.com";
+export const BASE_URL = "https://linkdin-clone-yh6f.onrender.com";
 
 
 export const clientServer = axios.create({
