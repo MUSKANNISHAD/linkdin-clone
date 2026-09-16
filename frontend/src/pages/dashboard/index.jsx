@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { createPost, getAllPosts, deletePost, incrementPostlikes, getCommentsById, postComment } from '../../config/redux/action/postAction/index.js';
 import { getAboutCurrentUser, getAllUser } from '../../config/redux/action/authAction/index.js';
 import UserLayout from '../../layout/userLayout/index.jsx';
-import NavbarComponent from '../../Components/Navbar/index.jsx';
+// import NavbarComponent from '../../Components/Navbar/index.jsx';
 import styles from "./style.module.css";
 import DashboardLayout from '../../layout/DashboardLayout/index.jsx';
 import { BASE_URL } from '../../config/index.js';
