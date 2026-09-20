@@ -3,7 +3,6 @@ import styles from "./style.module.css";
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { reset } from '../../config/redux/reducer/authReducer';
-// import authReducer from "../../config/redux/reducer/authReducer";
 import { getAboutCurrentUser, getAllUser } from '../../config/redux/action/authAction';
 
 export default function NavbarComponent() {
@@ -27,58 +26,113 @@ export default function NavbarComponent() {
 
     if (authState.user) {
         return (
-            <div className={styles.NavbarContainer}>
-                <div className={styles.container}>
-                    <nav className={styles.navbar}>
-                        <h1 style={{ cursor: "pointer" }} onClick={() => {
-                            router.push("/");
-                        }}>Pro Connect</h1>
-                        <div className={styles.navbarOptionContainer}>
+            <>
+                <div className={styles.NavbarContainer}>
+                    <div className={styles.container}>
+                        <nav className={styles.navbar}>
 
-                            {authState.profileFetched && (
-                                <div className={styles.navbarLinks}>
-                                    <p>
-                                        Hey, {authState.user.userId?.name}
-                                    </p>
-                                    <p
+                            <h1
+                                onClick={() => {
+                                    router.push("/dashboard");
+                                }}
+                            >
+                                Pro Connect
+                            </h1>
+
+                            <div className={styles.navbarOptionContainer}>
+
+                                {authState.profileFetched && (
+                                    <div className={styles.navbarLinks}>
+
+                                        <p>
+                                            Hey, {authState.user.userId?.name}
+                                        </p>
+
+                                        <p
+                                            onClick={() => {
+                                                router.push('/profile')
+                                            }}
+                                            style={{
+                                                fontWeight: "bold",
+                                                cursor: "pointer"
+                                            }}
+                                        >
+                                            profile
+                                        </p>
+
+                                        <p
+                                            onClick={() => {
+                                                localStorage.removeItem("token")
+                                                router.push("/login")
+                                                dispatch(reset())
+                                            }}
+                                            style={{
+                                                fontWeight: "bold",
+                                                cursor: "pointer"
+                                            }}
+                                        >
+                                            Logout
+                                        </p>
+
+                                    </div>
+                                )}
+
+                                {!authState.profileFetched &&
+                                    <div
                                         onClick={() => {
-                                            router.push('/profile')
-                                        }}
-                                        style={{
-                                            fontWeight: "bold",
-                                            cursor: "pointer"
-                                        }}
-                                    >
-                                        profile
-                                    </p>
-                                    <p
-                                        onClick={() => {
-                                            localStorage.removeItem("token")
                                             router.push("/login")
-                                            dispatch(reset())
                                         }}
-                                        style={{
-                                            fontWeight: "bold",
-                                            cursor: "pointer"
-                                        }}
+                                        className={styles.ButtonJoin}
                                     >
-                                        Logout
-                                    </p>
-                                </div>
-                            )}
+                                        <p>Be a part</p>
+                                    </div>
+                                }
 
-                            {!authState.profileFetched &&
-                                <div onClick={() => {
-                                    // console.log("authstate is :", authState.profileFetched)
-                                    router.push("/login")
-                                }} className={styles.ButtonJoin}>
-                                    <p>Be a part</p>
-                                </div>}
-
-                        </div>
-                    </nav>
+                            </div>
+                        </nav>
+                    </div>
                 </div>
-            </div>
+
+
+                <div className={styles.mobileNav}>
+
+                    <div
+                        className={`${styles.mobileNavItem} ${router.pathname === "/dashboard"
+                                ? styles.active
+                                : ""
+                            }`}
+                        onClick={() => router.push("/dashboard")}
+                    >
+                        <span className={styles.mobileNavIcon}>⌂</span>
+                        <span>Home</span>
+                    </div>
+
+
+                    <div
+                        className={`${styles.mobileNavItem} ${router.pathname === "/discover"
+                                ? styles.active
+                                : ""
+                            }`}
+                        onClick={() => router.push("/discover")}
+                    >
+                        <span className={styles.mobileNavIcon}>⌕</span>
+                        <span>Discover</span>
+                    </div>
+
+
+                    <div
+                        className={`${styles.mobileNavItem} ${router.pathname === "/my_connection"
+                                ? styles.active
+                                : ""
+                            }`}
+                        onClick={() => router.push("/my_connection")}
+                    >
+                            <i className="fa-solid fa-user home-icon"></i>
+                        <span>Connections</span>
+                    </div>
+
+                </div>
+            </>
         )
     } else {
         return (
