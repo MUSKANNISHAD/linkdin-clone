@@ -25,21 +25,31 @@ export default function NavbarComponent() {
         }
     }, [authState.isTokenThere])
 
-    if (authState.user) {
-        return (
+   if (authState.user) {
+    return (
+        <>
+            {/* Top Navbar */}
             <div className={styles.NavbarContainer}>
                 <div className={styles.container}>
                     <nav className={styles.navbar}>
-                        <h1 style={{ cursor: "pointer" }} onClick={() => {
-                            router.push("/");
-                        }}>Pro Connect</h1>
+
+                        <h1
+                            onClick={() => {
+                                router.push("/dashboard");
+                            }}
+                        >
+                            Pro Connect
+                        </h1>
+
                         <div className={styles.navbarOptionContainer}>
 
                             {authState.profileFetched && (
                                 <div className={styles.navbarLinks}>
+
                                     <p>
                                         Hey, {authState.user.userId?.name}
                                     </p>
+
                                     <p
                                         onClick={() => {
                                             router.push('/profile')
@@ -51,6 +61,7 @@ export default function NavbarComponent() {
                                     >
                                         profile
                                     </p>
+
                                     <p
                                         onClick={() => {
                                             localStorage.removeItem("token")
@@ -64,23 +75,72 @@ export default function NavbarComponent() {
                                     >
                                         Logout
                                     </p>
+
                                 </div>
                             )}
 
                             {!authState.profileFetched &&
-                                <div onClick={() => {
-                                    // console.log("authstate is :", authState.profileFetched)
-                                    router.push("/login")
-                                }} className={styles.ButtonJoin}>
+                                <div
+                                    onClick={() => {
+                                        router.push("/login")
+                                    }}
+                                    className={styles.ButtonJoin}
+                                >
                                     <p>Be a part</p>
-                                </div>}
+                                </div>
+                            }
 
                         </div>
                     </nav>
                 </div>
             </div>
-        )
-    } else {
+
+
+            {/* Mobile Bottom Navigation */}
+            <div className={styles.mobileNav}>
+
+                <div
+                    className={`${styles.mobileNavItem} ${
+                        router.pathname === "/dashboard"
+                            ? styles.active
+                            : ""
+                    }`}
+                    onClick={() => router.push("/dashboard")}
+                >
+                    <span className={styles.mobileNavIcon}>⌂</span>
+                    <span>Home</span>
+                </div>
+
+
+                <div
+                    className={`${styles.mobileNavItem} ${
+                        router.pathname === "/discover"
+                            ? styles.active
+                            : ""
+                    }`}
+                    onClick={() => router.push("/discover")}
+                >
+                    <span className={styles.mobileNavIcon}>⌕</span>
+                    <span>Discover</span>
+                </div>
+
+
+                <div
+                    className={`${styles.mobileNavItem} ${
+                        router.pathname === "/my_connection"
+                            ? styles.active
+                            : ""
+                    }`}
+                    onClick={() => router.push("/my_connection")}
+                >
+                    <span className={styles.mobileNavIcon}>♙</span>
+                    <span>Connections</span>
+                </div>
+
+            </div>
+        </>
+    )
+}else {
         return (
             <>
                 <div>Not a User</div>
