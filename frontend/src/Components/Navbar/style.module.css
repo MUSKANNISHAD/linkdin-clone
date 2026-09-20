@@ -224,23 +224,4 @@
 
 }
 
-@media screen and (max-width: 600px) {
 
-    .navbarLinks p:first-child {
-        display: none;
-    }
-
-    .navbarLinks p:nth-child(2),
-    .navbarLinks p:nth-child(3) {
-        font-size: 0.75rem;
-    }
-
-}
-
-@media screen and (max-width: 600px) {
-
-    .navbarLinks p {
-        display: none;
-    }
-
-}
