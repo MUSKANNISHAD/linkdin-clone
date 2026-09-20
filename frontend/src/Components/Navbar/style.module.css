@@ -1,3 +1,4 @@
+/* ================= NAVBAR ================= */
 
 .NavbarContainer {
     position: sticky;
@@ -13,6 +14,7 @@
 }
 
 
+/* ================= NAVBAR INNER ================= */
 
 .container {
     width: 100%;
@@ -34,6 +36,7 @@
 }
 
 
+/* ================= LOGO ================= */
 
 .navbar h1 {
     margin: 0;
@@ -47,6 +50,7 @@
 }
 
 
+/* ================= RIGHT SIDE ================= */
 
 .navbarOptionContainer {
     display: flex;
@@ -65,6 +69,7 @@
 }
 
 
+/* ================= TEXT ================= */
 
 .navbarLinks p {
     margin: 0;
@@ -75,6 +80,7 @@
 }
 
 
+/* ================= JOIN BUTTON ================= */
 
 .ButtonJoin {
     display: flex;
@@ -109,6 +115,9 @@
 }
 
 
+/* =====================================================
+   TABLET
+===================================================== */
 
 @media screen and (max-width: 768px) {
 
@@ -129,6 +138,10 @@
     }
 }
 
+
+/* =====================================================
+   MOBILE
+===================================================== */
 
 @media screen and (max-width: 600px) {
 
@@ -154,6 +167,9 @@
 }
 
 
+/* =====================================================
+   SMALL MOBILE
+===================================================== */
 
 @media screen and (max-width: 450px) {
 
@@ -168,81 +184,4 @@
     .navbarLinks p {
         font-size: 0.75rem;
     }
-}
-
-
-.mobileNav {
-    display: none;
-}
-
-
-@media screen and (max-width: 768px) {
-
-    .mobileNav {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-
-        width: 100%;
-        height: 65px;
-
-        background: white;
-        border-top: 1px solid #eeeeee;
-
-        display: flex;
-        align-items: center;
-        justify-content: space-around;
-
-        z-index: 2000;
-    }
-
-
-    .mobileNavItem {
-        flex: 1;
-
-        height: 100%;
-
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-
-        gap: 3px;
-
-        font-size: 0.75rem;
-        font-weight: 500;
-
-        color: #555;
-
-        cursor: pointer;
-    }
-
-
-    .mobileNavIcon {
-        font-size: 1.4rem;
-        line-height: 1;
-    }
-
-
-    .mobileNavItem.active {
-        color: #000;
-        font-weight: 700;
-    }
-
-}
-
-
-
-
-@media screen and (max-width: 600px) {
-
-    .navbarLinks p:first-child {
-        display: none;
-    }
-
-    .navbarLinks p:nth-child(2),
-    .navbarLinks p:nth-child(3) {
-        font-size: 0.75rem;
-    }
-
 }

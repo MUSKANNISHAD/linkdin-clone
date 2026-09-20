@@ -402,6 +402,7 @@
         gap: 1rem;
     }
 
+    /* Create post */
 
     .createPostContainer {
         padding: 14px;
@@ -459,6 +460,7 @@
     }
 
 
+    /* Options */
 
     .singleoptions_optionContainer {
         padding: 0.4rem 0.7rem;
