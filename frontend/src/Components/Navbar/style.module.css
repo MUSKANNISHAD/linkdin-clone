@@ -46,7 +46,6 @@
 .navbarOptionContainer {
     display: flex;
     align-items: center;
-
     min-width: 0;
 }
 
@@ -222,6 +221,15 @@
         font-weight: 700;
     }
 
+    .UserName {
+        display: none;
+    }
+
+    .navbarOptionContainer {
+        width: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        min-width: 0;
+    }
 }
-
-
