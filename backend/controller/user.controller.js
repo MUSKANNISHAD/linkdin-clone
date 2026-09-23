@@ -73,7 +73,7 @@ export const signup = async (req, res) => {
 
         const existUser = await User.findOne({ email });
         if (existUser) {
-            return res.status(400).json({ message: "user already exist" });
+            return res.status(400).json({ message: "user already exist, Please Login" });
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -105,7 +105,7 @@ export const login = async (req, res) => {
     try {
         const { password, email } = req.body;
         if (!password || !email) {
-            return res.status(400).json({ message: "All feilds are required" });
+            return res.status(400).json({ message: "All fields are required" });
         }
 
         const userFound = await User.findOne({ email })
@@ -298,6 +298,7 @@ export const sendConnectionRequest = async (req, res) => {
 
         const connectionUser = await User.findOne({ _id: connectionId });
 
+
         if (!connectionUser) {
             return res.status(404).json({ message: " Connection Id is Invalid" });
         }
@@ -307,14 +308,18 @@ export const sendConnectionRequest = async (req, res) => {
                 user_Id: user._id,
                 connection_id: connectionUser._id
             });
+
+
         if (ExistingUser) {
             return res.status(400).json({ message: "request already sent" });
         }
+
 
         const request = new connectionReq({
             user_Id: user._id,
             connection_id: connectionUser._id
         })
+
 
         await request.save();
         return res.status(200).json({ message: "Connection sent" });

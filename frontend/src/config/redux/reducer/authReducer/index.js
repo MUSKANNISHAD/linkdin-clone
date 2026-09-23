@@ -45,8 +45,10 @@ const authSlice = createSlice({
             .addCase(loginUser.fulfilled, (state, action) => {
                 state.isLoading = false,
                     state.isSuccess = true,
-                    state.message = "logged in User",
-                    state.loggedIn = true,
+                    state.message = {
+                        message: "Registration is susccessful, please LogIn"
+                    }
+                state.loggedIn = true,
                     state.user = action.payload
             })
             .addCase(loginUser.rejected, (state, action) => {
@@ -55,7 +57,6 @@ const authSlice = createSlice({
                     state.isError = true,
                     state.loggedIn = false,
                     state.message = "couldn't loggedin"
-                // state.message = action.payload.message
             })
             .addCase(userSignup.pending, (state) => {
                 state.isLoading = true,
@@ -65,17 +66,18 @@ const authSlice = createSlice({
                 state.isLoading = false,
                     state.isSuccess = true,
                     state.message = {
-                        message: "Registration is susccessful, please loggedin"
+                        message: "Registration is susccessful, please LogIn"
                     }
                 state.loggedIn = false,
                     state.user = action.payload
             })
             .addCase(userSignup.rejected, (state, action) => {
-                    state.isLoading = false,
+                state.isLoading = false,
                     state.isSuccess = false,
                     state.isError = true,
                     state.loggedIn = false,
-                    state.message = action.payload.message
+                    state.message = action.payload?.message,
+                    console.log("rejected message is", state.message);
             })
             .addCase(getAboutCurrentUser.fulfilled, (state, action) => {
                 state.isError = false,

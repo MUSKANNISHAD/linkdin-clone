@@ -1,5 +1,4 @@
-// import { clientServer } from "@/config";
-import { clientServer } from "../../../index";
+import { clientServer } from "../../../index.js";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 

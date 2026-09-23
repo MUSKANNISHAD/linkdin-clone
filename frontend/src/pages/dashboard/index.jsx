@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { createPost, getAllPosts, deletePost, incrementPostlikes, getCommentsById, postComment } from '../../config/redux/action/postAction/index.js';
 import { getAboutCurrentUser, getAllUser } from '../../config/redux/action/authAction/index.js';
@@ -8,7 +8,6 @@ import UserLayout from '../../layout/userLayout/index.jsx';
 import styles from "./style.module.css";
 import DashboardLayout from '../../layout/DashboardLayout/index.jsx';
 import { BASE_URL } from '../../config/index.js';
-// import TextField from '@mui/material/TextField';
 import { resetPostId } from '../../config/redux/reducer/postReducer/index.js';
 
 
@@ -119,16 +118,6 @@ export default function DashboardComponent() {
                                                             }} style={{ fontWeight: "bold" }}>
                                                                 {post.userId?.name || ""}
                                                             </p>
-                                                            {/* {
-                                                                post.userId?._id === authState.user.userId?._id &&
-                                                                <div onClick={async () => {
-                                                                    // { console.log("delted post", deletePost) }
-                                                                    await dispatch(deletePost({ post_id: post?._id }))
-                                                                    await dispatch(getAllPosts())
-                                                                }}
-                                                                    style={{ cursor: "pointer" }}>
-                                                                </div>
-                                                            } */}
 
                                                         </div>
                                                         <p style={{ color: "grey" }}>{post.userId?.username}</p>
@@ -136,7 +125,6 @@ export default function DashboardComponent() {
 
                                                         <div className={styles.singleCard_image}>
                                                             <img src={`${BASE_URL}/${post.media}`} />
-                                                            {/* {fileContent ? console.log("uploaede image is :  ", post.media) : ""} */}
                                                         </div>
 
                                                         <div className={styles.optionsContainer}>
@@ -145,17 +133,7 @@ export default function DashboardComponent() {
                                                                 dispatch(getAllPosts())
                                                             }}
                                                                 className={styles.singleoptions_optionContainer}
-                                                                style={{
-                                                                    display: "flex",
-                                                                    alignItems: "center",
-                                                                    gap: "6px",
-                                                                    cursor: "pointer",
-                                                                    fontSize: "5px",
-                                                                    color: "#555",
-                                                                    padding: "5px 10px",
-                                                                    borderRadius: "6px",
-                                                                    fontFamily: "sans-serif"
-                                                                }}>
+                                                            >
                                                                 <i className="fa-solid fa-thumbs-up">&nbsp;{post.likes}</i>
                                                             </div>
                                                             <div onClick={async () => {
@@ -225,7 +203,6 @@ export default function DashboardComponent() {
                                         })}
                                     </div>
                                 }
-                                {/* {console.log("postState is", postState.Comments)} */}
                                 <div className={styles.postCommentContainer}>
                                     <input type="text" placeholder='enter Comments' value={commentText} onChange={(e) => setCommentText(e.target.value)} />
                                     <div onClick={async () => {

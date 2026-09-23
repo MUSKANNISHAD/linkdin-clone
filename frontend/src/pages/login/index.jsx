@@ -24,8 +24,17 @@ export default function LoginComponent() {
     const [email, setEmail] = useState("");
 
 
-    const handleRegister = () => {
-        dispatch(userSignup({ username, password, name, email }));
+    const handleRegister = async () => {
+        try {
+            await dispatch(userSignup({ username, password, name, email }));
+            setIsLoginMethod(true);
+            setUserName("");
+            setName("");
+        }
+        catch (error) {
+            console.log("Signup failed:", error);
+        }
+
     }
 
     const handleLogin = () => {
@@ -61,19 +70,19 @@ export default function LoginComponent() {
             <div className={styles.cardContainer}>
                 <div className={styles.cardContainer_left}>
                     <p className={styles.cardleft_heading}>{isLoginMethod ? "SignIn" : "SignUp"}</p>
-                    <p style={{ color: authState.isError ? "red" : "green" }}>   {authState.message.message}</p>
+                    <p style={{ color: authState.isError ? "red" : "green" }}>   {authState.message?.message}</p>
                     <form className={styles.form}>
                         <TextField
                             onChange={(e) => setEmail(e.target.value)}
                             fullWidth
-                            label="Email"
+                            label="email"
                             variant="outlined"
                             margin="normal"
                         />
                         <TextField
                             onChange={(e) => setPassword(e.target.value)}
                             fullWidth
-                            label="Password"
+                            label="password"
                             type="password"
                             variant="outlined"
                             margin="normal"
