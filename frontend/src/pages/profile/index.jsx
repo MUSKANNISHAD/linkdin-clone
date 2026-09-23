@@ -180,10 +180,12 @@ export default function ProfilePage() {
 
                                         {post.media !== "" && (
                                             <div className={styles.postMedia}>
-                                                <img
+                                                {/* <img
                                                     src={`${BASE_URL}/${post.media}`}
                                                     alt="Post"
-                                                />
+                                                /> */}
+                                            <img src={post.media} />
+
                                             </div>
                                         )}
 
