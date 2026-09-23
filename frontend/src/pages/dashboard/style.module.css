@@ -321,7 +321,6 @@
     bottom: 1.2rem;
     left: 1.2rem;
 
-    /* width: calc(100% - 2.4rem); */
     width: 90%;
 
     display: flex;
@@ -380,6 +379,14 @@
 }
 
 
+@media screen and (max-width: 600px) {
+    .scrollContainer {
+        width: 100%;
+        padding-bottom: 80px;
+    }
+}
+
+
 @media screen and (max-width: 1000px) {
 
     .wrapper {
@@ -400,8 +407,6 @@
 
         gap: 1rem;
     }
-
-    /* Create post */
 
     .createPostContainer {
         padding: 14px;
@@ -458,8 +463,6 @@
         border-radius: 14px;
     }
 
-
-    /* Options */
 
     .singleoptions_optionContainer {
         padding: 0.4rem 0.7rem;
