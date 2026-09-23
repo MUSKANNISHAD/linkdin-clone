@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { reset } from '../../config/redux/reducer/authReducer';
 // import authReducer from "../../config/redux/reducer/authReducer";
 import { getAboutCurrentUser, getAllUser } from '../../config/redux/action/authAction';
+import { BASE_URL } from '../../config';
 
 export default function NavbarComponent() {
 
@@ -43,6 +44,9 @@ export default function NavbarComponent() {
 
                             <div className={styles.navbarOptionContainer}>
 
+
+                                {console.log("authstate is ", authState.user.userId.profilePicture)}
+
                                 {authState.profileFetched && (
                                     <div className={styles.navbarLinks}>
 
@@ -59,7 +63,15 @@ export default function NavbarComponent() {
                                                 cursor: "pointer"
                                             }}
                                         >
-                                            profile
+                                            <div className={styles.profileSection}>
+                                                <img
+                                                    className={styles.profilePicture}
+                                                    src={`${BASE_URL}/${authState.user.userId.profilePicture}`}
+                                                    alt="Profile-Picture"
+                                                />
+
+                                                <span>Profile</span>
+                                            </div>
                                         </p>
 
                                         <p
@@ -101,8 +113,8 @@ export default function NavbarComponent() {
 
                     <div
                         className={`${styles.mobileNavItem} ${router.pathname === "/dashboard"
-                                ? styles.active
-                                : ""
+                            ? styles.active
+                            : ""
                             }`}
                         onClick={() => router.push("/dashboard")}
                     >
@@ -113,8 +125,8 @@ export default function NavbarComponent() {
 
                     <div
                         className={`${styles.mobileNavItem} ${router.pathname === "/discover"
-                                ? styles.active
-                                : ""
+                            ? styles.active
+                            : ""
                             }`}
                         onClick={() => router.push("/discover")}
                     >
@@ -125,8 +137,8 @@ export default function NavbarComponent() {
 
                     <div
                         className={`${styles.mobileNavItem} ${router.pathname === "/my_connection"
-                                ? styles.active
-                                : ""
+                            ? styles.active
+                            : ""
                             }`}
                         onClick={() => router.push("/my_connection")}
                     >
