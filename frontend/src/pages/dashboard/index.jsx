@@ -133,6 +133,7 @@ export default function DashboardComponent() {
                                                                 dispatch(getAllPosts())
                                                             }}
                                                                 className={styles.singleoptions_optionContainer}
+                                                                style={{ fontSize: "1rem" }}
                                                             >
                                                                 <i className="fa-solid fa-thumbs-up">&nbsp;{post.likes}</i>
                                                             </div>
