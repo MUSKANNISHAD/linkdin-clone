@@ -3,36 +3,98 @@ import User from "../model/user.model.js";
 import bcrypt from "bcrypt";
 import Profile from "../model/profile.model.js";
 import Comment from "../model/comments.model.js";
+import cloudinary from "../config/cloudinary.js";
 
 export const activeCheck = async (req, res) => {
     return res.status(200).json({ message: "running" });
 }
 
+// export const createPost = async (req, res) => {
+//     const { token } = req.body;
+//     try {
+//         const user = await User.findOne({ token });
+//         if (!user) {
+//             return res.status(404).json({ message: "user not found" });
+//         }
+
+//         const post = new Post({
+//             userId: user._id,
+//             body: req.body.body,
+//             media: req.file != undefined ? req.file.filename : "",
+//             fileType: req.file != undefined ? req.file.mimetype.split("/")[1] : ""
+//         })
+//         await post.save();
+//         return res.status(200).json({ message: "post created" });
+//     }
+//     catch (err) {
+//         console.error(err);
+//         return res.status(500).json({
+//             message: "Internal server error",
+//             error: err.message
+//         });
+//     }
+// }
+
 export const createPost = async (req, res) => {
     const { token } = req.body;
+
     try {
         const user = await User.findOne({ token });
+
         if (!user) {
-            return res.status(404).json({ message: "user not found" });
+            return res.status(404).json({
+                message: "user not found"
+            });
+        }
+
+        let mediaUrl = "";
+        let filetype = "";
+
+        // If user uploaded an image
+        if (req.file) {
+            const result = await new Promise((resolve, reject) => {
+                const uploadStream = cloudinary.uploader.upload_stream(
+                    {
+                        folder: "linkedin_posts"
+                    },
+                    (error, result) => {
+                        if (error) {
+                            reject(error);
+                        } else {
+                            resolve(result);
+                        }
+                    }
+                );
+
+                uploadStream.end(req.file.buffer);
+            });
+
+            mediaUrl = result.secure_url;
+            filetype = req.file.mimetype.split("/")[1];
         }
 
         const post = new Post({
             userId: user._id,
             body: req.body.body,
-            media: req.file != undefined ? req.file.filename : "",
-            fileType: req.file != undefined ? req.file.mimetype.split("/")[1] : ""
-        })
+            media: mediaUrl,
+            filetype: filetype
+        });
+
         await post.save();
-        return res.status(200).json({ message: "post created" });
-    }
-    catch (err) {
+
+        return res.status(200).json({
+            message: "post created"
+        });
+
+    } catch (err) {
         console.error(err);
+
         return res.status(500).json({
             message: "Internal server error",
             error: err.message
         });
     }
-}
+};
 
 
 export const getAllPosts = async (req, res) => {

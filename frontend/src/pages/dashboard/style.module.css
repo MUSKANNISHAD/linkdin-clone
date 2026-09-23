@@ -379,6 +379,12 @@
     object-fit: cover;
 }
 
+@media screen and (max-width: 600px) {
+    .scrollContainer {
+        width: 100%;
+        padding-bottom: 80px;
+    }
+}
 
 @media screen and (max-width: 1000px) {
 
