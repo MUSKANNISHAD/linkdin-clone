@@ -126,7 +126,8 @@ export default function view_profile({ userProfile }) {
                                             <div className={styles.card}>
                                                 <div className={styles.card_profileContainer}>
                                                     {post.media !== "" ?
-                                                        <img src={`${BASE_URL}/${post.media}`} alt="base-url" />
+                                                        // <img src={`${BASE_URL}/${post.media}`} alt="base-url" />
+                                                        <img src={post.media} />
                                                         :
                                                         <div style={{ width: "3.4rem", height: "3.4rem" }}></div>
                                                     }
