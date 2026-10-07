@@ -45,7 +45,7 @@ export default function NavbarComponent() {
                             <div className={styles.navbarOptionContainer}>
 
 
-                                {console.log("authstate is ", authState.user.userId.profilePicture)}
+                                {console.log("authstate is ", authState.user.userId?.profilePicture)}
 
                                 {authState.profileFetched && (
                                     <div className={styles.navbarLinks}>
