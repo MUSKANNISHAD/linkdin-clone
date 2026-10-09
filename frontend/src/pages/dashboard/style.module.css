@@ -281,7 +281,7 @@
 
     z-index: 100;
     margin-top: 80px;
-    width: 100vw;
+    width: fit-content;
     height: 65vh;
 
     background: rgba(0, 0, 0, 0.7);
