@@ -152,7 +152,7 @@ export default function NavbarComponent() {
     } else {
         return (
             <>
-                <div>Not a User</div>
+            
             </>
         )
     }
