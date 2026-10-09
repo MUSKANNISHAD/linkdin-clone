@@ -280,9 +280,9 @@
     inset: 0;
 
     z-index: 100;
-    margin-top: 80px;
-    width: fit-content;
-    height: 65vh;
+
+    width: 100vw;
+    height: 100vh;
 
     background: rgba(0, 0, 0, 0.7);
 
